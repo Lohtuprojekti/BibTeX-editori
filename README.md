@@ -10,12 +10,11 @@ Sprint Backlog:
 | artikkelin jolla on	| Tietorakennevaihtoehdot/implementaatio 	| Kalle        	|
 | artikkelille       	| BibTeX-parseri (sisäänluku)            	| Lilja        	|
 | tyypilliset kentät.	| Viite/artikkeliluokka                  	| Antti        	|
-----------------------------------------------------------------------------------------
-|2. User Story		| Tasks 					| Handler 	|
-|			|						|		|
-|			|						|		|
-|			|						|		|
-|			|						|		|
-----------------------------------------------------------------------------------------
+
+| 2. User Story    	| Tasks                      			| Handler 	|
+|------------------	|----------------------------			|---------	|
+| Arto voi         	| BibTeX-parseri (kirjoitus) 			| -       	|
+| generoida        	|                            			|         	|
+| BibTeX-tiedoston 	|                            			|         	|
 
 Product Backlog:
