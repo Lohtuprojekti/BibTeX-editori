@@ -4,17 +4,17 @@ Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat 
 
 Sprint Backlog:
 
-| 1. User Story       	| Tasks                                  	| Handler      	|
-|---------------------	|----------------------------------------	|---------------|
-| Arto voi lisätä    	| GUI                                    	| Johannes/Jami	|
-| artikkelin jolla on	| Tietorakennevaihtoehdot/implementaatio 	| Kalle        	|
-| artikkelille       	| BibTeX-parseri (sisäänluku)            	| Lilja        	|
-| tyypilliset kentät.	| Viite/artikkeliluokka                  	| Antti        	|
+| 1. User Story       	| Tasks                                  	| Handler      	| Estimate 	|
+|---------------------	|----------------------------------------	|---------------|---------	|
+| Arto voi lisätä    	| GUI                                    	| Johannes/Jami	|		|
+| artikkelin jolla on	| Tietorakennevaihtoehdot/implementaatio 	| Kalle        	|		|
+| artikkelille       	| BibTeX-parseri (sisäänluku)            	| Lilja        	|		|
+| tyypilliset kentät.	| Viite/artikkeliluokka                  	| Antti        	|		|
 
-| 2. User Story    	| Tasks                      			| Handler 	|
-|------------------	|----------------------------			|---------	|
-| Arto voi         	| BibTeX-parseri (kirjoitus) 			| -       	|
-| generoida        	|                            			|         	|
-| BibTeX-tiedoston 	|                            			|         	|
+| 2. User Story    	| Tasks                      			| Handler 	| Estimate	|
+|------------------	|----------------------------			|---------	|		|
+| Arto voi         	| BibTeX-parseri (kirjoitus) 			| -       	|		|
+| generoida        	|                            			|         	|		|
+| BibTeX-tiedoston 	|                            			|         	|		|
 
 Product Backlog:
