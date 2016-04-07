@@ -1,9 +1,21 @@
 # BibTeX-editori
 
-| User Story          | Tasks                                  | Handler       |
-|---------------------|----------------------------------------|---------------|
-| Arto voi lisätä     | GUI                                    | Johannes/Jami |
-| artikkelin jolla on | Tietorakennevaihtoehdot/implementaatio | Kalle         |
-| artikkelille        | BibTeX-parseri (sisäänluku)            | Lilja         |
-| tyypilliset kentät. | Viite/artikkeliluokka                  | Antti         |
---------------------------------------------------------------------------------
+Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat speksit https://github.com/mluukkai/ohtu2016/wiki/miniprojekti-speksi
+
+Sprint Backlog:
+
+| 1. User Story       	| Tasks                                  	| Handler      	|
+|---------------------	|----------------------------------------	|---------------|
+| Arto voi lisätä    	| GUI                                    	| Johannes/Jami	|
+| artikkelin jolla on	| Tietorakennevaihtoehdot/implementaatio 	| Kalle        	|
+| artikkelille       	| BibTeX-parseri (sisäänluku)            	| Lilja        	|
+| tyypilliset kentät.	| Viite/artikkeliluokka                  	| Antti        	|
+----------------------------------------------------------------------------------------
+|2. User Story		| Tasks 					| Handler 	|
+|			|						|		|
+|			|						|		|
+|			|						|		|
+|			|						|		|
+----------------------------------------------------------------------------------------
+
+Product Backlog:
