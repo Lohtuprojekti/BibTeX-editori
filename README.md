@@ -2,19 +2,8 @@
 
 Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat speksit https://github.com/mluukkai/ohtu2016/wiki/miniprojekti-speksi
 
-Sprint Backlog:
+Backlog:
+https://docs.google.com/spreadsheets/d/17CkXQanI1ZLBA5fAyDZJhTtrZXGwSo8b-4nAij-V2sc/edit#gid=0
 
-| 1. User Story       	| Tasks                                  	| Handler      	| Estimate 	|
-|---------------------	|----------------------------------------	|---------------|---------	|
-| Arto voi lisätä    	| GUI                                    	| Johannes/Jami	| nh		|
-| artikkelin jolla on	| Tietorakennevaihtoehdot/implementaatio 	| Kalle        	| 1h 		|
-| artikkelille       	| BibTeX-parseri (sisäänluku)            	| Lilja        	| nh		|
-| tyypilliset kentät.	| Viite/artikkeliluokka                  	| Antti        	| 30m		|
-
-| 2. User Story    	| Tasks                      			| Handler 	| Estimate	|
-|------------------	|----------------------------			|---------	|----------	|
-| Arto voi         	| BibTeX-parseri (kirjoitus) 			| -       	|		|
-| generoida        	|                            			|         	|		|
-| BibTeX-tiedoston 	|                            			|         	|		|
-
-Product Backlog:
+GUI prototype:
+https://docs.google.com/document/d/170nPVH2HUWYJIInBr7DlIVXbLDiOM1gGBpDT_k8pBWo/edit
