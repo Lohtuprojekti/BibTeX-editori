@@ -1,5 +1,7 @@
 # BibTeX-editori
 
+Travis: [![Build Status](https://travis-ci.org/Lohtuprojekti/Referenzixx.svg?branch=master)](https://travis-ci.org/Lohtuprojekti/Referenzixx)
+
 Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat speksit https://github.com/mluukkai/ohtu2016/wiki/miniprojekti-speksi
 
 Backlog:
