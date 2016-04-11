@@ -8,7 +8,7 @@ package referenzixx.refs;
 /**
  *
  * Contains methods for variables that all reference objects inherit:
- * Reference number, author, title and year.
+ * Reference number, author, publisher, title and year.
  */
 public class Reference {
    
