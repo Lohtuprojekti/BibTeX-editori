@@ -15,7 +15,7 @@
     </module>
 
     <module name="SuppressionFilter">
-    	<property name="file" value="UIsuppression.xml" />
+        <property name="file" value="mysuppressions.xml" />
     </module>
 
 </module>
