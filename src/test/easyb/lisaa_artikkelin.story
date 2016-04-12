@@ -10,13 +10,13 @@ scenario "Lisääminen onnistuu kun kaikki pakolliset on annettu", {
     then 'Lisäys onnistuu'
 }
 
-scenario "Lisääminen epäonnistuu jos kaikki pakolliset ovat tyhjänä" {
+scenario "Lisääminen epäonnistuu jos kaikki pakolliset ovat tyhjänä", {
     given 'Kaikki tiedot puuttuvat'
     when 'Valitaan lisäys'
     then 'Lisäys epäonnistuu'
 }
 
-scenario "Lisääminen epäonnistuu kun jotakin pakollista ei ole annettu" {
+scenario "Lisääminen epäonnistuu kun jotakin pakollista ei ole annettu", {
     given 'Kaikki paitsi yksi tieto on annettu'
     when 'Valitaan lisäys'
     then 'Lisäys epäonnistuu'
