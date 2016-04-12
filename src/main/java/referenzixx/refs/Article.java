@@ -19,7 +19,8 @@ public class Article extends Reference{
     //Constructor for article. Very ugly with 10 parameters.
     public Article(String authors, String title, String journal, int volume,
                    int number, int year, int startpage, int endpage, String publisher,
-                   String address){
+                   String address) {
+        
         this.author=authors;
         this.title = title;
         this.journal=journal;

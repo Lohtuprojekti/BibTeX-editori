@@ -58,7 +58,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="referenzixx.ui.Reference" name="reference1">
+    <Component class="referenzixx.ui.ReferenceUI" name="reference1">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

@@ -15,6 +15,18 @@ public class Reference {
     //refNum is the 3+ character reference number/identifier.
     public String  refNum, title, author, publisher;
     public Integer year;
+    
+    public Reference() {
+        
+    }
+
+    public Reference(String refNum, String title, String author, String publisher, Integer year) {
+        this.refNum = refNum;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.year = year;
+    }
    
     //Setters
     public void setRefNum(String ref){

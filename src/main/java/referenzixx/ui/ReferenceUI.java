@@ -4,12 +4,12 @@ package referenzixx.ui;
  *
  * @author Johannes
  */
-public class Reference extends javax.swing.JPanel {
+public class ReferenceUI extends javax.swing.JPanel {
 
     /**
      * Creates new form ReferenceUI
      */
-    public Reference() {
+    public ReferenceUI() {
         initComponents();
     }
 

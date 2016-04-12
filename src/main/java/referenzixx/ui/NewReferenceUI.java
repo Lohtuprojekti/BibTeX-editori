@@ -4,12 +4,12 @@ package referenzixx.ui;
  *
  * @author Johannes
  */
-public class NewReference extends javax.swing.JDialog {
+public class NewReferenceUI extends javax.swing.JDialog {
 
     /**
      * Creates new form NewReference
      */
-    public NewReference(java.awt.Frame parent, boolean modal) {
+    public NewReferenceUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -23,7 +23,7 @@ public class NewReference extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        reference1 = new referenzixx.ui.Reference();
+        reference1 = new referenzixx.ui.ReferenceUI();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -69,6 +69,6 @@ public class NewReference extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private referenzixx.ui.Reference reference1;
+    private referenzixx.ui.ReferenceUI reference1;
     // End of variables declaration//GEN-END:variables
 }
