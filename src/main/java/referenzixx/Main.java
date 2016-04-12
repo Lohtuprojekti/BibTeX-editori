@@ -1,10 +1,16 @@
 package referenzixx;
 
 import referenzixx.ui.MainUI;
+import java.util.Collection;
+import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Value;
+import referenzixx.refs.Article;
+import referenzixx.parser.BibtexReader;
 
 public class Main {
 
     public static void main(String[] args) {
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
         try {
@@ -26,5 +32,10 @@ public class Main {
         //</editor-fold>
 
         new MainUI().setVisible(true);
+
+//// Tällä voi testata tiedostoon kirjoittamista
+//        BibtexReader reader = new BibtexReader("src/shortbibtexfile.bib");
+//        reader.writeToFile(new Article("Kirjoittaja", "Artikkeli", "journal", 1, 0, 2016, 1, 200, "Julkaisija", "Osoite"));
+
     }
 }
