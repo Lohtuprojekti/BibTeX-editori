@@ -35,7 +35,7 @@ import referenzixx.refs.Article;
 public class BibtexReader {
 
     private File input;
-    BibTeXDatabase database;
+    private BibTeXDatabase database;
 
     public BibtexReader(String filename) {
         input = new File(filename);
