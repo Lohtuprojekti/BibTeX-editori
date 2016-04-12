@@ -4,6 +4,11 @@ Travis: [![Build Status](https://travis-ci.org/Lohtuprojekti/Referenzixx.svg?bra
 
 Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat speksit https://github.com/mluukkai/ohtu2016/wiki/miniprojekti-speksi
 
+Definition of done:
+1. Koodi on dokumentoitua toisia devaajia varten.
+2. Yksikkötestit menevät läpi.
+3. Koodi kääntyy oman koneen lisäksi myös Travis CI.
+
 Backlog:
 https://docs.google.com/spreadsheets/d/17CkXQanI1ZLBA5fAyDZJhTtrZXGwSo8b-4nAij-V2sc/edit?usp=docslist_api
 
