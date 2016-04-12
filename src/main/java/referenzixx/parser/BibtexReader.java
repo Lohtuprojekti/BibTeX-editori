@@ -15,6 +15,8 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
@@ -32,18 +34,19 @@ import org.jbibtex.ParseException;
 public class BibtexReader {
 
     private File input;
+    BibTeXDatabase database;
 
     public BibtexReader(String filename) {
         input = new File(filename);
     }
 
-    public Collection<org.jbibtex.BibTeXEntry> listReferences() {
+    public Collection<BibTeXEntry> listReferences() {
 
         try {
             BibTeXParser parser = new BibTeXParser();
-            BibTeXDatabase database = parser.parse(new FileReader(input));
+            database = parser.parse(new FileReader(input));
 
-            Map<org.jbibtex.Key, org.jbibtex.BibTeXEntry> entryMap = database.getEntries();
+            Map<Key, BibTeXEntry> entryMap = database.getEntries();
 
             return entryMap.values();
 
@@ -52,5 +55,26 @@ public class BibtexReader {
         }
 
         return null;
+    }
+
+    public void writeToFile(Article article) {
+        String bibtexEntry = formatToBibtex(article);
+       
+        try {
+            FileWriter writer = new FileWriter(input, true);
+            writer.write(bibtexEntry);
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+
+    private String formatToBibtex(Article art) {
+        return "\n@article{" + art.getRefNum() + ",\n"
+                + "author = {" + art.getAuthor() + "},\n"
+                + "title = {" + art.getTitle() + "},\n"
+                + "journal = {" + art.getJournal() + "},\n"
+                + "year = {" + art.getYear() + "},\n"
+                + "volume = {" + art.getVolume() + "},\n}";      
     }
 }
