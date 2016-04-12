@@ -40,6 +40,7 @@ public class BibtexReader {
         input = new File(filename);
     }
 
+    // Palauttaa viitteet listana
     public Collection<BibTeXEntry> listReferences() {
 
         try {
@@ -57,6 +58,7 @@ public class BibtexReader {
         return null;
     }
 
+    // Kirjoittaa artikkeli-olion .bib -tiedostoon
     public void writeToFile(Article article) {
         String bibtexEntry = formatToBibtex(article);
        
@@ -69,6 +71,7 @@ public class BibtexReader {
         }   
     }
 
+    // Muuttaa artikkeli-olion bibtex-muotoon
     private String formatToBibtex(Article art) {
         return "\n@article{" + art.getRefNum() + ",\n"
                 + "author = {" + art.getAuthor() + "},\n"
