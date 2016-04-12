@@ -6,7 +6,9 @@ Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat 
 
 Definition of done:
 1. Koodi on dokumentoitua toisia devaajia varten.
+ 
 2. Yksikkötestit menevät läpi.
+ 
 3. Koodi kääntyy oman koneen lisäksi myös Travis CI.
 
 Backlog:
