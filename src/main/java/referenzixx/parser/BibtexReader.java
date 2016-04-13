@@ -26,6 +26,8 @@ import org.jbibtex.BibTeXParser;
 import org.jbibtex.BibTeXString;
 import org.jbibtex.Key;
 import org.jbibtex.ParseException;
+import org.jbibtex.Value;
+import referenzixx.refs.Article;
 
 /**
  *
@@ -61,14 +63,14 @@ public class BibtexReader {
     // Kirjoittaa artikkeli-olion .bib -tiedostoon
     public void writeToFile(Article article) {
         String bibtexEntry = formatToBibtex(article);
-       
+
         try {
             FileWriter writer = new FileWriter(input, true);
             writer.write(bibtexEntry);
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
     }
 
     // Muuttaa artikkeli-olion bibtex-muotoon
@@ -78,6 +80,6 @@ public class BibtexReader {
                 + "title = {" + art.getTitle() + "},\n"
                 + "journal = {" + art.getJournal() + "},\n"
                 + "year = {" + art.getYear() + "},\n"
-                + "volume = {" + art.getVolume() + "},\n}";      
+                + "volume = {" + art.getVolume() + "},\n}";
     }
 }
