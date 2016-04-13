@@ -11,12 +11,3 @@ title = {Extreme Programming Explained: Embrace Change (2nd Edition)},
 year = {2004},
 publisher = {Addison-Wesley Professional},
 }
-
-
-@article{null,
-author = {Kirjoittaja},
-title = {Artikkeli},
-journal = {journal},
-year = {2016},
-volume = {1},
-}
