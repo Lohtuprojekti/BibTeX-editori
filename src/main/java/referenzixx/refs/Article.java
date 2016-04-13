@@ -17,20 +17,20 @@ public class Article extends Reference{
     private int pageStart, pageEnd;
    
     //Constructor for article. Very ugly with 10 parameters.
-    public Article(String authors, String title, String journal, int volume,
-                   int number, int year, int startpage, int endpage, String publisher,
-                   String address) {
-        
+    public Article(String refNum, String authors, String title, String journal, int volume,
+                   int year/*, int number, int startpage, int endpage, String publisher,
+                   String address*/) {
+        this.refNum = refNum;
         this.author=authors;
         this.title = title;
         this.journal=journal;
         this.volume=volume;
-        this.number = number;
         this.year = year;
-        this.pageStart = startpage;
-        this.pageEnd = endpage;
-        this.publisher = publisher;
-        this.address = address;
+        //this.number = number;
+        //this.pageStart = startpage;
+        //this.pageEnd = endpage;
+        //this.publisher = publisher;
+        //this.address = address;
     }
    
     //Setters.
