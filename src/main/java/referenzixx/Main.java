@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         /* Set the Nimbus look and feel */
-        /*
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -44,7 +44,7 @@ public class Main {
         references.put(456, new Reference("456", "Programming in Java", "Matti Luukkainen", "HY", 1564));
         
         mainUI.setReferences(references);
-*/
+
 //// Tällä voi testata tiedostoon kirjoittamista
         //BibtexReader reader = new BibtexReader("src/shortbibtexfile.bib");
         //Article artic = new Article("ABC54","Kirjoittaja", "Artikkeli", "journal", 1, 2016);
