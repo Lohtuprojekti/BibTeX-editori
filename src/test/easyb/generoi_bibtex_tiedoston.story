@@ -15,3 +15,15 @@ scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
     when "Lisätään tyhjää"
     then "Tiedostossa ei tapahdu muutosta"
 }
+
+scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
+    given "Bibtexiä ei ole olemassa"
+    when "Lisätään artikkeli"
+    then "Tiedosto luodaan ja siinä on sisältöä"
+}
+
+scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
+    given "Bibtexiä ei ole olemassa"
+    when "Lisätään tyhjää"
+    then "Tiedostoa ei ole olemassa"
+}
