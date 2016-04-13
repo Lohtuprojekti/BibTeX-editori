@@ -37,8 +37,8 @@ public class BibtexReader {
     private File input;
     private BibTeXDatabase database;
 
-    public BibtexReader(String filename) {
-        input = new File(filename);
+    public BibtexReader(File fi) {
+        input = fi;
     }
 
     // Palauttaa viitteet listana
@@ -61,8 +61,10 @@ public class BibtexReader {
 
     // Kirjoittaa artikkeli-olion .bib -tiedostoon
     public void writeToFile(Article article) {
+        if (article == null) {
+            return;
+        }
         String bibtexEntry = formatToBibtex(article);
-       
         try {
             FileWriter writer = new FileWriter(input, true);
             writer.write(bibtexEntry);
@@ -74,6 +76,9 @@ public class BibtexReader {
 
     // Muuttaa artikkeli-olion bibtex-muotoon
     private String formatToBibtex(Article art) {
+        if (art == null) {
+            return null;
+        }
         return "\n@article{" + art.getRefNum() + ",\n"
                 + "author = {" + art.getAuthor() + "},\n"
                 + "title = {" + art.getTitle() + "},\n"
