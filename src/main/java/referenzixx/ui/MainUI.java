@@ -23,23 +23,28 @@ public class MainUI extends javax.swing.JFrame {
     /**
      * Creates new form MainUI
      */
-    /**
-     * Creates new form MainUI
-     *
-     * @param bibtexReader
-     */
     public MainUI() {
         this.articles = new HashMap<String, Article>();
 
         initComponents();
     }
 
-    public void setArticles(Map<Integer, Article> articles) {
+    /**
+     * Lisää listan artikkeleita käyttöliittymään.
+     * 
+     * @param articles Lisättävät artikkelit
+     */
+    public void addArticles(Map<Integer, Article> articles) {
         for (Article article : articles.values()) {
             addArticle(article);
         }
     }
 
+    /**
+     * Lisää artikkeli käyttöliittymään.
+     * 
+     * @param article Lisättävä artikkeli
+     */
     public void addArticle(Article article) {
         articles.put(article.getRefNum(), article);
 
@@ -51,6 +56,7 @@ public class MainUI extends javax.swing.JFrame {
         tableModel.setValueAt(article.getPublisher(), row, 4);
 
         row++;
+        saveButton.setEnabled(true);
     }
 
     /**
@@ -70,8 +76,10 @@ public class MainUI extends javax.swing.JFrame {
         referenceUI1 = new referenzixx.ui.ReferenceUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         addReferenceButton.setText("Lisää");
+        addReferenceButton.setToolTipText("Lisää uusi artikkeli");
         addReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addReferenceButtonActionPerformed(evt);
@@ -79,6 +87,8 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         saveButton.setText("Tallenna");
+        saveButton.setToolTipText("Tallenna artikkelit BibTex-muodossa");
+        saveButton.setEnabled(false);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -86,6 +96,7 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         readButton.setText("Lue");
+        readButton.setEnabled(false);
         readButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 readButtonActionPerformed(evt);
@@ -168,12 +179,14 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // Avataan ikkuna tiedoston tallentamista varten
         JFileChooser jFileChooser = new JFileChooser();
         int value = jFileChooser.showSaveDialog(this);
 
-        if (value == JFileChooser.APPROVE_OPTION) {
+        if (value == JFileChooser.APPROVE_OPTION) { // Käyttäjä painoi save-nappia
             File file = new File(jFileChooser.getSelectedFile().getPath() + ".bib");
 
+            // Tallennetaan artikkelit tiedostoon
             for (Article article : articles.values()) {
                 new BibtexReader(file).writeToFile(article);
             }

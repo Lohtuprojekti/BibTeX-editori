@@ -46,8 +46,10 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lisää uusi viite");
+        setLocationByPlatform(true);
 
         addButton.setText("Lisää");
+        addButton.setToolTipText("Lisää artikkeli");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -55,6 +57,7 @@ public class NewReferenceUI extends javax.swing.JDialog {
         });
 
         cancelButton.setText("Peruuta");
+        cancelButton.setToolTipText("Peruuta tallentamatta artikkelia");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -63,11 +66,16 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
         jLabel1.setText("Viite");
 
+        referenceTextField.setToolTipText("Artikkelin viite");
         referenceTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 referenceTextFieldActionPerformed(evt);
             }
         });
+
+        authorTextField.setToolTipText("Artikkelin kirjoittaja");
+
+        titleTextField.setToolTipText("Artikkelin nimi");
 
         jLabel2.setText("Author");
 
@@ -75,7 +83,11 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
         jLabel4.setText("Journal");
 
-        journalTextField.setToolTipText("");
+        journalTextField.setToolTipText("Artikkelin julkaisulehti");
+
+        yearTextField.setToolTipText("Artikkelin julkaisuvuosi");
+
+        volumeTextField.setToolTipText("Artikkelin sivumäärä");
 
         jLabel5.setText("Year");
 
@@ -171,12 +183,22 @@ public class NewReferenceUI extends javax.swing.JDialog {
         String author = referenceTextField.getText();
         String title = titleTextField.getText();
         String journal = journalTextField.getText();
+        String yearText = yearTextField.getText();
+        String volumeText = volumeTextField.getText();
+        
+        if (reference.isEmpty() || author.isEmpty() || title.isEmpty()
+                || journal.isEmpty() || yearText.isEmpty() || volumeText.isEmpty()) {
+            
+            errorLabel.setText("Syötä jokaiseen kenttään jokin arvo");
+            return;
+        }
+        
         int year;
         int volume;
         
         try {
-            year = Integer.parseInt(yearTextField.getText());
-            volume = Integer.parseInt(volumeTextField.getText());
+            year = Integer.parseInt(yearText);
+            volume = Integer.parseInt(volumeText);
         } catch (NumberFormatException ex) {
             errorLabel.setText("Syötä year ja volume oikeassa muodossa");
             return;

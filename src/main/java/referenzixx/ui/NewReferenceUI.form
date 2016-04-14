@@ -4,6 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Lis&#xe4;&#xe4; uusi viite"/>
+    <Property name="locationByPlatform" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -63,6 +64,7 @@
     <Component class="javax.swing.JButton" name="addButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lis&#xe4;&#xe4;"/>
+        <Property name="toolTipText" type="java.lang.String" value="Lis&#xe4;&#xe4; artikkeli"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
@@ -71,6 +73,7 @@
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Peruuta"/>
+        <Property name="toolTipText" type="java.lang.String" value="Peruuta tallentamatta artikkelia"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
@@ -142,13 +145,22 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="referenceTextField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin viite"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="referenceTextFieldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="authorTextField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin kirjoittaja"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="titleTextField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin nimi"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -167,12 +179,18 @@
         </Component>
         <Component class="javax.swing.JTextField" name="journalTextField">
           <Properties>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin julkaisulehti"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="yearTextField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin julkaisuvuosi"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="volumeTextField">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Artikkelin sivum&#xe4;&#xe4;r&#xe4;"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>

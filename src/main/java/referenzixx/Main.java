@@ -42,7 +42,7 @@ public class Main {
         articles.put(123, new Article("123", "J. K. Rowling", "Jipii", "Studio", 456, 1995));
         articles.put(456, new Article("456", "Matti Luukkainen", "Programming in Java", "HY", 456, 2010));
         
-        mainUI.setArticles(articles);
+        mainUI.addArticles(articles);
          
 //// Tällä voi testata tiedostoon kirjoittamista
         //File file = new File("src/shortbibtexfile.bib");
