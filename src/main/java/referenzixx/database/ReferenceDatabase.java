@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package referenzixx.database;
 
-/**
- *
- * @author kkirjala
- */
+import java.util.Map;
+import referenzixx.refs.Article;
+
 public interface ReferenceDatabase {
     
+    
+    public Map<Integer, Article> getArticles();
+    
+    public Map<Integer, Article> getArticles(String refNum, String title, String author, String publisher, Integer year);
+        
 }
