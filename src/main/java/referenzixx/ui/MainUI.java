@@ -24,7 +24,7 @@ public class MainUI extends javax.swing.JFrame {
      * Creates new form MainUI
      */
     public MainUI() {
-        this.articles = new HashMap<String, Article>();
+        this.articles = new HashMap<>();
 
         initComponents();
     }

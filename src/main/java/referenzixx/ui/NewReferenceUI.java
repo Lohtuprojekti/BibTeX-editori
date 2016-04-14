@@ -180,7 +180,7 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         String reference = referenceTextField.getText();
-        String author = referenceTextField.getText();
+        String author = authorTextField.getText();
         String title = titleTextField.getText();
         String journal = journalTextField.getText();
         String yearText = yearTextField.getText();

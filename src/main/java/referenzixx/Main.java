@@ -38,7 +38,7 @@ public class Main {
         mainUI.setVisible(true);
         
         // Test references
-        Map<Integer, Article> articles = new HashMap<Integer, Article>();
+        Map<Integer, Article> articles = new HashMap<>();
         articles.put(123, new Article("123", "J. K. Rowling", "Jipii", "Studio", 456, 1995));
         articles.put(456, new Article("456", "Matti Luukkainen", "Programming in Java", "HY", 456, 2010));
         
