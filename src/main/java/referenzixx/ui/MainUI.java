@@ -1,8 +1,14 @@
 package referenzixx.ui;
 
 import java.awt.Component;
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFileChooser;
 import javax.swing.table.TableModel;
+import org.jbibtex.BibTeXEntry;
+import referenzixx.parser.BibtexReader;
+import referenzixx.refs.Article;
 import referenzixx.refs.Reference;
 
 /**
@@ -11,33 +17,40 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<Integer, Reference> references;
-    
+    private Map<String, Article> articles;
+    private int row = 0;
+
     /**
      * Creates new form MainUI
      */
-    
     /**
      * Creates new form MainUI
+     *
+     * @param bibtexReader
      */
     public MainUI() {
+        this.articles = new HashMap<String, Article>();
+
         initComponents();
     }
-    
-    public void setReferences(Map<Integer, Reference> references) {
-        int row = 0;
-        for (Reference reference : references.values()) {
-            addReference(row++, reference);
+
+    public void setArticles(Map<Integer, Article> articles) {
+        for (Article article : articles.values()) {
+            addArticle(article);
         }
     }
-    
-    public void addReference(int row, Reference reference) {
+
+    public void addArticle(Article article) {
+        articles.put(article.getRefNum(), article);
+
         TableModel tableModel = referenceTable.getModel();
-        tableModel.setValueAt(reference.getRefNum(), row, 0);
-        tableModel.setValueAt(reference.getAuthor(), row, 1);
-        tableModel.setValueAt(reference.getTitle(), row, 2);
-        tableModel.setValueAt(reference.getYear()+"", row, 3);
-        tableModel.setValueAt(reference.getPublisher(), row, 4);
+        tableModel.setValueAt(article.getRefNum(), row, 0);
+        tableModel.setValueAt(article.getAuthor(), row, 1);
+        tableModel.setValueAt(article.getTitle(), row, 2);
+        tableModel.setValueAt(article.getYear() + "", row, 3);
+        tableModel.setValueAt(article.getPublisher(), row, 4);
+
+        row++;
     }
 
     /**
@@ -73,6 +86,11 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         readButton.setText("Lue");
+        readButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readButtonActionPerformed(evt);
+            }
+        });
 
         referenceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,12 +168,25 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser jFileChooser = new JFileChooser();
+        int value = jFileChooser.showSaveDialog(this);
+
+        if (value == JFileChooser.APPROVE_OPTION) {
+            File file = new File(jFileChooser.getSelectedFile().getPath() + ".bib");
+
+            for (Article article : articles.values()) {
+                new BibtexReader(file).writeToFile(article);
+            }
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
         new NewReferenceUI(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
+
+    private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
+        
+    }//GEN-LAST:event_readButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;

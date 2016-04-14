@@ -67,7 +67,7 @@ public class BibtexReader {
         String bibtexEntry = formatToBibtex(article);
         try {
             FileWriter writer = new FileWriter(input, true);
-            writer.write(bibtexEntry);
+            writer.write(bibtexEntry+"\r\n");
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
