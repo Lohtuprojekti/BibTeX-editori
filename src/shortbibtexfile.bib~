@@ -1,18 +1,19 @@
-@inproceedings{VPL11,
-author = {Vihavainen, Arto and Paksula, Matti and Luukkainen, Matti},
-title = {Extreme Apprenticeship Method in Teaching Programming for Beginners.},
-year = {2011},
-booktitle = {SIGCSE '11: Proceedings of the 42nd SIGCSE technical symposium on Computer science education},
-}
- 
-@book{BA04,
-author = {Beck, Kent and Andres, Cynthia},
-title = {Extreme Programming Explained: Embrace Change (2nd Edition)},
-year = {2004},
-publisher = {Addison-Wesley Professional},
+@article{65VF,
+	author = {Joku},
+	title = {Huono},
+	journal = {journal},
+	year = {1628},
+	volume = {13}
 }
 
-@article{null,
+@article{ABC54,
+	author = {Kirjoittaja},
+	title = {Artikkeli},
+	journal = {journal},
+	year = {2016},
+	volume = {1}
+}
+@article{ABC54,
 author = {Kirjoittaja},
 title = {Artikkeli},
 journal = {journal},
