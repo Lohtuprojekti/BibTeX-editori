@@ -4,12 +4,12 @@ package referenzixx.ui;
  *
  * @author Johannes
  */
-public class Reference extends javax.swing.JPanel {
+public class ReferenceUI extends javax.swing.JPanel {
 
     /**
      * Creates new form ReferenceUI
      */
-    public Reference() {
+    public ReferenceUI() {
         initComponents();
     }
 
@@ -36,7 +36,7 @@ public class Reference extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
-        jLabel1.setText("Tyyppi");
+        jLabel1.setText("Viite");
 
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -44,17 +44,17 @@ public class Reference extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Kirjoittaja");
+        jLabel2.setText("Author");
 
-        jLabel3.setText("Nimi");
+        jLabel3.setText("Title");
 
-        jLabel4.setText("Vuosi");
+        jLabel4.setText("Journal");
 
         year.setToolTipText("");
 
-        jLabel5.setText("Julkaisija");
+        jLabel5.setText("Year");
 
-        jLabel6.setText("Viite");
+        jLabel6.setText("Volume");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
