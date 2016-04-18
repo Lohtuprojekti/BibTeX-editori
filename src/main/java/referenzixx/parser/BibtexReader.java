@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,10 @@ public class BibtexReader {
 
     public BibtexReader(File fi) {
         input = fi;
+    }
+    
+    public Collection<Article> listArticles() {
+        return new ArrayList<>();
     }
 
     // Palauttaa viitteet listana
