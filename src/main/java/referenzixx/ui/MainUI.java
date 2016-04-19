@@ -1,7 +1,10 @@
 package referenzixx.ui;
 
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFileChooser;
@@ -19,14 +22,21 @@ public class MainUI extends javax.swing.JFrame {
 
     private Map<String, Article> articles;
     private int row = 0;
+    private String url = "referenzixx.bib";
+    private BibtexReader bibtexReader;
+    private Clipboard clipboard;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
         this.articles = new HashMap<>();
+        this.bibtexReader = new BibtexReader(new File(url));
+        this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         initComponents();
+        
+        addArticles(bibtexReader.listArticles());
     }
 
     /**
@@ -34,8 +44,8 @@ public class MainUI extends javax.swing.JFrame {
      * 
      * @param articles Lisättävät artikkelit
      */
-    public void addArticles(Map<Integer, Article> articles) {
-        for (Article article : articles.values()) {
+    private void addArticles(Collection<Article> articles) {
+        for (Article article : articles) {
             addArticle(article);
         }
     }
@@ -56,7 +66,10 @@ public class MainUI extends javax.swing.JFrame {
         tableModel.setValueAt(article.getPublisher(), row, 4);
 
         row++;
-        saveButton.setEnabled(true);
+        copyButton.setEnabled(true);
+        
+        File file = new File(url);
+        new BibtexReader(file).writeToFile(article);
     }
 
     /**
@@ -69,7 +82,7 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         addReferenceButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        copyButton = new javax.swing.JButton();
         readButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         referenceTable = new javax.swing.JTable();
@@ -86,12 +99,12 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        saveButton.setText("Tallenna");
-        saveButton.setToolTipText("Tallenna artikkelit BibTex-muodossa");
-        saveButton.setEnabled(false);
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
+        copyButton.setText("Kopioi leikepöydälle");
+        copyButton.setToolTipText("Kopioi BibTex-tiedoston leikepöydälle");
+        copyButton.setEnabled(false);
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+                copyButtonActionPerformed(evt);
             }
         });
 
@@ -151,7 +164,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(readButton)
                         .addGap(18, 18, 18)
-                        .addComponent(saveButton))
+                        .addComponent(copyButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -166,7 +179,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addReferenceButton)
-                    .addComponent(saveButton)
+                    .addComponent(copyButton)
                     .addComponent(readButton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
@@ -178,20 +191,9 @@ public class MainUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // Avataan ikkuna tiedoston tallentamista varten
-        JFileChooser jFileChooser = new JFileChooser();
-        int value = jFileChooser.showSaveDialog(this);
-
-        if (value == JFileChooser.APPROVE_OPTION) { // Käyttäjä painoi save-nappia
-            File file = new File(jFileChooser.getSelectedFile().getPath() + ".bib");
-
-            // Tallennetaan artikkelit tiedostoon
-            for (Article article : articles.values()) {
-                new BibtexReader(file).writeToFile(article);
-            }
-        }
-    }//GEN-LAST:event_saveButtonActionPerformed
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        // clipboard.setContents(bibtexReader.getBibfileAsString(new File(url)), null);
+    }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
         new NewReferenceUI(this, true).setVisible(true);
@@ -203,10 +205,10 @@ public class MainUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
+    private javax.swing.JButton copyButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
     private referenzixx.ui.ReferenceUI referenceUI1;
-    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -41,6 +41,10 @@ public class BibtexReader {
     public BibtexReader(File file) {
         bibfile = file;
     }
+    
+    public Collection<Article> listArticles() {
+        return new ArrayList<>();
+    }
 
     /**
      * Muuttaa BibTexEntryt Article-olioiksi ja palauttaa ne listana
