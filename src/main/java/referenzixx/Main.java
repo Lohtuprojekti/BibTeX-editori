@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Value;
-import referenzixx.parser.BibtexConverter;
 import referenzixx.refs.Article;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Reference;
@@ -38,8 +37,8 @@ public class Main {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-//        //</editor-fold>
-//
+////        //</editor-fold>
+////
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
 //        
@@ -59,5 +58,7 @@ public class Main {
 ////Tässä esimerkki jbibtexin käytöstä tiedoston lukemisessa. 
 //        Collection<BibTeXEntry> c = reader.listReferences();
         //System.out.println(c.iterator().next().getFields().keySet().toString());
+        
+        
     }
 }

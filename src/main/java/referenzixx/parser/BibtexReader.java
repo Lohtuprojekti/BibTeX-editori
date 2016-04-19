@@ -34,7 +34,6 @@ public class BibtexReader {
 
     private File bibfile;
     private BibTeXDatabase database;
-    private BibtexConverter converter;
 
     /**
      *
@@ -44,6 +43,23 @@ public class BibtexReader {
         bibfile = file;
     }
 
+    /**
+     * Palauttaa artikkeli-oliot listana
+     * 
+     * @param entries
+     * @return 
+     */
+     public Collection<Article> listArticles(Collection<BibTeXEntry> entries) {
+         Collection<Article> articles = new ArrayList<>();
+        
+        for (BibTeXEntry entry : entries) {
+            Article a = new Article(entry);
+            articles.add(a);
+        }
+        return articles;
+        
+    }
+     
     /**
      * Palauttaa viitteet bibtexEntry-olioiden listana
      *
@@ -56,7 +72,7 @@ public class BibtexReader {
             database = parser.parse(new FileReader(bibfile));
 
             Map<Key, BibTeXEntry> entryMap = database.getEntries();
-
+           
             return entryMap.values();
 
         } catch (Exception e) {
@@ -65,6 +81,7 @@ public class BibtexReader {
 
         return null;
     }
+ 
 
     /**
      * Palauttaa bibtiedoston Stringinä
