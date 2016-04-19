@@ -1,21 +1,41 @@
 package referenzixx.ui;
 
-import referenzixx.refs.Article;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import javax.swing.JPanel;
+import org.jbibtex.BibTeXEntry;
 
 /**
  *
  * @author Johannes
  */
 public class NewReferenceUI extends javax.swing.JDialog {
+
     private MainUI mainUI;
+    private JPanel fieldsPanel;
 
     /**
      * Creates new form NewReference
+     *
+     * @param mainUI
+     * @param modal
      */
     public NewReferenceUI(MainUI mainUI, boolean modal) {
         super(mainUI, modal);
         this.mainUI = mainUI;
         initComponents();
+        
+        fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "articleConfig.cnf");
+        initFields();
+    }
+
+    private void initFields() {
+        contentPanel.setSize(fieldsPanel.getWidth(), fieldsPanel.getHeight());
+        contentPanel.setLayout(new GridLayout());
+        contentPanel.add(fieldsPanel);
+
+        Dimension size = new Dimension(contentPanel.getWidth() + 60, contentPanel.getHeight() + 150);
+        this.setSize(size);
     }
 
     /**
@@ -29,8 +49,9 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
         addButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        fieldsPanel = new AddReferencePanel("uiconfig.cnf");
         errorLabel = new javax.swing.JLabel();
+        typeChooser = new javax.swing.JComboBox();
+        contentPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lisää uusi viite");
@@ -52,15 +73,22 @@ public class NewReferenceUI extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout fieldsPanelLayout = new javax.swing.GroupLayout(fieldsPanel);
-        fieldsPanel.setLayout(fieldsPanelLayout);
-        fieldsPanelLayout.setHorizontalGroup(
-            fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 629, Short.MAX_VALUE)
+        typeChooser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Article", "Book", "Inproceedings" }));
+        typeChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeChooserActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        fieldsPanelLayout.setVerticalGroup(
-            fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 314, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -70,28 +98,33 @@ public class NewReferenceUI extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(errorLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelButton)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(fieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(typeChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorLabel)
+                        .addGap(0, 392, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(fieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(typeChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
-                    .addComponent(cancelButton)
-                    .addComponent(errorLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cancelButton))
+                .addContainerGap())
         );
 
         pack();
@@ -103,40 +136,62 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         /*String reference = referenceTextField.getText();
-        String author = authorTextField.getText();
-        String title = titleTextField.getText();
-        String journal = journalTextField.getText();
-        String yearText = yearTextField.getText();
-        String volumeText = volumeTextField.getText();
+         String author = authorTextField.getText();
+         String title = titleTextField.getText();
+         String journal = journalTextField.getText();
+         String yearText = yearTextField.getText();
+         String volumeText = volumeTextField.getText();
         
-        if (reference.isEmpty() || author.isEmpty() || title.isEmpty()
-                || journal.isEmpty() || yearText.isEmpty() || volumeText.isEmpty()) {
+         if (reference.isEmpty() || author.isEmpty() || title.isEmpty()
+         || journal.isEmpty() || yearText.isEmpty() || volumeText.isEmpty()) {
             
-            errorLabel.setText("Syötä jokaiseen kenttään jokin arvo");
-            return;
-        }
+         errorLabel.setText("Syötä jokaiseen kenttään jokin arvo");
+         return;
+         }
         
-        int year;
-        int volume;
+         int year;
+         int volume;
         
-        try {
-            year = Integer.parseInt(yearText);
-            volume = Integer.parseInt(volumeText);
-        } catch (NumberFormatException ex) {
-            errorLabel.setText("Syötä year ja volume oikeassa muodossa");
-            return;
-        }
+         try {
+         year = Integer.parseInt(yearText);
+         volume = Integer.parseInt(volumeText);
+         } catch (NumberFormatException ex) {
+         errorLabel.setText("Syötä year ja volume oikeassa muodossa");
+         return;
+         }
         
-        Article article = new Article(reference, author, title, journal, volume, year);
-        mainUI.addArticle(article);
+         Article article = new Article(reference, author, title, journal, volume, year);
+         mainUI.addArticle(article);
         
-        this.setVisible(false);*/
+         this.setVisible(false);*/
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void typeChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeChooserActionPerformed
+        contentPanel.remove(fieldsPanel);
+
+        switch (typeChooser.getSelectedItem().toString()) {
+            case "Article":
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "articleConfig.cnf");
+                break;
+            case "Book":
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "bookConfig.cnf");
+                break;
+            case "Inproceedings":
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "inproceedingsConfig.cnf");
+                break;
+        }
+
+        initFields();
+
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_typeChooserActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel errorLabel;
-    private javax.swing.JPanel fieldsPanel;
+    private javax.swing.JComboBox typeChooser;
     // End of variables declaration//GEN-END:variables
 }

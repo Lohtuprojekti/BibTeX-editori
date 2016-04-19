@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package referenzixx.ui;
+package referenzixx.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
