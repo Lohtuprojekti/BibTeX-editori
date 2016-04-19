@@ -1,7 +1,9 @@
 package referenzixx.refs;
 
+import org.jbibtex.BibTeXEntry;
 
-public class Inproceedings extends Reference {
+
+public class Inproceedings extends Reference implements IReference {
     //An article in a conference proceedings.
     //Required fields: author, title, booktitle, year
     //Optional fields: editor, volume/number, series, pages, address, month, organization, publisher, note, key
@@ -19,6 +21,13 @@ public class Inproceedings extends Reference {
         this.year = year;
     }
     
+    public Inproceedings(BibTeXEntry e) {
+        this.refNum = e.getKey().toString();
+        this.author = e.getField(BibTeXEntry.KEY_AUTHOR).toUserString();
+        this.title = e.getField(BibTeXEntry.KEY_TITLE).toUserString();
+        this.booktitle = e.getField(BibTeXEntry.KEY_BOOKTITLE).toUserString();
+        this.year = Integer.parseInt(e.getField(BibTeXEntry.KEY_YEAR).toUserString());
+    }
     
     @Override
     public String toString() {

@@ -1,4 +1,3 @@
-
 package referenzixx.refs;
 
 import org.jbibtex.BibTeXEntry;
@@ -7,7 +6,7 @@ import org.jbibtex.BibTeXEntry;
  *
  * Article reference. Extends Reference class and inherits its public methods
  */
-public class Article extends Reference {
+public class Article extends Reference implements IReference {
 
     private String journal, address;
     private int volume, number;
@@ -30,20 +29,6 @@ public class Article extends Reference {
         //this.publisher = publisher;
         //this.address = address;
     }
-    
-    // Muuttaa artikkeli-olion bibtex-muotoon
-    @Override
-    public String toString() {
-        return "\n@article{" + this.getRefNum() + ",\n"
-                + "author = {" + this.getAuthor() + "},\n"
-                + "title = {" + this.getTitle() + "},\n"
-                + "journal = {" + this.getJournal() + "},\n"
-                + "year = {" + this.getYear() + "},\n"
-                + "volume = {" + this.getVolume() + "},\n}";      
-    }
-    
-   
-
 
     public Article(BibTeXEntry e) {
         this.refNum = e.getKey().toString();
@@ -52,6 +37,17 @@ public class Article extends Reference {
         this.journal = e.getField(BibTeXEntry.KEY_JOURNAL).toUserString();
         this.volume = Integer.parseInt(e.getField(BibTeXEntry.KEY_VOLUME).toUserString());
         this.year = Integer.parseInt(e.getField(BibTeXEntry.KEY_YEAR).toUserString());
+    }
+
+    // Muuttaa artikkeli-olion bibtex-muotoon
+    @Override
+    public String toString() {
+        return "\n@article{" + this.getRefNum() + ",\n"
+                + "author = {" + this.getAuthor() + "},\n"
+                + "title = {" + this.getTitle() + "},\n"
+                + "journal = {" + this.getJournal() + "},\n"
+                + "year = {" + this.getYear() + "},\n"
+                + "volume = {" + this.getVolume() + "},\n}";
     }
 
     //Setters.

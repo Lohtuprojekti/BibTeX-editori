@@ -73,8 +73,7 @@ public class BibtexReaderTest {
         Collection<BibTeXEntry> entries = reader.listReferences();
         Collection<Article> articles = reader.listArticles(entries);
 
-        assertEquals(Article.class, articles.iterator().next().getClass());
-
+        assertEquals(Article.class, articles.iterator().next().getClass());        
     }
 
     /**
