@@ -3,3 +3,9 @@ language: java
 branches:
   only:
     - master
+
+jdk:
+  - oraclejdk8
+
+script:
+  - mvn integration-test
