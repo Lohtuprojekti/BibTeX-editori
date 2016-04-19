@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Value;
-import referenzixx.refs.Article;
+import referenzixx.refs.*;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Reference;
 
@@ -46,13 +46,16 @@ public class Main {
         mainUI.setReferences(references);
 */
 //// Tällä voi testata tiedostoon kirjoittamista
-        //BibtexReader reader = new BibtexReader("src/shortbibtexfile.bib");
-        //Article artic = new Article("ABC54","Kirjoittaja", "Artikkeli", "journal", 1, 2016);
+        //BibtexReader reader = new BibtexReader("src/kirjoitustesti2.bib");
+        //Article artic = new Article("ABC541","Kirjoasdittaja", "Arasdatikkeli", "journsadal", 1, 2016);
+        //Book b = new Book("B1015", "Authorisatan2", "666", "Hell", 1990);
+        //Inproceedings impro = new Inproceedings("Impro1","Test666", "Mein Kampf","Allah", 0);
         //reader.writeToFile(artic);
+        //reader.writeToFile(b);
+        //reader.writeToFile(impro);
         
 ////Tässä esimerkki jbibtexin käytöstä tiedoston lukemisessa. 
         //Collection<org.jbibtex.BibTeXEntry> c = reader.listReferences();
         //System.out.println(c.iterator().next().getFields().keySet().toString());
-
     }
 }

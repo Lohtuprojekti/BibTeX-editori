@@ -27,6 +27,15 @@ public class Reference {
         this.publisher = publisher;
         this.year = year;
     }
+    
+    // Muuttaa referenssi-olion bibtex-muotoon
+    @Override
+    public String toString() {
+        return "\n@reference{" + this.getRefNum() + ",\n"
+                + "author = {" + this.getAuthor() + "},\n"
+                + "title = {" + this.getTitle() + "},\n"
+                + "year = {" + this.getYear() + "},\n}";
+    }
    
     //Setters
     public void setRefNum(String ref){

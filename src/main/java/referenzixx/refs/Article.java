@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package referenzixx.refs;
 
 /**
@@ -32,6 +28,18 @@ public class Article extends Reference{
         //this.publisher = publisher;
         //this.address = address;
     }
+    
+    // Muuttaa artikkeli-olion bibtex-muotoon
+    @Override
+    public String toString() {
+        return "\n@article{" + this.getRefNum() + ",\n"
+                + "author = {" + this.getAuthor() + "},\n"
+                + "title = {" + this.getTitle() + "},\n"
+                + "journal = {" + this.getJournal() + "},\n"
+                + "year = {" + this.getYear() + "},\n"
+                + "volume = {" + this.getVolume() + "},\n}";      
+    }
+    
    
     //Setters.
     public void setJournal(String jour){

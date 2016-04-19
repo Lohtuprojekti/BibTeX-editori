@@ -26,7 +26,7 @@ import org.jbibtex.BibTeXParser;
 import org.jbibtex.BibTeXString;
 import org.jbibtex.Key;
 import org.jbibtex.ParseException;
-import referenzixx.refs.Article;
+import referenzixx.refs.Reference;
 
 /**
  *
@@ -59,9 +59,9 @@ public class BibtexReader {
         return null;
     }
 
-    // Kirjoittaa artikkeli-olion .bib -tiedostoon
-    public void writeToFile(Article article) {
-        String bibtexEntry = formatToBibtex(article);
+    // Kirjoittaa referenssi-olion .bib -tiedostoon
+    public void writeToFile(Reference ref) {
+        String bibtexEntry = ref.toString();
        
         try {
             FileWriter writer = new FileWriter(input, true);
@@ -73,12 +73,7 @@ public class BibtexReader {
     }
 
     // Muuttaa artikkeli-olion bibtex-muotoon
-    private String formatToBibtex(Article art) {
-        return "\n@article{" + art.getRefNum() + ",\n"
-                + "author = {" + art.getAuthor() + "},\n"
-                + "title = {" + art.getTitle() + "},\n"
-                + "journal = {" + art.getJournal() + "},\n"
-                + "year = {" + art.getYear() + "},\n"
-                + "volume = {" + art.getVolume() + "},\n}";      
-    }
+    //private String formatToBibtex(Reference ref) {
+    //    return ref.toString();
+   //}
 }
