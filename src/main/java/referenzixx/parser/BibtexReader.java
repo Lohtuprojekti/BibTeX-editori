@@ -103,12 +103,16 @@ public class BibtexReader {
 
     // Kirjoittaa referenssi-olion .bib -tiedostoon
     public void writeToFile(Reference ref) {
+        
+        if(ref == null){
+           return;
+        }
+ 
         String bibtexEntry = ref.toString();
-       
 
         try {
             FileWriter writer = new FileWriter(bibfile, true);
-            writer.write(bibtexEntry + "\r\n");
+            writer.write(bibtexEntry);
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);

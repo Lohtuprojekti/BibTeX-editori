@@ -4,15 +4,15 @@ import referenzixx.ui.*
 import referenzixx.parser.*
 import java.io.File;
 import java.io.PrintWriter;
-
+import java.io.*
 
 description "Arto voi generoida bibtex-tiedoston"
 
 scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
-    
+
         File file = new File("src/emptybibtexfile.bib")
-        new PrintWriter(file).close()
         BibtexReader reader = new BibtexReader(file)
+        new PrintWriter(file).close()
         Article artic = new Article("ABC54","Kirjoittaja", "Artikkeli", "journal", 1, 2016)
 
     when "Lisätään yksi uusi viite", {
@@ -27,8 +27,9 @@ scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
     
         File file = new File("src/emptybibtexfile.bib")
-        new PrintWriter(file).close()
         BibtexReader reader = new BibtexReader(file)
+
+        new PrintWriter(file).close()
         Article artic = null
 
     when "Lisätään olematonta", {
