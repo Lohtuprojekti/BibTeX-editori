@@ -41,34 +41,45 @@ public class BibtexReader {
     public BibtexReader(File file) {
         bibfile = file;
     }
-    
+
+
     public Collection<Article> listArticles() {
         return new ArrayList<>();
     }
 
     /**
-     * Muuttaa BibTexEntryt Article-olioiksi ja palauttaa ne listana
-     * 
-     * @param entries
-     * @return 
-     */
-     public Collection<Article> listArticles(Collection<BibTeXEntry> entries) {
-         Collection<Article> articles = new ArrayList<>();
-        
-        for (BibTeXEntry entry : entries) {
-            Article a = new Article(entry);
-            articles.add(a);
-        }
-        return articles;
-        
-    }
-     
-    /**
-     * Palauttaa viitteet bibtexEntry-olioiden listana
+     * Muuttaa BibTexEntryt tyyppiään vastaaviksi olioiksi ja palauttaa ne listana
      *
+     * @param entries
      * @return
      */
-    public Collection<BibTeXEntry> listReferences() {
+    public Collection<IReference> listArticles(Collection<BibTeXEntry> entries) {
+        Collection<IReference> refs = new ArrayList<>();
+
+        for (BibTeXEntry entry : entries) {
+
+            IReference ref = null;
+            String type = entry.getType().toString().toLowerCase();
+
+            if (type.equals("article")) {
+                ref = new Article(entry);
+            } else if (type.equals("book")) {
+                ref = new Book(entry);
+            } else if (type.equals("inproceedings")) {
+                ref = new Inproceedings(entry);
+            }
+            refs.add(ref);
+        }
+        return refs;
+    }
+
+
+/**
+ * Palauttaa viitteet bibtexEntry-olioiden listana
+ *
+ * @return
+ */
+public Collection<BibTeXEntry> listReferences() {
 
         try {
             BibTeXParser parser = new BibTeXParser();
@@ -97,9 +108,13 @@ public class BibtexReader {
             Scanner scanner = new Scanner(bibfile);
             while (scanner.hasNext()) {
                 bibString += scanner.nextLine() + "\n";
-            }
+            
+
+}
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BibtexReader.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
         return bibString;
 
@@ -118,8 +133,12 @@ public class BibtexReader {
             FileWriter writer = new FileWriter(bibfile, true);
             writer.write(bibtexEntry);
             writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
+        
+
+} catch (IOException ex) {
+            Logger.getLogger(BibtexReader.class  
+
+.getName()).log(Level.SEVERE, null, ex);
         }
 
         //// Allaoleva lisää bibtexEntryn bibtexDatabaseen ja kirjoittaa tiedostoon, EI TOIMI
