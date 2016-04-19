@@ -44,7 +44,7 @@ public class BibtexReader {
     }
 
     /**
-     * Palauttaa artikkeli-oliot listana
+     * Muuttaa BibTexEntryt Article-olioiksi ja palauttaa ne listana
      * 
      * @param entries
      * @return 
