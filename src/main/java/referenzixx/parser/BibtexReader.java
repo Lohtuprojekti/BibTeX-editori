@@ -104,6 +104,14 @@ public class BibtexReader {
     // Kirjoittaa referenssi-olion .bib -tiedostoon
     public void writeToFile(Reference ref) {
         
+        for (BibTeXEntry entry : database.getEntries().values()) {
+           Key k = entry.getKey();
+           if (ref.refNum.equals(k.toString())) {
+               System.out.println("Yritit lisätä samaa kuin oli jo");
+               return;
+           }
+        }
+        
         if(ref == null){
            return;
         }
