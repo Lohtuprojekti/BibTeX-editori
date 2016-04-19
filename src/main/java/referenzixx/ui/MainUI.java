@@ -1,8 +1,14 @@
 package referenzixx.ui;
 
 import java.awt.Component;
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFileChooser;
 import javax.swing.table.TableModel;
+import org.jbibtex.BibTeXEntry;
+import referenzixx.parser.BibtexReader;
+import referenzixx.refs.Article;
 import referenzixx.refs.Reference;
 
 /**
@@ -11,33 +17,46 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<Integer, Reference> references;
-    
-    /**
-     * Creates new form MainUI
-     */
-    
+    private Map<String, Article> articles;
+    private int row = 0;
+
     /**
      * Creates new form MainUI
      */
     public MainUI() {
+        this.articles = new HashMap<>();
+
         initComponents();
     }
-    
-    public void setReferences(Map<Integer, Reference> references) {
-        int row = 0;
-        for (Reference reference : references.values()) {
-            addReference(row++, reference);
+
+    /**
+     * Lisää listan artikkeleita käyttöliittymään.
+     * 
+     * @param articles Lisättävät artikkelit
+     */
+    public void addArticles(Map<Integer, Article> articles) {
+        for (Article article : articles.values()) {
+            addArticle(article);
         }
     }
-    
-    public void addReference(int row, Reference reference) {
+
+    /**
+     * Lisää artikkeli käyttöliittymään.
+     * 
+     * @param article Lisättävä artikkeli
+     */
+    public void addArticle(Article article) {
+        articles.put(article.getRefNum(), article);
+
         TableModel tableModel = referenceTable.getModel();
-        tableModel.setValueAt(reference.getRefNum(), row, 0);
-        tableModel.setValueAt(reference.getAuthor(), row, 1);
-        tableModel.setValueAt(reference.getTitle(), row, 2);
-        tableModel.setValueAt(reference.getYear()+"", row, 3);
-        tableModel.setValueAt(reference.getPublisher(), row, 4);
+        tableModel.setValueAt(article.getRefNum(), row, 0);
+        tableModel.setValueAt(article.getAuthor(), row, 1);
+        tableModel.setValueAt(article.getTitle(), row, 2);
+        tableModel.setValueAt(article.getYear() + "", row, 3);
+        tableModel.setValueAt(article.getPublisher(), row, 4);
+
+        row++;
+        saveButton.setEnabled(true);
     }
 
     /**
@@ -57,8 +76,10 @@ public class MainUI extends javax.swing.JFrame {
         referenceUI1 = new referenzixx.ui.ReferenceUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         addReferenceButton.setText("Lisää");
+        addReferenceButton.setToolTipText("Lisää uusi artikkeli");
         addReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addReferenceButtonActionPerformed(evt);
@@ -66,6 +87,8 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         saveButton.setText("Tallenna");
+        saveButton.setToolTipText("Tallenna artikkelit BibTex-muodossa");
+        saveButton.setEnabled(false);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -73,6 +96,12 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         readButton.setText("Lue");
+        readButton.setEnabled(false);
+        readButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readButtonActionPerformed(evt);
+            }
+        });
 
         referenceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,12 +179,27 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        // Avataan ikkuna tiedoston tallentamista varten
+        JFileChooser jFileChooser = new JFileChooser();
+        int value = jFileChooser.showSaveDialog(this);
+
+        if (value == JFileChooser.APPROVE_OPTION) { // Käyttäjä painoi save-nappia
+            File file = new File(jFileChooser.getSelectedFile().getPath() + ".bib");
+
+            // Tallennetaan artikkelit tiedostoon
+            for (Article article : articles.values()) {
+                new BibtexReader(file).writeToFile(article);
+            }
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
         new NewReferenceUI(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
+
+    private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
+        
+    }//GEN-LAST:event_readButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
