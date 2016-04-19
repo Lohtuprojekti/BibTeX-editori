@@ -8,6 +8,7 @@ package referenzixx.parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import org.jbibtex.BibTeXEntry;
 import org.junit.After;
@@ -50,11 +51,32 @@ public class BibtexReaderTest {
     public void metodiPalauttaaSamanMaaranOlioitaKunBibTiedostossaOnViitteita() {
         BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
         Collection<BibTeXEntry> entries = reader.listReferences();
-        
+
         assertEquals(2, entries.size());
-        
+
     }
-    
+
+    /**
+     * Tests of listArticles method, of class BibtexReader.
+     */
+    @Test
+    public void muuttaessaBibtexEntrytArticleOlioiksiPalautetaanSamaMaaraOlioita() {
+        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
+        Collection<BibTeXEntry> entries = reader.listReferences();
+        Collection<Article> articles = reader.listArticles(entries);
+        assertEquals(entries.size(), articles.size());
+    }
+
+    @Test
+    public void metodiMuuttaaBibtexEntryOliotArticleOlioiksi() {
+        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
+        Collection<BibTeXEntry> entries = reader.listReferences();
+        Collection<Article> articles = reader.listArticles(entries);
+
+        assertEquals(Article.class, articles.iterator().next().getClass());
+
+    }
+
     /**
      * Tests of writeToFile method, of class BibtexReader.
      */
@@ -63,17 +85,17 @@ public class BibtexReaderTest {
         File file = new File("src/emptybibtexfile.bib");
         new PrintWriter(file).close();
         BibtexReader reader = new BibtexReader(file);
-        
+
         assertEquals(0, file.length());
 
         Article artic = new Article("ABC54", "Kirjoittaja", "Artikkeli", "journal", 1, 2016);
         reader.writeToFile(artic);
-        
+
         assertNotEquals(0, file.length());
-        
-        file.delete();    
+
+        file.delete();
     }
-    
+
     @Test
     public void tyhjanArtikkelinLisaaminenEiOnnistu() throws FileNotFoundException {
         File file = new File("src/emptybibtexfile.bib");
@@ -82,11 +104,10 @@ public class BibtexReaderTest {
 
         Article artic = null;
         reader.writeToFile(artic);
-        
+
         assertEquals(0, file.length());
-        
-        file.delete(); 
+
+        file.delete();
     }
-    
-   
+
 }
