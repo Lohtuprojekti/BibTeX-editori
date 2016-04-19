@@ -43,13 +43,9 @@ public class BibtexReader {
     }
 
 
-    public Collection<Article> listArticles() {
-        return new ArrayList<>();
-    }
-
     /**
      * Muuttaa BibTexEntryt tyyppiään vastaaviksi olioiksi ja palauttaa ne listana
-     *
+     * nimi pitää muuttaa
      * @param entries
      * @return
      */
