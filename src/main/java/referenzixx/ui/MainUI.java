@@ -1,7 +1,11 @@
 package referenzixx.ui;
 
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFileChooser;
@@ -9,6 +13,9 @@ import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Article;
+import referenzixx.refs.Book;
+import referenzixx.refs.IReference;
+import referenzixx.refs.Inproceedings;
 import referenzixx.refs.Reference;
 
 /**
@@ -17,46 +24,71 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<String, Article> articles;
+    private Map<String, IReference> references;
     private int row = 0;
+    private String url = "referenzixx.bib";
+    private BibtexReader bibtexReader;
+    private Clipboard clipboard;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
-        this.articles = new HashMap<>();
+        this.references = new HashMap<>();
+        this.bibtexReader = new BibtexReader(new File(url));
+        this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         initComponents();
+
+        Collection<BibTeXEntry> references = bibtexReader.listReferences();
+        if (references != null) {
+            addReferences(bibtexReader.listArticles(references));
+        }
     }
 
     /**
      * Lisää listan artikkeleita käyttöliittymään.
-     * 
-     * @param articles Lisättävät artikkelit
+     *
+     * @param references Lisättävät artikkelit
      */
-    public void addArticles(Map<Integer, Article> articles) {
-        for (Article article : articles.values()) {
-            addArticle(article);
+    private void addReferences(Collection<IReference> references) {
+        for (IReference reference : references) {
+            addReference(reference);
         }
     }
 
     /**
      * Lisää artikkeli käyttöliittymään.
-     * 
-     * @param article Lisättävä artikkeli
+     *
+     * @param reference Lisättävä artikkeli
      */
-    public void addArticle(Article article) {
-        articles.put(article.getRefNum(), article);
+    public void addReference(IReference reference) {
+        references.put(reference.getRefNum(), reference);
 
         TableModel tableModel = referenceTable.getModel();
-        tableModel.setValueAt(article.getRefNum(), row, 0);
-        tableModel.setValueAt(article.getAuthor(), row, 1);
-        tableModel.setValueAt(article.getTitle(), row, 2);
-        tableModel.setValueAt(article.getYear() + "", row, 3);
-        tableModel.setValueAt(article.getPublisher(), row, 4);
+        tableModel.setValueAt(reference.getRefNum(), row, 0);
+        tableModel.setValueAt(reference.getAuthor(), row, 1);
+        tableModel.setValueAt(reference.getTitle(), row, 2);
+        tableModel.setValueAt(reference.getYear() + "", row, 3);
+        tableModel.setValueAt(reference.getPublisher(), row, 4);
 
         row++;
-        saveButton.setEnabled(true);
+
+        File file = new File(url);
+        new BibtexReader(file).writeToFile(reference);
+    }
+
+    public void addReference(BibTeXEntry entry) {
+        if (entry.getType() == BibTeXEntry.TYPE_ARTICLE) {
+            Article article = new Article(entry);
+            bibtexReader.writeToFile(article);
+        } else if (entry.getType() == BibTeXEntry.TYPE_BOOK) {
+            Book book = new Book(entry);
+            bibtexReader.writeToFile(book);
+        } else if (entry.getType() == BibTeXEntry.TYPE_INPROCEEDINGS) {
+            Inproceedings inproceedings = new Inproceedings(entry);
+            bibtexReader.writeToFile(inproceedings);
+        }
     }
 
     /**
@@ -69,7 +101,7 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         addReferenceButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        copyButton = new javax.swing.JButton();
         readButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         referenceTable = new javax.swing.JTable();
@@ -86,12 +118,11 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
-        saveButton.setText("Tallenna");
-        saveButton.setToolTipText("Tallenna artikkelit BibTex-muodossa");
-        saveButton.setEnabled(false);
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
+        copyButton.setText("Kopioi leikepöydälle");
+        copyButton.setToolTipText("Kopioi BibTex-tiedoston leikepöydälle");
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+                copyButtonActionPerformed(evt);
             }
         });
 
@@ -151,7 +182,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(readButton)
                         .addGap(18, 18, 18)
-                        .addComponent(saveButton))
+                        .addComponent(copyButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -166,7 +197,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addReferenceButton)
-                    .addComponent(saveButton)
+                    .addComponent(copyButton)
                     .addComponent(readButton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
@@ -178,35 +209,25 @@ public class MainUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // Avataan ikkuna tiedoston tallentamista varten
-        JFileChooser jFileChooser = new JFileChooser();
-        int value = jFileChooser.showSaveDialog(this);
-
-        if (value == JFileChooser.APPROVE_OPTION) { // Käyttäjä painoi save-nappia
-            File file = new File(jFileChooser.getSelectedFile().getPath() + ".bib");
-
-            // Tallennetaan artikkelit tiedostoon
-            for (Article article : articles.values()) {
-                new BibtexReader(file).writeToFile(article);
-            }
-        }
-    }//GEN-LAST:event_saveButtonActionPerformed
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        String content = bibtexReader.getBibFileAsString();
+        clipboard.setContents(new StringSelection(content), null);
+    }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
         new NewReferenceUI(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
-        
+
     }//GEN-LAST:event_readButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
+    private javax.swing.JButton copyButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
     private referenzixx.ui.ReferenceUI referenceUI1;
-    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

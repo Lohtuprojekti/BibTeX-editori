@@ -1,7 +1,9 @@
 
 package referenzixx.refs;
 
-public class Book extends Reference{
+import org.jbibtex.BibTeXEntry;
+
+public class Book extends Reference implements IReference {
     
     //Required fields: author/editor, title, publisher, year
     //Optional fields: volume/number, series, address, edition, month, note, key
@@ -25,6 +27,14 @@ public class Book extends Reference{
         this.series = series;
         this.address = address;
         this.note = note;
+    }
+    
+    public Book(BibTeXEntry e) {
+        this.refNum = e.getKey().toString();
+        this.author = e.getField(BibTeXEntry.KEY_AUTHOR).toUserString();
+        this.title = e.getField(BibTeXEntry.KEY_TITLE).toUserString();
+        this.publisher = e.getField(BibTeXEntry.KEY_PUBLISHER).toUserString();
+        this.year = Integer.parseInt(e.getField(BibTeXEntry.KEY_YEAR).toUserString());
     }
     
     // Muuttaa referenssi-olion bibtex-muotoon
