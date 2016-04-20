@@ -1,0 +1,11 @@
+Author|Kirjan tekijä|author|string|required
+Title|Kirjan otsikko|title|string|required
+Publisher|Kirjan julkaisija|publisher|string|required
+Year|Kirjan julkaisuvuosi|year|integer|required
+Volume|Volume|volume|integer|optional
+Series|Kirjasarja|series|string|optional
+Address|Address|address|string|optional
+Edition|Edition|edition|string|optional
+Month|Month|month|string|optional
+Note|Note|note|string|optional
+Key|Key|key|string|optional

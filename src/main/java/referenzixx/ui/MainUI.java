@@ -3,6 +3,7 @@ package referenzixx.ui;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Article;
+import referenzixx.refs.Book;
+import referenzixx.refs.Inproceedings;
 import referenzixx.refs.Reference;
 
 /**
@@ -35,13 +38,13 @@ public class MainUI extends javax.swing.JFrame {
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         initComponents();
-        
+
         addArticles(bibtexReader.listArticles());
     }
 
     /**
      * Lisää listan artikkeleita käyttöliittymään.
-     * 
+     *
      * @param articles Lisättävät artikkelit
      */
     private void addArticles(Collection<Article> articles) {
@@ -52,7 +55,7 @@ public class MainUI extends javax.swing.JFrame {
 
     /**
      * Lisää artikkeli käyttöliittymään.
-     * 
+     *
      * @param article Lisättävä artikkeli
      */
     public void addArticle(Article article) {
@@ -66,10 +69,24 @@ public class MainUI extends javax.swing.JFrame {
         tableModel.setValueAt(article.getPublisher(), row, 4);
 
         row++;
-        copyButton.setEnabled(true);
-        
+
         File file = new File(url);
         new BibtexReader(file).writeToFile(article);
+    }
+
+    public void addReference(BibTeXEntry entry) {
+        if (entry.getType() == BibTeXEntry.TYPE_ARTICLE) {
+            Article article = new Article(entry);
+            bibtexReader.writeToFile(article);
+        }
+        else if (entry.getType() == BibTeXEntry.TYPE_BOOK) {
+            //Book book = new Book(entry);
+            //bibtexReader.writeToFile(book);
+        }
+        else if (entry.getType() == BibTeXEntry.TYPE_INPROCEEDINGS) {
+            //Inproceedings inproceedings = new Inproceedings(entry);
+            //bibtexReader.writeToFile(inproceedings);
+        }
     }
 
     /**
@@ -101,7 +118,6 @@ public class MainUI extends javax.swing.JFrame {
 
         copyButton.setText("Kopioi leikepöydälle");
         copyButton.setToolTipText("Kopioi BibTex-tiedoston leikepöydälle");
-        copyButton.setEnabled(false);
         copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyButtonActionPerformed(evt);
@@ -192,7 +208,8 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
-        // clipboard.setContents(bibtexReader.getBibfileAsString(new File(url)), null);
+        String content = bibtexReader.getBibFileAsString();
+        clipboard.setContents(new StringSelection(content), null);
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
@@ -200,7 +217,7 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
-        
+
     }//GEN-LAST:event_readButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

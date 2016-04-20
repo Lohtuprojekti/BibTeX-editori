@@ -1,0 +1,5 @@
+Author|Artikkelin tekijä|author|string|required
+Title|Artikkelin otsikko|title|string|required
+Journal|Artikkelin julkaisulehti|journal|string|required
+Volume|Volume|volume|integer|required
+Year|Artikkelin julkaisuvuosi|year|integer|required

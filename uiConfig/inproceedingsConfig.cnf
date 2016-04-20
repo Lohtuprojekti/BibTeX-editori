@@ -1,0 +1,14 @@
+Author|Tekij‰|author|string|required
+Title|Otsikko|title|string|required
+Booktitle|Kirjan otsikko|booktitle|string|required
+Year|Julkaisuvuosi|year|string|required
+Editor|Editor|editor|string|optional
+Volume|Volume|volume|integer|optional
+Series|Series|series|string|optional
+Pages|Sivum‰‰r‰|pages|integer|optional
+Address|Address|address|string|optional
+Month|Kuukausi|month|string|optional
+Organization|Organisaatio|organization|string|optional
+Publisher|Julkaisija|publisher|string|optional
+Note|Note|note|string|optional
+Key|Key|key|string|optional
