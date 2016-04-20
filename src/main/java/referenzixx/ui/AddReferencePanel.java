@@ -23,7 +23,7 @@ public class AddReferencePanel extends JPanel {
     }
 
     private void initComponents() {
-        List<String> lines = FileParser.parseFile(configUrl);
+        List<String> lines = FileParser.parseFile(configUrl, "***");
 
         Dimension size = new Dimension(550, (lines.size() + 1) / 2 * 42);
         JPanel panel = new JPanel();
@@ -59,14 +59,14 @@ public class AddReferencePanel extends JPanel {
 
         return true;
     }
-    
+
     public BibTeXEntry getEntry(String ref) {
         BibTeXEntry entry = new BibTeXEntry(type, new Key(ref));
-        
+
         for (ReferencePanel reference : references) {
             entry.addField(reference.getType(), reference.getValue());
         }
-        
+
         return entry;
     }
 }
