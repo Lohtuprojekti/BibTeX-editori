@@ -14,6 +14,7 @@ import org.jbibtex.BibTeXEntry;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Article;
 import referenzixx.refs.Book;
+import referenzixx.refs.IReference;
 import referenzixx.refs.Inproceedings;
 import referenzixx.refs.Reference;
 
@@ -23,7 +24,7 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<String, Article> articles;
+    private Map<String, IReference> references;
     private int row = 0;
     private String url = "referenzixx.bib";
     private BibtexReader bibtexReader;
@@ -33,59 +34,60 @@ public class MainUI extends javax.swing.JFrame {
      * Creates new form MainUI
      */
     public MainUI() {
-        this.articles = new HashMap<>();
+        this.references = new HashMap<>();
         this.bibtexReader = new BibtexReader(new File(url));
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         initComponents();
 
-        addArticles(bibtexReader.listArticles());
+        Collection<BibTeXEntry> references = bibtexReader.listReferences();
+        if (references != null) {
+            addReferences(bibtexReader.listArticles(references));
+        }
     }
 
     /**
      * Lisää listan artikkeleita käyttöliittymään.
      *
-     * @param articles Lisättävät artikkelit
+     * @param references Lisättävät artikkelit
      */
-    private void addArticles(Collection<Article> articles) {
-        for (Article article : articles) {
-            addArticle(article);
+    private void addReferences(Collection<IReference> references) {
+        for (IReference reference : references) {
+            addReference(reference);
         }
     }
 
     /**
      * Lisää artikkeli käyttöliittymään.
      *
-     * @param article Lisättävä artikkeli
+     * @param reference Lisättävä artikkeli
      */
-    public void addArticle(Article article) {
-        articles.put(article.getRefNum(), article);
+    public void addReference(IReference reference) {
+        references.put(reference.getRefNum(), reference);
 
         TableModel tableModel = referenceTable.getModel();
-        tableModel.setValueAt(article.getRefNum(), row, 0);
-        tableModel.setValueAt(article.getAuthor(), row, 1);
-        tableModel.setValueAt(article.getTitle(), row, 2);
-        tableModel.setValueAt(article.getYear() + "", row, 3);
-        tableModel.setValueAt(article.getPublisher(), row, 4);
+        tableModel.setValueAt(reference.getRefNum(), row, 0);
+        tableModel.setValueAt(reference.getAuthor(), row, 1);
+        tableModel.setValueAt(reference.getTitle(), row, 2);
+        tableModel.setValueAt(reference.getYear() + "", row, 3);
+        tableModel.setValueAt(reference.getPublisher(), row, 4);
 
         row++;
 
         File file = new File(url);
-        new BibtexReader(file).writeToFile(article);
+        new BibtexReader(file).writeToFile(reference);
     }
 
     public void addReference(BibTeXEntry entry) {
         if (entry.getType() == BibTeXEntry.TYPE_ARTICLE) {
             Article article = new Article(entry);
             bibtexReader.writeToFile(article);
-        }
-        else if (entry.getType() == BibTeXEntry.TYPE_BOOK) {
-            //Book book = new Book(entry);
-            //bibtexReader.writeToFile(book);
-        }
-        else if (entry.getType() == BibTeXEntry.TYPE_INPROCEEDINGS) {
-            //Inproceedings inproceedings = new Inproceedings(entry);
-            //bibtexReader.writeToFile(inproceedings);
+        } else if (entry.getType() == BibTeXEntry.TYPE_BOOK) {
+            Book book = new Book(entry);
+            bibtexReader.writeToFile(book);
+        } else if (entry.getType() == BibTeXEntry.TYPE_INPROCEEDINGS) {
+            Inproceedings inproceedings = new Inproceedings(entry);
+            bibtexReader.writeToFile(inproceedings);
         }
     }
 

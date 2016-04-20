@@ -18,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import referenzixx.refs.Article;
+import referenzixx.refs.IReference;
 
 /**
  *
@@ -63,7 +64,7 @@ public class BibtexReaderTest {
     public void muuttaessaBibtexEntrytArticleOlioiksiPalautetaanSamaMaaraOlioita() {
         BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
         Collection<BibTeXEntry> entries = reader.listReferences();
-        Collection<Article> articles = reader.listArticles(entries);
+        Collection<IReference> articles = reader.listArticles(entries);
         assertEquals(entries.size(), articles.size());
     }
 
@@ -71,7 +72,7 @@ public class BibtexReaderTest {
     public void metodiMuuttaaBibtexEntryOliotArticleOlioiksi() {
         BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
         Collection<BibTeXEntry> entries = reader.listReferences();
-        Collection<Article> articles = reader.listArticles(entries);
+        Collection<IReference> articles = reader.listArticles(entries);
 
         assertEquals(Article.class, articles.iterator().next().getClass());        
     }

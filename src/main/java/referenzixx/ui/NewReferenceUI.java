@@ -34,10 +34,10 @@ public class NewReferenceUI extends javax.swing.JDialog {
                 fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "uiConfig/articleConfig.cnf");
                 break;
             case "Book":
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "uiConfig/bookConfig.cnf");
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_BOOK, "uiConfig/bookConfig.cnf");
                 break;
             case "Inproceedings":
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "uiConfig/inproceedingsConfig.cnf");
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
                 break;
         }
         
@@ -156,39 +156,9 @@ public class NewReferenceUI extends javax.swing.JDialog {
             return;
         }
 
-        BibTeXEntry entry = fieldsPanel.getEntry("random viite");
+        BibTeXEntry entry = fieldsPanel.getEntry("viite");
         mainUI.addReference(entry);
         this.setVisible(false);
-
-        /*String reference = referenceTextField.getText();
-        String author = authorTextField.getText();
-        String title = titleTextField.getText();
-        String journal = journalTextField.getText();
-        String yearText = yearTextField.getText();
-        String volumeText = volumeTextField.getText();
-
-        if (reference.isEmpty() || author.isEmpty() || title.isEmpty()
-            || journal.isEmpty() || yearText.isEmpty() || volumeText.isEmpty()) {
-
-            errorLabel.setText("Syötä jokaiseen kenttään jokin arvo");
-            return;
-        }
-
-        int year;
-        int volume;
-
-        try {
-            year = Integer.parseInt(yearText);
-            volume = Integer.parseInt(volumeText);
-        } catch (NumberFormatException ex) {
-            errorLabel.setText("Syötä year ja volume oikeassa muodossa");
-            return;
-        }
-
-        Article article = new Article(reference, author, title, journal, volume, year);
-        mainUI.addArticle(article);
-
-        this.setVisible(false);*/
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

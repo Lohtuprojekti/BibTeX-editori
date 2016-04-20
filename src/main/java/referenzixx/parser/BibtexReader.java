@@ -42,10 +42,10 @@ public class BibtexReader {
         bibfile = file;
     }
 
-
     /**
-     * Muuttaa BibTexEntryt tyyppiään vastaaviksi olioiksi ja palauttaa ne listana
-     * nimi pitää muuttaa
+     * Muuttaa BibTexEntryt tyyppiään vastaaviksi olioiksi ja palauttaa ne
+     * listana nimi pitää muuttaa
+     *
      * @param entries
      * @return
      */
@@ -69,29 +69,26 @@ public class BibtexReader {
         return refs;
     }
 
-
-/**
- * Palauttaa viitteet bibtexEntry-olioiden listana
- *
- * @return
- */
-public Collection<BibTeXEntry> listReferences() {
+    /**
+     * Palauttaa viitteet bibtexEntry-olioiden listana
+     *
+     * @return
+     */
+    public Collection<BibTeXEntry> listReferences() {
 
         try {
             BibTeXParser parser = new BibTeXParser();
             database = parser.parse(new FileReader(bibfile));
 
             Map<Key, BibTeXEntry> entryMap = database.getEntries();
-           
+
             return entryMap.values();
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return null;
     }
- 
 
     /**
      * Palauttaa bibtiedoston Stringinä
@@ -104,41 +101,36 @@ public Collection<BibTeXEntry> listReferences() {
             Scanner scanner = new Scanner(bibfile);
             while (scanner.hasNext()) {
                 bibString += scanner.nextLine() + "\n";
-            
 
-}
+            }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(BibtexReader.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BibtexReader.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return bibString;
 
     }
 
     // Kirjoittaa referenssi-olion .bib -tiedostoon
-    public void writeToFile(Reference ref) {
-        
-        if(ref == null){
-           return;
+    public void writeToFile(IReference ref) {
+
+        if (ref == null) {
+            return;
         }
- 
+
         String bibtexEntry = ref.toString();
 
         try {
             FileWriter writer = new FileWriter(bibfile, true);
             writer.write(bibtexEntry);
             writer.close();
-        
 
-} catch (IOException ex) {
-            Logger.getLogger(BibtexReader.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BibtexReader.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         //// Allaoleva lisää bibtexEntryn bibtexDatabaseen ja kirjoittaa tiedostoon, EI TOIMI
-        
 //        BibTeXEntry bibtexEntry = formatToBibtex(article);
 //        database.addObject(bibtexEntry);
 //        
@@ -156,7 +148,7 @@ public Collection<BibTeXEntry> listReferences() {
     // Muuttaa artikkeli-olion bibtex-muotoon
     //private String formatToBibtex(Reference ref) {
     //    return ref.toString();
-   //}
+    //}
     /**
      * Muuttaa artikkeli-olion bibtex-muotoon
      *
@@ -165,25 +157,25 @@ public Collection<BibTeXEntry> listReferences() {
      */
     /*private String formatToBibtex(Article art) {
 
-        if (art == null) {
-            return null;
-        }
-        return "\n@article{" + art.getRefNum() + ",\n"
-                + "author = {" + art.getAuthor() + "},\n"
-                + "title = {" + art.getTitle() + "},\n"
-                + "journal = {" + art.getJournal() + "},\n"
-                + "year = {" + art.getYear() + "},\n"
-                + "volume = {" + art.getVolume() + "},\n}";
+     if (art == null) {
+     return null;
+     }
+     return "\n@article{" + art.getRefNum() + ",\n"
+     + "author = {" + art.getAuthor() + "},\n"
+     + "title = {" + art.getTitle() + "},\n"
+     + "journal = {" + art.getJournal() + "},\n"
+     + "year = {" + art.getYear() + "},\n"
+     + "volume = {" + art.getVolume() + "},\n}";
 
-        //// Luo bibtexEntryn artikkelista
-//        BibTeXEntry entry = new BibTeXEntry(BibTeXEntry.TYPE_ARTICLE, new Key(art.refNum));
-//        entry.addField(BibTeXEntry.KEY_AUTHOR, new KeyValue(art.getAuthor()));
-//        entry.addField(BibTeXEntry.KEY_TITLE, new KeyValue(art.getTitle()));
-//        entry.addField(BibTeXEntry.KEY_JOURNAL, new KeyValue(art.getJournal()));
-//        entry.addField(BibTeXEntry.KEY_YEAR, new KeyValue(Integer.toString(art.getYear())));
-//        entry.addField(BibTeXEntry.KEY_VOLUME, new KeyValue(Integer.toString(art.getVolume())));
-//        return entry;
-    }
+     //// Luo bibtexEntryn artikkelista
+     //        BibTeXEntry entry = new BibTeXEntry(BibTeXEntry.TYPE_ARTICLE, new Key(art.refNum));
+     //        entry.addField(BibTeXEntry.KEY_AUTHOR, new KeyValue(art.getAuthor()));
+     //        entry.addField(BibTeXEntry.KEY_TITLE, new KeyValue(art.getTitle()));
+     //        entry.addField(BibTeXEntry.KEY_JOURNAL, new KeyValue(art.getJournal()));
+     //        entry.addField(BibTeXEntry.KEY_YEAR, new KeyValue(Integer.toString(art.getYear())));
+     //        entry.addField(BibTeXEntry.KEY_VOLUME, new KeyValue(Integer.toString(art.getVolume())));
+     //        return entry;
+     }
 
-*/
+     */
 }

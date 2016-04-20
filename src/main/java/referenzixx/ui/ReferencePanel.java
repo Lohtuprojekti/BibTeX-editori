@@ -63,6 +63,9 @@ public class ReferencePanel extends javax.swing.JPanel {
 
     public boolean valueConvertOk() {
         if (isInteger) {
+            if (!isRequired && valueField.getText().isEmpty())
+                return true;
+            
             try {
                 Integer.parseInt(valueField.getText());
             } catch (NumberFormatException ex) {
