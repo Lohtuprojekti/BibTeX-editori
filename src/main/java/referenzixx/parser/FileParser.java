@@ -18,13 +18,16 @@ import java.util.Scanner;
  */
 public class FileParser {
     
-    public static List<String> parseFile(String url) {
+    public static List<String> parseFile(String url, String ignore) {
         List<String> lines = new ArrayList<>();
         
         try {
             Scanner scanner = new Scanner(new File(url));
             while (scanner.hasNext()) {
-                lines.add(scanner.nextLine());
+                String line = scanner.nextLine();
+                if (!line.startsWith(ignore) && !line.isEmpty()) {
+                    lines.add(line);
+                }
             }
         } catch (FileNotFoundException ex) {
         }
