@@ -1,12 +1,14 @@
 package referenzixx.ui;
 
 import referenzixx.refs.Article;
+import referenzixx.refs.ReferenceIDGenerator;
 
 /**
  *
  * @author Johannes
  */
 public class NewReferenceUI extends javax.swing.JDialog {
+
     private MainUI mainUI;
 
     /**
@@ -185,17 +187,28 @@ public class NewReferenceUI extends javax.swing.JDialog {
         String journal = journalTextField.getText();
         String yearText = yearTextField.getText();
         String volumeText = volumeTextField.getText();
-        
+
+        // if no referenceID was specified, we'll generate a
+        // unique one on the fly, based on author names and publication year
+        if (reference.isEmpty()
+                && !author.isEmpty()
+                && !yearText.isEmpty()) {
+
+            ReferenceIDGenerator refID = new ReferenceIDGenerator(author, yearText);
+            reference = refID.generateReferenceID();
+
+        }
+
         if (reference.isEmpty() || author.isEmpty() || title.isEmpty()
                 || journal.isEmpty() || yearText.isEmpty() || volumeText.isEmpty()) {
-            
+
             errorLabel.setText("Syötä jokaiseen kenttään jokin arvo");
             return;
         }
-        
+
         int year;
         int volume;
-        
+
         try {
             year = Integer.parseInt(yearText);
             volume = Integer.parseInt(volumeText);
@@ -203,10 +216,10 @@ public class NewReferenceUI extends javax.swing.JDialog {
             errorLabel.setText("Syötä year ja volume oikeassa muodossa");
             return;
         }
-        
+
         Article article = new Article(reference, author, title, journal, volume, year);
         mainUI.addArticle(article);
-        
+
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed
 
