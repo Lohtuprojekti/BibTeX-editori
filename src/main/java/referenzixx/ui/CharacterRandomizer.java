@@ -12,8 +12,6 @@ package referenzixx.ui;
 public class CharacterRandomizer {
 
     private String currChars;
-    private int currIndexChar;
-    private char[] possibleChars;
 
     public CharacterRandomizer() {
 
