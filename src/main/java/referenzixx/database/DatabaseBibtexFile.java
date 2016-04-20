@@ -1,6 +1,8 @@
 package referenzixx.database;
 
+import java.io.File;
 import java.util.Map;
+import referenzixx.parser.BibtexReader;
 import referenzixx.refs.Article;
 
 public class DatabaseBibtexFile implements ReferenceDatabase {
@@ -9,6 +11,14 @@ public class DatabaseBibtexFile implements ReferenceDatabase {
     // read bibtex file to an internal hashmap, within constructor
     // file location can be specified in a constructor parameter
     // implement interface methods for filtering out unwanted articles.
+    
+    private BibtexReader bibtexEntries;
+
+    public DatabaseBibtexFile(BibtexReader bibtexEntries) {
+        this.bibtexEntries = bibtexEntries;    
+    }
+        
+    
     
     @Override
     public Map<Integer, Article> getArticles() {
@@ -20,7 +30,11 @@ public class DatabaseBibtexFile implements ReferenceDatabase {
         return null;
     }
     
-    
+    private void readBibtexFile() {
+        
+        // bibtexEntries.listReferences().stream().
+        
+    }
 
     
 }
