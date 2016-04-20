@@ -6,6 +6,7 @@
 package referenzixx.ui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.StringTokenizer;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
@@ -40,8 +41,12 @@ public class ReferencePanel extends javax.swing.JPanel {
         nameLabel.setText(tokenizer.nextToken());
         valueField.setToolTipText(tokenizer.nextToken());
         type = new Key(tokenizer.nextToken());
-        isInteger = tokenizer.nextToken().equalsIgnoreCase("true");
-        isRequired = tokenizer.nextToken().equalsIgnoreCase("true");
+        isInteger = tokenizer.nextToken().equalsIgnoreCase("integer");
+        isRequired = tokenizer.nextToken().equalsIgnoreCase("required");
+
+        if (isRequired) {
+            nameLabel.setText(nameLabel.getText() + "*");
+        }
     }
 
     public Key getType() {
@@ -55,7 +60,7 @@ public class ReferencePanel extends javax.swing.JPanel {
     public boolean valueOk() {
         return isRequired ? !valueField.getText().isEmpty() : true;
     }
-    
+
     public boolean valueConvertOk() {
         if (isInteger) {
             try {
@@ -67,7 +72,6 @@ public class ReferencePanel extends javax.swing.JPanel {
 
         return true;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

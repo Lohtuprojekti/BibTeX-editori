@@ -76,7 +76,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Kopioi leikep&#xf6;yd&#xe4;lle"/>
         <Property name="toolTipText" type="java.lang.String" value="Kopioi BibTex-tiedoston leikep&#xf6;yd&#xe4;lle"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyButtonActionPerformed"/>
