@@ -8,10 +8,10 @@ import org.jbibtex.BibTeXEntry;
  */
 public class Article extends Reference implements IReference {
 
-    private String journal, address;
-    private int volume, number;
+    private String journal, address, month;
+    private int volume = Integer.MIN_VALUE, number = Integer.MIN_VALUE;
     //Article starting and ending pages
-    private int pageStart, pageEnd;
+    private int pageStart = Integer.MIN_VALUE, pageEnd = Integer.MIN_VALUE;
 
     //Constructor for article. Very ugly with 10 parameters.
     public Article(String refNum, String authors, String title, String journal, int volume,
@@ -40,14 +40,26 @@ public class Article extends Reference implements IReference {
     }
 
     // Muuttaa artikkeli-olion bibtex-muotoon
+    
+        //this.number = number;
+        //this.pageStart = startpage;
+        //this.pageEnd = endpage;
+        //this.publisher = publisher;
+        //this.address = address;
     @Override
     public String toString() {
         return "\n@article{" + this.getRefNum() + ",\n"
                 + "author = {" + this.getAuthor() + "},\n"
                 + "title = {" + this.getTitle() + "},\n"
                 + "journal = {" + this.getJournal() + "},\n"
-                + "year = {" + this.getYear() + "},\n"
-                + "volume = {" + this.getVolume() + "},\n}";
+                + "volume = {" + this.getVolume() + "},\n"
+                +checkOptionalNum("number", this.number)
+                +checkOptional("month", this.month)
+                +checkOptionalPages("pages", this.pageStart, this.pageEnd)
+                +checkOptional("publisher", this.publisher)
+                +checkOptional("address", this.address)
+                + "year = {" + this.getYear() + "}\n"
+                +"}";
     }
 
     //Setters.
@@ -70,6 +82,10 @@ public class Article extends Reference implements IReference {
     public void setPages(int startpg, int endpg) {
         this.pageStart = startpg;
         this.pageEnd = endpg;
+    }
+    
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     //Getters
@@ -95,6 +111,10 @@ public class Article extends Reference implements IReference {
 
     public int getEndPage() {
         return this.pageEnd;
+    }
+    
+    public String getMonth() {
+        return month;
     }
 
 }

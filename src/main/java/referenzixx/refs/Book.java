@@ -7,7 +7,7 @@ public class Book extends Reference implements IReference {
     
     //Required fields: author/editor, title, publisher, year
     //Optional fields: volume/number, series, address, edition, month, note, key
-    private int volume, edition, month; //Month number ie. 1 = January
+    private int volume = Integer.MIN_VALUE, edition = Integer.MIN_VALUE, month = Integer.MIN_VALUE; //Month number ie. 1 = January
     private String series, address, note;
     
     //Pakolliset kentät samat kuin Reference oliolla
@@ -44,8 +44,15 @@ public class Book extends Reference implements IReference {
                 + "author = {" + this.getAuthor() + "},\n"
                 + "title = {" + this.getTitle() + "},\n"
                 + "publisher = {" + this.getPublisher() + "},\n"
-                + "year = {" + this.getYear() + "},\n}";
+                + checkOptionalNum("volume", this.volume)
+                + checkOptionalNum("edition", this.edition)
+                + checkOptionalNum("month", this.month)
+                + checkOptional("series", this.series)
+                + checkOptional("address", this.address)
+                + "year = {" + this.getYear() + "}\n"
+                + "}";
     }
+   
     
     //Setters
     public void setNote(String note) {

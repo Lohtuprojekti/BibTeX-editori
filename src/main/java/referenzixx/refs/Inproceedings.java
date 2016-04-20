@@ -8,9 +8,10 @@ public class Inproceedings extends Reference implements IReference {
     //Required fields: author, title, booktitle, year
     //Optional fields: editor, volume/number, series, pages, address, month, organization, publisher, note, key
     
-    private String booktitle;
+    private String booktitle, organization;
     //private String editor, address, organization, note;
-    //private int volume, pageStart, pageEnd, month;
+    //private int volume, pageStart, pageEnd, 
+    private int month = Integer.MIN_VALUE;
     
     public Inproceedings(String refNum, String author, String title, String booktitle,
                         int year){
@@ -35,16 +36,37 @@ public class Inproceedings extends Reference implements IReference {
                 + "author = {" + this.getAuthor() + "},\n"
                 + "title = {" + this.getTitle() + "},\n"
                 + "booktitle = {" + this.getBooktitle() + "},\n"
-                + "year = {" + this.getYear() + "},\n}";
+                + checkOptionalNum("month", this.month)
+                + checkOptional("publisher", this.publisher)
+                + checkOptional("organization", this.organization)
+                + "year = {" + this.getYear() + "}\n"
+                + "}";
     }
     
-
+    //Getters
     public String getBooktitle() {
         return booktitle;
     }
-
+    
+    public String getOrganization() {
+        return organization;
+    }
+    
+    public int getMonth() {
+        return month;
+    }
+    
+    //Setters
     public void setBooktitle(String booktitle) {
         this.booktitle = booktitle;
     }
-    
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
 }

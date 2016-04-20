@@ -29,6 +29,29 @@ public class Reference implements IReference {
         this.publisher = publisher;
         this.year = year;
     }
+    
+    //Laastari chekkimetodit toString metodiin, joka katsoo että vian asetetut kentät tulostetaan/tallennetaan
+    public String checkOptional(String key,String field){
+        if(field != null && !field.isEmpty()){
+            return key+" = {"+field+"},\n";
+        }
+        return "";
+    }
+    
+    public String checkOptionalNum(String key,int field){
+        if(field > Integer.MIN_VALUE){
+            return key+" = {"+field+"},\n";
+        }
+        return "";
+    }
+    
+    public String checkOptionalPages(String key, int spage, int epage){
+        if(spage > Integer.MIN_VALUE && epage > Integer.MIN_VALUE){
+            return key+" = {"+spage+"--"+epage+"},\n";
+        }
+        return "";
+    }
+    
 
     
     // Muuttaa referenssi-olion bibtex-muotoon
