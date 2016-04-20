@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jbibtex.BibTeXEntry;
 
+import referenzixx.refs.Article;
+import referenzixx.refs.ReferenceIDGenerator;
+
 /**
  *
  * @author Johannes
@@ -147,6 +150,7 @@ public class NewReferenceUI extends javax.swing.JDialog {
     }//GEN-LAST:event_typeChooserActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        
         if (!fieldsPanel.valuesOk()) {
             errorLabel.setText("Syötä vaadittuihin kenttiin jokin arvo");
             return;
@@ -156,8 +160,11 @@ public class NewReferenceUI extends javax.swing.JDialog {
             return;
         }
 
-        BibTeXEntry entry = fieldsPanel.getEntry("viite");
+        // we'll use empty reference here in order to facilitate
+        // auto-generation in fieldsPanel.getEntry() 
+        BibTeXEntry entry = fieldsPanel.getEntry("");
         mainUI.addReference(entry);
+                
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed
 
