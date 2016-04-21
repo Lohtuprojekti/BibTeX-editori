@@ -13,5 +13,5 @@ Year|Artikkelin julkaisuvuosi|year|integer|required
 Volume|Volume|volume|integer|optional
 Number|Number|number|integer|optional
 Pages|Pages|pages|integer|optional
-Month|Month|month|integer|optional
+Month|Month|month|string|optional
 Note|Note|note|string|optional

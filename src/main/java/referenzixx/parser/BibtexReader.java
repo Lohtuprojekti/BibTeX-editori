@@ -59,25 +59,25 @@ public class BibtexReader {
      * @param entries
      * @return
      */
-    public Collection<IReference> listArticles(Collection<BibTeXEntry> entries) {
-        Collection<IReference> refs = new ArrayList<>();
-
-        for (BibTeXEntry entry : entries) {
-
-            IReference ref = null;
-            String type = entry.getType().toString().toLowerCase();
-
-            if (type.equals("article")) {
-                ref = new Article(entry);
-            } else if (type.equals("book")) {
-                ref = new Book(entry);
-            } else if (type.equals("inproceedings")) {
-                ref = new Inproceedings(entry);
-            }
-            refs.add(ref);
-        }
-        return refs;
-    }
+//    public Collection<IReference> listArticles(Collection<BibTeXEntry> entries) {
+//        Collection<IReference> refs = new ArrayList<>();
+//
+//        for (BibTeXEntry entry : entries) {
+//
+//            IReference ref = null;
+//            String type = entry.getType().toString().toLowerCase();
+//
+//            if (type.equals("article")) {
+//                ref = new Article(entry);
+//            } else if (type.equals("book")) {
+//                ref = new Book(entry);
+//            } else if (type.equals("inproceedings")) {
+//                ref = new Inproceedings(entry);
+//            }
+//            refs.add(ref);
+//        }
+//        return refs;
+//    }
 
     /**
      * Palauttaa viitteet bibtexEntry-olioiden listana

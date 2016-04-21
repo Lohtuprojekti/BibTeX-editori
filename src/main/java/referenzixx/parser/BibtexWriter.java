@@ -40,6 +40,9 @@ public class BibtexWriter {
 
     //Kirjoittaa annetun BibTeXEntryn fileen
     public boolean writeToBibtex(BibTeXEntry entry) {
+        if (entry == null) {
+            return false;
+        }
         Key refnum = entry.getKey();
 
         //Tarkista viimeistään tässä onko refnum jo databasessa

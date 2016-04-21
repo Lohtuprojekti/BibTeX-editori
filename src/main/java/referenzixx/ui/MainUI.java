@@ -14,10 +14,7 @@ import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
-import referenzixx.refs.Article;
-import referenzixx.refs.Book;
 import referenzixx.refs.IReference;
-import referenzixx.refs.Inproceedings;
 import referenzixx.refs.Reference;
 
 /**
@@ -115,7 +112,6 @@ public class MainUI extends javax.swing.JFrame {
         readButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         referenceTable = new javax.swing.JTable();
-        referenceUI1 = new referenzixx.ui.ReferenceUI();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -178,8 +174,6 @@ public class MainUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(referenceTable);
 
-        referenceUI1.setToolTipText("");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,18 +187,13 @@ public class MainUI extends javax.swing.JFrame {
                         .addComponent(readButton)
                         .addGap(18, 18, 18)
                         .addComponent(copyButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addReferenceButton)
                     .addComponent(copyButton)
@@ -213,8 +202,6 @@ public class MainUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        referenceUI1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,6 +225,5 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
-    private referenzixx.ui.ReferenceUI referenceUI1;
     // End of variables declaration//GEN-END:variables
 }

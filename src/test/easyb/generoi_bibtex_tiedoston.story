@@ -5,18 +5,20 @@ import referenzixx.parser.*
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.*
+import org.jbibtex.*
 
 description "Arto voi generoida bibtex-tiedoston"
 
 scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 
         File file = new File("src/emptybibtexfile.bib")
-        BibtexReader reader = new BibtexReader(file)
         new PrintWriter(file).close()
-        Article artic = new Article("ABC54","Kirjoittaja", "Artikkeli", "journal", 1, 2016)
+        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibTeXEntry entry = new BibTeXEntry(new Key("Tyyppi"), new Key("refID"));
+        
 
     when "Lisätään yksi uusi viite", {
-        reader.writeToFile(artic)
+        writer.writeToBibtex(entry)
     }
     then "Tiedoston pituus kasvaa", {
         file.length().shouldNotBe(0)
@@ -27,13 +29,13 @@ scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
     
         File file = new File("src/emptybibtexfile.bib")
-        BibtexReader reader = new BibtexReader(file)
-
         new PrintWriter(file).close()
-        Article artic = null
+        
+        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        reader.writeToFile(artic) 
+        writer.writeToBibtex(entry)
     }
 
     then "Tiedostossa ei tapahdu muutosta", {
@@ -46,12 +48,12 @@ scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
 
         File file = new File("src/olematon.bib")
         file.delete()
-        BibtexReader reader = new BibtexReader(file)
-        Article artic = new Article("ABC54","Kirjoittaja", "Artikkeli", "journal", 1, 2016)
+        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibTeXEntry entry = new BibTeXEntry(new Key("Tyyppi"), new Key("refID"));
 
 
     when "Lisätään artikkeli", {
-        reader.writeToFile(artic)
+        writer.writeToBibtex(entry)
     }
     then "Tiedosto luodaan ja siinä on sisältöä", {
         file.exists().shouldBe(true)
@@ -64,11 +66,11 @@ scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
     
         File file = new File("src/olematon.bib")
         file.delete()
-        BibtexReader reader = new BibtexReader(file)
-        Article artic = null
+        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        reader.writeToFile(artic) 
+        writer.writeToBibtex(entry)
     }
     then "Tiedostoa ei pitäisi ilmestyä", {
         file.exists().shouldBe(false)
