@@ -2,7 +2,7 @@ import referenzixx.*
 import referenzixx.refs.*
 import referenzixx.ui.*
 
-description 'Arto voi lisätä kirjan, jolla on kirjalle tyypilliset kentät.'
+description 'Arto voi lisätä viitteen, jolla on viitteelle tyypilliset kentät.'
 
 scenario "Lisääminen onnistuu kun kaikki pakolliset on annettu", {
     given 'Kaikki tiedot on annettu.'
