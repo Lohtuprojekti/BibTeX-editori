@@ -37,7 +37,7 @@ public class MainUI extends javax.swing.JFrame {
         this.references = new HashMap<>();
         File file = new File(url);
         this.bibtexReader = new BibtexReader(file);
-        this.bibtexWriter = new BibtexWriter(file, bibtexReader);
+        this.bibtexWriter = new BibtexWriter();
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         initComponents();
@@ -91,11 +91,15 @@ public class MainUI extends javax.swing.JFrame {
 //            bibtexReader.writeToFile(inproceedings);
 //        }
 //    }
+    /**
+     * Kirjoittaa bibtexin tiedostoon, lisää sen databaseen.
+     * @param entry Lisättävä bibtexEntry
+     */
     public void addBibtex(BibTeXEntry entry) {
-        bibtexWriter.writeToBibtex(entry);
+        bibtexWriter.writeToBibtex(entry,bibtexReader.getFile(), bibtexReader.getDatabase());
     }
     public BibTeXDatabase getDatabase() {
-        return this.bibtexWriter.getDatabase();
+        return this.bibtexReader.getDatabase();
     }
 
     /**

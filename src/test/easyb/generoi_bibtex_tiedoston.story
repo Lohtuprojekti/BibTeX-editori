@@ -13,12 +13,13 @@ scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 
         File file = new File("src/emptybibtexfile.bib")
         new PrintWriter(file).close()
-        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibtexWriter writer = new BibtexWriter()
+        BibTeXDatabase database = new BibTeXDatabase();
         BibTeXEntry entry = new BibTeXEntry(new Key("Tyyppi"), new Key("refID"));
         
 
     when "Lisätään yksi uusi viite", {
-        writer.writeToBibtex(entry)
+        writer.writeToBibtex(entry, file, database)
     }
     then "Tiedoston pituus kasvaa", {
         file.length().shouldNotBe(0)
@@ -31,11 +32,12 @@ scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
         File file = new File("src/emptybibtexfile.bib")
         new PrintWriter(file).close()
         
-        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibtexWriter writer = new BibtexWriter()
+        BibTeXDatabase database = new BibTeXDatabase();
         BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        writer.writeToBibtex(entry)
+        writer.writeToBibtex(entry, file, database)
     }
 
     then "Tiedostossa ei tapahdu muutosta", {
@@ -48,12 +50,13 @@ scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
 
         File file = new File("src/olematon.bib")
         file.delete()
-        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibtexWriter writer = new BibtexWriter()
+        BibTeXDatabase database = new BibTeXDatabase();
         BibTeXEntry entry = new BibTeXEntry(new Key("Tyyppi"), new Key("refID"));
 
 
     when "Lisätään artikkeli", {
-        writer.writeToBibtex(entry)
+        writer.writeToBibtex(entry, file, database)
     }
     then "Tiedosto luodaan ja siinä on sisältöä", {
         file.exists().shouldBe(true)
@@ -66,11 +69,12 @@ scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
     
         File file = new File("src/olematon.bib")
         file.delete()
-        BibtexWriter writer = new BibtexWriter(file, new BibTeXDatabase())
+        BibtexWriter writer = new BibtexWriter()
+        BibTeXDatabase database = new BibTeXDatabase();
         BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        writer.writeToBibtex(entry)
+        writer.writeToBibtex(entry, file, database)
     }
     then "Tiedostoa ei pitäisi ilmestyä", {
         file.exists().shouldBe(false)

@@ -42,14 +42,18 @@ public class BibtexReader {
         this.bibfile = file;
         this.database = new BibTeXDatabase();
     }
-    
+
     public BibtexReader(File file, BibTeXDatabase database) {
         this.bibfile = file;
         this.database = database;
     }
-    
+
     public BibTeXDatabase getDatabase() {
         return this.database;
+    }
+    
+    public File getFile() {
+        return this.bibfile;
     }
 
     /**
@@ -78,7 +82,6 @@ public class BibtexReader {
 //        }
 //        return refs;
 //    }
-
     /**
      * Palauttaa viitteet bibtexEntry-olioiden listana
      *
@@ -98,6 +101,25 @@ public class BibtexReader {
         }
 
         return null;
+    }
+    
+    /**
+     * Lukee tiedoston databaseen, asettaa tiedoston käytetyksi tiedostoksi ja palauttaa databasen
+     * 
+     * @return 
+     */
+    public boolean openNewFile(File file) {
+        try {
+            this.bibfile = file;
+            BibTeXParser parser = new BibTeXParser();
+            database = parser.parse(new FileReader(bibfile));
+
+            return true;
+
+        } catch (Exception e) {
+        }
+
+        return false;
     }
 
     /**
@@ -120,69 +142,4 @@ public class BibtexReader {
         return bibString;
 
     }
-
-    // Kirjoittaa referenssi-olion .bib -tiedostoon
-    public void writeToFile(IReference ref) {
-
-        if (ref == null) {
-            return;
-        }
-
-        String bibtexEntry = ref.toString();
-
-        try {
-            FileWriter writer = new FileWriter(bibfile, true);
-            writer.write(bibtexEntry);
-            writer.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(BibtexReader.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //// Allaoleva lisää bibtexEntryn bibtexDatabaseen ja kirjoittaa tiedostoon, EI TOIMI
-//        BibTeXEntry bibtexEntry = formatToBibtex(article);
-//        database.addObject(bibtexEntry);
-//        
-//        try {
-//            FileWriter writer = new FileWriter(bibfile);
-//            BibTeXFormatter f = new BibTeXFormatter();
-//            f.format(database, writer);
-//            writer.close();
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
-
-    // Muuttaa artikkeli-olion bibtex-muotoon
-    //private String formatToBibtex(Reference ref) {
-    //    return ref.toString();
-    //}
-    /**
-     * Muuttaa artikkeli-olion bibtex-muotoon
-     *
-     * @param art
-     * @return
-     */
-    /*private String formatToBibtex(Article art) {
-     if (art == null) {
-     return null;
-     }
-     return "\n@article{" + art.getRefNum() + ",\n"
-     + "author = {" + art.getAuthor() + "},\n"
-     + "title = {" + art.getTitle() + "},\n"
-     + "journal = {" + art.getJournal() + "},\n"
-     + "year = {" + art.getYear() + "},\n"
-     + "volume = {" + art.getVolume() + "},\n}";
-     //// Luo bibtexEntryn artikkelista
-     //        BibTeXEntry entry = new BibTeXEntry(BibTeXEntry.TYPE_ARTICLE, new Key(art.refNum));
-     //        entry.addField(BibTeXEntry.KEY_AUTHOR, new KeyValue(art.getAuthor()));
-     //        entry.addField(BibTeXEntry.KEY_TITLE, new KeyValue(art.getTitle()));
-     //        entry.addField(BibTeXEntry.KEY_JOURNAL, new KeyValue(art.getJournal()));
-     //        entry.addField(BibTeXEntry.KEY_YEAR, new KeyValue(Integer.toString(art.getYear())));
-     //        entry.addField(BibTeXEntry.KEY_VOLUME, new KeyValue(Integer.toString(art.getVolume())));
-     //        return entry;
-     }
-     */
 }
