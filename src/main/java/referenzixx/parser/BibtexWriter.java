@@ -29,6 +29,10 @@ public class BibtexWriter {
         String kirjoitettava = bibtexBuilder(entry);
         addToDatabase(entry, database);
 
+        return addToBibtex(kirjoitettava, file);
+    }
+
+    private boolean addToBibtex(String kirjoitettava, File file) {
         try {
             FileWriter kirjoittaja = new FileWriter(file, true);
             kirjoittaja.write(kirjoitettava);
@@ -51,7 +55,7 @@ public class BibtexWriter {
                 kirjoitettava += (valuepair.getValue().toUserString() + "},\n");
             }
         }
-        kirjoitettava += "}\n";
+        kirjoitettava += "}\n\n";
         return kirjoitettava;
     }
 
