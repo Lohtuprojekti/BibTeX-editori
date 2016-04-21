@@ -39,7 +39,17 @@ public class BibtexReader {
      * @param file
      */
     public BibtexReader(File file) {
-        bibfile = file;
+        this.bibfile = file;
+        this.database = new BibTeXDatabase();
+    }
+    
+    public BibtexReader(File file, BibTeXDatabase database) {
+        this.bibfile = file;
+        this.database = database;
+    }
+    
+    public BibTeXDatabase getDatabase() {
+        return this.database;
     }
 
     /**

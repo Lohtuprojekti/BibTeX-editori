@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.FileParser;
@@ -33,7 +34,6 @@ public class AddReferencePanel extends JPanel {
         this.add(panel);
 
         panel.setLayout(new GridLayout(0, 2, 50, 0));
-        
         for (String line : lines) {
             ReferencePanel referencePanel = new ReferencePanel(line);
             panel.add(referencePanel);
@@ -61,23 +61,22 @@ public class AddReferencePanel extends JPanel {
         return true;
     }
 
-    public BibTeXEntry getEntry(String ref) {
-
+    public BibTeXEntry getEntry(String ref, BibTeXDatabase database) {
+        
+        
         // if no referenceID was specified, we'll generate a
         // unique one on the fly, based on author names and publication year
         if (ref.isEmpty()) {
 
             ReferenceIDGenerator refID = new ReferenceIDGenerator(getValueByFieldName("author"), getValueByFieldName("year"));
-            ref = refID.generateReferenceID();
+            ref = refID.generateReferenceID(database);
 
         }
-
         BibTeXEntry entry = new BibTeXEntry(type, new Key(ref));
 
         for (ReferencePanel reference : references) {
             entry.addField(reference.getType(), reference.getValue());
         }
-
         return entry;
     }
 
@@ -90,11 +89,11 @@ public class AddReferencePanel extends JPanel {
         String foundValue = "";
 
         for (ReferencePanel reference : references) {
-            if (reference.getType().toString() == field) {
-                foundValue = reference.getValue().toString();
+            //Stringejä ei kannata vertailla "==" oli bugi tässä pitkän aikaa
+            if (reference.getType().toString().equals(field)) {
+                foundValue = reference.getValue().toUserString();
             }
         }
-
         return foundValue;
 
     }

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jbibtex.BibTeXEntry;
+import referenzixx.parser.BibtexWriter;
 
 import referenzixx.refs.Article;
 import referenzixx.refs.ReferenceIDGenerator;
@@ -42,6 +43,8 @@ public class NewReferenceUI extends javax.swing.JDialog {
             case "Inproceedings":
                 fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
                 break;
+            default:
+                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
         }
         
         contentPanel.setSize(fieldsPanel.getWidth(), fieldsPanel.getHeight());
@@ -162,8 +165,9 @@ public class NewReferenceUI extends javax.swing.JDialog {
 
         // we'll use empty reference here in order to facilitate
         // auto-generation in fieldsPanel.getEntry() 
-        BibTeXEntry entry = fieldsPanel.getEntry("");
-        mainUI.addReference(entry);
+        BibTeXEntry entry = fieldsPanel.getEntry("", mainUI.getDatabase());
+        mainUI.addBibtex(entry);
+        //mainUI.addReference(entry);
                 
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed
