@@ -10,9 +10,6 @@ import org.jbibtex.Value;
 
 public class BibtexWriter {
 
-    public BibtexWriter() {
-    }
-
     //Kirjoittaa annetun BibTeXEntryn fileen
     public boolean writeToBibtex(BibTeXEntry entry, File file, BibTeXDatabase database) {
         if (entry == null) {

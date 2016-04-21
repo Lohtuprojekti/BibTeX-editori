@@ -31,9 +31,6 @@ import org.jbibtex.*;
  */
 public class BibtexReader {
 
-    public BibtexReader() {
-    }
-
     /**
      * Palauttaa viitteet bibtexEntry-olioiden listana
      *

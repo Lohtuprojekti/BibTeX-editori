@@ -4,10 +4,13 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Key;
+import org.jbibtex.Value;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 
@@ -41,22 +44,39 @@ public class DatabaseUtils implements ReferenceDatabase {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         String content = new BibtexReader().getBibFileAsString(file);
         clipboard.setContents(new StringSelection(content), null);
-
     }
 
+    /*
     private void readBibtexFile() {
 
-        // bibtexEntries.listReferences().stream().
+        bibtexEntries.listReferences().stream().
     }
+     */
 
     @Override
     public List<BibTeXEntry> getReferences() {
-        return null;
+        List<BibTeXEntry> entryList = new ArrayList<>();
+        for (BibTeXEntry entry : database.getEntries().values()) {
+            entryList.add(entry);
+        }
+        return entryList;
     }
 
     @Override
     public List<BibTeXEntry> getReferences(Map<String, String> filters) {
-        return null;
+        List<BibTeXEntry> entryList = new ArrayList<>();
+        //Aivan sysipaska mutta pitäisi antaa oikeita tuloksia
+        for (Map.Entry<String, String> filter : filters.entrySet()) {
+            for (BibTeXEntry entry : database.getEntries().values()) {
+                if (entry.getFields().containsKey(new Key(filter.getKey()))) {
+                    if (entry.getField(new Key(filter.getKey())).toUserString()
+                            .equals(filter.getValue())) {
+                        entryList.add(entry);
+                    }
+                }
+            }
+        }
+        return entryList;
     }
 
     public File getFile() {
