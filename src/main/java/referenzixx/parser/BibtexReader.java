@@ -31,43 +31,19 @@ import org.jbibtex.*;
  */
 public class BibtexReader {
 
-    private File bibfile;
-    private BibTeXDatabase database;
-
-    /**
-     *
-     * @param file
-     */
-    public BibtexReader(File file) {
-        this.bibfile = file;
-        this.database = new BibTeXDatabase();
+    public BibtexReader() {
     }
-
-    public BibtexReader(File file, BibTeXDatabase database) {
-        this.bibfile = file;
-        this.database = database;
-    }
-
-    public BibTeXDatabase getDatabase() {
-        return this.database;
-    }
-    
-    public File getFile() {
-        return this.bibfile;
-    }
-
-
 
     /**
      * Palauttaa viitteet bibtexEntry-olioiden listana
      *
      * @return
      */
-    public Collection<BibTeXEntry> listReferences() {
+    public Collection<BibTeXEntry> listReferences(File file, BibTeXDatabase database) {
 
         try {
             BibTeXParser parser = new BibTeXParser();
-            database = parser.parse(new FileReader(bibfile));
+            database = parser.parse(new FileReader(file));
 
             Map<Key, BibTeXEntry> entryMap = database.getEntries();
 
@@ -84,11 +60,10 @@ public class BibtexReader {
      * 
      * @return 
      */
-    public boolean openNewFile(File file) {
+    public boolean openNewFile(File file, BibTeXDatabase database) {
         try {
-            this.bibfile = file;
             BibTeXParser parser = new BibTeXParser();
-            database = parser.parse(new FileReader(bibfile));
+            database = parser.parse(new FileReader(file));
 
             return true;
 
@@ -100,13 +75,14 @@ public class BibtexReader {
 
     /**
      * Palauttaa bibtiedoston Stringinä
-     *
+     * Usage: Copy to clipboard
+     * 
      * @return
      */
-    public String getBibFileAsString() {
+    public String getBibFileAsString(File file) {
         String bibString = "";
         try {
-            Scanner scanner = new Scanner(bibfile);
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 bibString += scanner.nextLine() + "\n";
 

@@ -9,6 +9,7 @@ import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.ConfigFileParser;
+import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.refs.ReferenceIDGenerator;
 
 public class ReferencePanelList extends JPanel {
@@ -62,40 +63,6 @@ public class ReferencePanelList extends JPanel {
     }
 
     public BibTeXEntry getEntry(String ref, BibTeXDatabase database) {
-        
-        
-        // if no referenceID was specified, we'll generate a
-        // unique one on the fly, based on author names and publication year
-        if (ref.isEmpty()) {
-
-            ReferenceIDGenerator refID = new ReferenceIDGenerator(getValueByFieldName("author"), getValueByFieldName("year"));
-            ref = refID.generateReferenceID(database);
-
-        }
-        BibTeXEntry entry = new BibTeXEntry(type, new Key(ref));
-
-        for (ReferencePanel reference : references) {
-            entry.addField(reference.getType(), reference.getValue());
-        }
-        return entry;
+        return new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
     }
-
-    // A helper method for finding value of input field based on the BibTex
-    // type (name) of the field
-    //
-    // TODO: refactor by moving to some more suitable (util?) class
-    private String getValueByFieldName(String field) {
-
-        String foundValue = "";
-
-        for (ReferencePanel reference : references) {
-            //Stringejä ei kannata vertailla "==" oli bugi tässä pitkän aikaa
-            if (reference.getType().toString().equals(field)) {
-                foundValue = reference.getValue().toUserString();
-            }
-        }
-        return foundValue;
-
-    }
-
 }

@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
+import referenzixx.database.DatabaseUtils;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 
@@ -23,25 +24,19 @@ public class MainUI extends javax.swing.JFrame {
 
     private int row = 0;
     private String url = "referenzixx.bib"; // TODO: Refactor to database utils
-    private BibtexReader bibtexReader; // TODO: Refactor to database utils
-    private BibtexWriter bibtexWriter; // TODO: Refactor to database utils
-    private Clipboard clipboard; // TODO: Move to utils
+    private DatabaseUtils dbutils;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
-        File file = new File(url);
-        this.bibtexReader = new BibtexReader(file);
-        this.bibtexWriter = new BibtexWriter();
-        this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        this.dbutils = new DatabaseUtils(url);
 
         initComponents();
-
-//        Collection<BibTeXEntry> references = bibtexReader.listReferences();
-//        if (references != null) {
-//            addReferences(bibtexReader.listArticles(references));
-//        }
+    }
+    
+    public DatabaseUtils getDBUtils() {
+        return this.dbutils;
     }
 
     /**
@@ -63,17 +58,6 @@ public class MainUI extends javax.swing.JFrame {
 //
 //        bibtexReader.writeToFile(reference);
 //    }
-    
-    /**
-     * Kirjoittaa bibtexin tiedostoon, lisää sen databaseen.
-     * @param entry Lisättävä bibtexEntry
-     */
-    public void addBibtex(BibTeXEntry entry) {
-        bibtexWriter.writeToBibtex(entry,bibtexReader.getFile(), bibtexReader.getDatabase()); // TODO: move to utils
-    }
-    public BibTeXDatabase getDatabase() {
-        return this.bibtexReader.getDatabase(); // TODO: move to utils
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -185,8 +169,8 @@ public class MainUI extends javax.swing.JFrame {
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
         // TODO: Move to utils
-        String content = bibtexReader.getBibFileAsString();
-        clipboard.setContents(new StringSelection(content), null);
+        dbutils.copyToClipboard();
+        
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed

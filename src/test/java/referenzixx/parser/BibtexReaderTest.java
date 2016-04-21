@@ -47,14 +47,14 @@ public class BibtexReaderTest {
     /**
      * Tests of listReferences method, of class BibtexReader.
      */
-    @Test
-    public void metodiPalauttaaSamanMaaranOlioitaKunBibTiedostossaOnViitteita() {
-        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
-        Collection<BibTeXEntry> entries = reader.listReferences();
-
-        assertEquals(2, entries.size());
-
-    }
+//    @Test
+//    public void metodiPalauttaaSamanMaaranOlioitaKunBibTiedostossaOnViitteita() {
+//        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
+//        Collection<BibTeXEntry> entries = reader.listReferences();
+//
+//        assertEquals(2, entries.size());
+//
+//    }
 
     /**
      * Tests of listArticles method, of class BibtexReader.

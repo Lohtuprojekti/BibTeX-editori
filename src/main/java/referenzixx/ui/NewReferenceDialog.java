@@ -163,9 +163,8 @@ public class NewReferenceDialog extends javax.swing.JDialog {
 
         // we'll use empty reference here in order to facilitate
         // auto-generation in fieldsPanel.getEntry() 
-        BibTeXEntry entry = fieldsPanel.getEntry("", mainUI.getDatabase());
-        mainUI.addBibtex(entry);
-        //mainUI.addReference(entry);
+        BibTeXEntry entry = fieldsPanel.getEntry("", mainUI.getDBUtils().getDatabase());
+        mainUI.getDBUtils().addEntry(entry);
                 
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed
