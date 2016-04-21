@@ -11,10 +11,10 @@ import referenzixx.refs.ReferenceIDGenerator;
  *
  * @author Johannes
  */
-public class NewReferenceUI extends javax.swing.JDialog {
+public class NewReferenceDialog extends javax.swing.JDialog {
 
     private MainUI mainUI;
-    private AddReferencePanel fieldsPanel;
+    private ReferencePanelList fieldsPanel;
 
     /**
      * Creates new form NewReference
@@ -22,7 +22,7 @@ public class NewReferenceUI extends javax.swing.JDialog {
      * @param mainUI
      * @param modal
      */
-    public NewReferenceUI(MainUI mainUI, boolean modal) {
+    public NewReferenceDialog(MainUI mainUI, boolean modal) {
         super(mainUI, modal);
         this.mainUI = mainUI;
         initComponents();
@@ -33,16 +33,16 @@ public class NewReferenceUI extends javax.swing.JDialog {
     private void initFields() {
         switch (typeChooser.getSelectedItem().toString()) {
             case "Article":
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_ARTICLE, "uiConfig/articleConfig.cnf");
+                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_ARTICLE, "uiConfig/articleConfig.cnf");
                 break;
             case "Book":
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_BOOK, "uiConfig/bookConfig.cnf");
+                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_BOOK, "uiConfig/bookConfig.cnf");
                 break;
             case "Inproceedings":
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
+                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
                 break;
             default:
-                fieldsPanel = new AddReferencePanel(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
+                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
         }
         
         contentPanel.setSize(fieldsPanel.getWidth(), fieldsPanel.getHeight());

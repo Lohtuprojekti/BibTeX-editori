@@ -18,7 +18,7 @@ import java.util.Scanner;
  *
  * @author johkauha
  */
-public class FileParser {
+public class ConfigFileParser {
     
     public static List<String> parseFile(String url, String ignore) {
         List<String> lines = new ArrayList<>();

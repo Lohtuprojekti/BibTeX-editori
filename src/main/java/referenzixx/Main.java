@@ -20,9 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import org.jbibtex.*;
 import referenzixx.refs.*;
-import referenzixx.parser.BibtexReader;
-import referenzixx.parser.BibtexWriter;
-import referenzixx.refs.Reference;
+import referenzixx.parser.*;
 
 public class Main {
 
