@@ -8,16 +8,16 @@ import javax.swing.JPanel;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
-import referenzixx.parser.FileParser;
+import referenzixx.parser.ConfigFileParser;
 import referenzixx.refs.ReferenceIDGenerator;
 
-public class AddReferencePanel extends JPanel {
+public class ReferencePanelList extends JPanel {
 
     private Key type;
     private String configUrl;
     private List<ReferencePanel> references;
 
-    public AddReferencePanel(Key type, String configUrl) {
+    public ReferencePanelList(Key type, String configUrl) {
         this.type = type;
         this.configUrl = configUrl;
         this.references = new ArrayList<>();
@@ -25,7 +25,7 @@ public class AddReferencePanel extends JPanel {
     }
 
     private void initComponents() {
-        List<String> lines = FileParser.parseFile(configUrl, "***");
+        List<String> lines = ConfigFileParser.parseFile(configUrl, "***");
 
         Dimension size = new Dimension(550, (lines.size() + 1) / 2 * 42);
         JPanel panel = new JPanel();

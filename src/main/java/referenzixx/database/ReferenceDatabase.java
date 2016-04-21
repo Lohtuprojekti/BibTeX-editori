@@ -1,13 +1,14 @@
-//package referenzixx.database;
-//
-//import java.util.Map;
-//import referenzixx.refs.Article;
-//
-//public interface ReferenceDatabase {
-//    
-//    
-//    public Map<Integer, Article> getArticles();
-//    
-//    public Map<Integer, Article> getArticles(String refNum, String title, String author, String publisher, Integer year);
-//        
-//}
+package referenzixx.database;
+
+import java.util.List;
+import java.util.Map;
+import org.jbibtex.BibTeXEntry;
+
+public interface ReferenceDatabase {
+    
+    
+    public List<BibTeXEntry> getReferences();
+    
+    public List<BibTeXEntry> getReferences(Map<String, String> filters);
+        
+}

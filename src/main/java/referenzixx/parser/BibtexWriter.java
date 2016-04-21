@@ -40,18 +40,19 @@ public class BibtexWriter {
         return false;
     }
 
-    //Muokkaa BibTeXEntryn stringiksi
+    //Muokkaa BibTeXEntryn stringiksi siististi tabulaattoreita ja rivinvaihtoja
+    //käyttäen täsmälleen mallin mukaisesti.
     private String bibtexBuilder(BibTeXEntry entry) {
         String kirjoitettava = "@";
         kirjoitettava += (entry.getType().getValue() + "{");
-        kirjoitettava += (entry.getKey().getValue() + ",\n");
+        kirjoitettava += (entry.getKey().getValue() + ",\r\n");
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             if (!valuepair.getValue().toUserString().isEmpty()) {
-                kirjoitettava += (valuepair.getKey().toString() + " = {");
-                kirjoitettava += (valuepair.getValue().toUserString() + "},\n");
+                kirjoitettava += ("\t" + valuepair.getKey().toString() + " = {");
+                kirjoitettava += (valuepair.getValue().toUserString() + "},\r\n");
             }
         }
-        kirjoitettava += "}\n";
+        kirjoitettava += "}\r\n\r\n";
         return kirjoitettava;
     }
 

@@ -14,8 +14,6 @@ import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
-import referenzixx.refs.IReference;
-import referenzixx.refs.Reference;
 
 /**
  *
@@ -23,18 +21,16 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<String, IReference> references;
     private int row = 0;
-    private String url = "referenzixx.bib";
-    private BibtexReader bibtexReader;
-    private BibtexWriter bibtexWriter;
+    private String url = "referenzixx.bib"; // TODO: Refactor to database utils
+    private BibtexReader bibtexReader; // TODO: Refactor to database utils
+    private BibtexWriter bibtexWriter; // TODO: Refactor to database utils
     private Clipboard clipboard;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
-        this.references = new HashMap<>();
         File file = new File(url);
         this.bibtexReader = new BibtexReader(file);
         this.bibtexWriter = new BibtexWriter();
@@ -47,17 +43,6 @@ public class MainUI extends javax.swing.JFrame {
 //            addReferences(bibtexReader.listArticles(references));
 //        }
     }
-
-    /**
-     * Lisää listan artikkeleita käyttöliittymään.
-     *
-     * @param references Lisättävät artikkelit
-     */
-//    private void addReferences(Collection<IReference> references) {
-//        for (IReference reference : references) {
-//            addReference(reference);
-//        }
-//    }
 
     /**
      * Lisää artikkeli käyttöliittymään.
@@ -78,28 +63,16 @@ public class MainUI extends javax.swing.JFrame {
 //
 //        bibtexReader.writeToFile(reference);
 //    }
-
-//    public void addReference(BibTeXEntry entry) {
-//        if (entry.getType() == BibTeXEntry.TYPE_ARTICLE) {
-//            Article article = new Article(entry);
-//            bibtexReader.writeToFile(article);
-//        } else if (entry.getType() == BibTeXEntry.TYPE_BOOK) {
-//            Book book = new Book(entry);
-//            bibtexReader.writeToFile(book);
-//        } else if (entry.getType() == BibTeXEntry.TYPE_INPROCEEDINGS) {
-//            Inproceedings inproceedings = new Inproceedings(entry);
-//            bibtexReader.writeToFile(inproceedings);
-//        }
-//    }
+    
     /**
      * Kirjoittaa bibtexin tiedostoon, lisää sen databaseen.
      * @param entry Lisättävä bibtexEntry
      */
     public void addBibtex(BibTeXEntry entry) {
-        bibtexWriter.writeToBibtex(entry,bibtexReader.getFile(), bibtexReader.getDatabase());
+        bibtexWriter.writeToBibtex(entry,bibtexReader.getFile(), bibtexReader.getDatabase()); // TODO: move to utils
     }
     public BibTeXDatabase getDatabase() {
-        return this.bibtexReader.getDatabase();
+        return this.bibtexReader.getDatabase(); // TODO: move to utils
     }
 
     /**
@@ -216,7 +189,7 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
-        new NewReferenceUI(this, true).setVisible(true);
+        new NewReferenceDialog(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
