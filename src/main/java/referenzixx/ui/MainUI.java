@@ -25,7 +25,7 @@ public class MainUI extends javax.swing.JFrame {
     private String url = "referenzixx.bib"; // TODO: Refactor to database utils
     private BibtexReader bibtexReader; // TODO: Refactor to database utils
     private BibtexWriter bibtexWriter; // TODO: Refactor to database utils
-    private Clipboard clipboard;
+    private Clipboard clipboard; // TODO: Move to utils
 
     /**
      * Creates new form MainUI
@@ -184,6 +184,7 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        // TODO: Move to utils
         String content = bibtexReader.getBibFileAsString();
         clipboard.setContents(new StringSelection(content), null);
     }//GEN-LAST:event_copyButtonActionPerformed
