@@ -6,6 +6,10 @@ import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.Key;
 import referenzixx.util.CharacterSequencer;
 
+/**
+ * Generates unique reference IDs.
+ *
+ */
 
 public class ReferenceIDGenerator {
 

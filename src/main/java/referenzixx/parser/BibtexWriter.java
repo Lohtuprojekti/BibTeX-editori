@@ -8,9 +8,22 @@ import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.jbibtex.Value;
 
+/**
+ * Writes BibtexEntry objects to .bib files.
+ * 
+ * @author lilkettu
+ */
 public class BibtexWriter {
 
-    //Kirjoittaa annetun BibTeXEntryn fileen
+    /**
+     * Prepares BibTexEntry to be written to a file.
+     * 
+     * @param entry
+     * @param file
+     * @param database
+     * @return 
+     */
+    
     public boolean writeToBibtex(BibTeXEntry entry, File file, BibTeXDatabase database) {
         if (entry == null) {
             return false;
@@ -29,6 +42,13 @@ public class BibtexWriter {
         return addToBibtex(kirjoitettava, file);
     }
 
+    /**
+     * Writes reference to a .bib file.
+     * 
+     * @param kirjoitettava
+     * @param file
+     * @return 
+     */
     private boolean addToBibtex(String kirjoitettava, File file) {
         try {
             FileWriter kirjoittaja = new FileWriter(file, true);
@@ -41,8 +61,14 @@ public class BibtexWriter {
         return false;
     }
 
-    //Muokkaa BibTeXEntryn stringiksi siististi tabulaattoreita ja rivinvaihtoja
-    //käyttäen täsmälleen mallin mukaisesti.
+    /**
+     * Muokkaa BibTeXEntryn stringiksi siististi tabulaattoreita ja rivinvaihtoja 
+     * käyttäen täsmälleen mallin mukaisesti.
+     * 
+     * @param entry
+     * @return 
+     */
+   
     private String bibtexBuilder(BibTeXEntry entry) {
         String kirjoitettava = "@";
         kirjoitettava += (entry.getType().getValue() + "{");
@@ -57,11 +83,23 @@ public class BibtexWriter {
         return kirjoitettava;
     }
 
-    //Databasenhallintaan
+    /**
+     * Adds BibTexEntry to the database
+     * 
+     * @param entry
+     * @param database 
+     */
     private void addToDatabase(BibTeXEntry entry, BibTeXDatabase database) {
         database.addObject(entry);
     }
 
+    /**
+     * Checks if the reference number of the BibTexEntry is unique
+     * 
+     * @param refnum
+     * @param database
+     * @return 
+     */
     private boolean isRefnumUnique(Key refnum, BibTeXDatabase database) {
         if (database.getEntries().containsKey(refnum)) {
             return false;

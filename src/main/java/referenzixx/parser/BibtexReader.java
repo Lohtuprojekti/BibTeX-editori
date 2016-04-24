@@ -24,8 +24,7 @@ import referenzixx.refs.*;
 import org.jbibtex.*;
 
 /**
- * Parseroi bibtex -muodossa olevat viitteet ja kirjoittaa ne oikeassa muodossa
- * .bib -tiedostoon
+ * Parses the Bibtex file to a database of objects
  *
  * @author lilkettu
  */
@@ -54,7 +53,7 @@ public class BibtexReader {
     
     /**
      * Lukee tiedoston databaseen, asettaa tiedoston käytetyksi tiedostoksi ja palauttaa databasen
-     * 
+     * Parses the contents of a Bibtex file and adds them in a database
      * @return 
      */
     public boolean openNewFile(File file, BibTeXDatabase database) {
@@ -71,7 +70,7 @@ public class BibtexReader {
     }
 
     /**
-     * Palauttaa bibtiedoston Stringinä
+     * Returns the contents of BibTex file as string
      * Usage: Copy to clipboard
      * 
      * @return
