@@ -12,40 +12,63 @@ import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
+import referenzixx.refs.ReferenceEntryBuilder;
+import referenzixx.ui.ReferencePanel;
 
 /**
  *
  */
 public class DatabaseUtils implements ReferenceDatabase {
 
+    // DONE: read bibtex file to an internal hashmap, within constructor
+    // DONE: file location can be specified in a constructor parameter
     // TODO: 
-    // read bibtex file to an internal hashmap, within constructor
-    // file location can be specified in a constructor parameter
     // implement interface methods for filtering out unwanted articles.
     private File file;
     private BibTeXDatabase database;
+
+    /**
+     * Default constructor called by MainUI.
+     */
+    public DatabaseUtils() {
+        this("referenzixx.bib");
+    }
 
     /**
      * Constructor of class DatabaseUtils
      *
      * @param url
      */
-    public DatabaseUtils(String url) {
+    public DatabaseUtils(String url) { //Käli haluaa url version
         this(new File(url));
-    }
-    
-    public DatabaseUtils(File file) {
-        this.file = file;
-        this.database = new BibtexReader().openNewFile(this.file);
     }
 
     /**
-     *  Changes the 
+     * Constructor of class DatabaseUtils
+     *
+     * @param file
+     */
+    public DatabaseUtils(File file) {
+        this.selectFile(file);
+    }
+
+    /**
+     * Changes the currently accessed file and database to given file.
+     *
      * @param url
      */
-    public void selectFile(String url) { //Voiko tästä jotenkin hankkiutua eroon
-        this.file = new File(url);
-        this.database = new BibtexReader().openNewFile(file);
+    public void selectFile(String url) { //Käli haluaa url version
+        this.selectFile(new File(url));
+    }
+
+    /**
+     * Changes the currently accessed file and database to given file.
+     *
+     * @param file
+     */
+    private void selectFile(File file) {
+        this.file = file;
+        this.database = new BibtexReader().openNewFile(this.file);
     }
 
     /**
@@ -59,6 +82,12 @@ public class DatabaseUtils implements ReferenceDatabase {
         }
         database.addObject(entry);
         new BibtexWriter().writeToBibtex(entry, file);
+    }
+
+    public void addEntry(Key type, String ref, List<ReferencePanel> references) {
+        ReferenceEntryBuilder builder = new ReferenceEntryBuilder();
+        BibTeXEntry entry = new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
+        this.addEntry(entry);
     }
 
     /**
@@ -134,7 +163,7 @@ public class DatabaseUtils implements ReferenceDatabase {
     public File getFile() {
         return file;
     }
-    
+
     /**
      * Used to get the currently chosen database.
      *

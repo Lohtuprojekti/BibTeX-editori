@@ -17,20 +17,17 @@ import referenzixx.refs.ReferenceIDGenerator;
 public class NewReferenceDialog extends javax.swing.JDialog {
 
     private MainUI mainUI;
-    private ReferenceEntryBuilder referenceEntryBuilder;
     private ReferencePanelList referencePanelList;
 
     /**
      * Creates new form NewReference
      *
      * @param mainUI
-     * @param referenceEntryBuilder
      * @param modal
      */
-    public NewReferenceDialog(MainUI mainUI, ReferenceEntryBuilder referenceEntryBuilder, boolean modal) {
+    public NewReferenceDialog(MainUI mainUI, boolean modal) {
         super(mainUI, modal);
         this.mainUI = mainUI;
-        this.referenceEntryBuilder = referenceEntryBuilder;
         initComponents();
 
         initFields();
@@ -57,7 +54,7 @@ public class NewReferenceDialog extends javax.swing.JDialog {
                 url = "inproceedingsConfig.cnf";
         }
         
-        referencePanelList = new ReferencePanelList(referenceEntryBuilder, type, url);
+        referencePanelList = new ReferencePanelList(type, url);
 
         contentPanel.setSize(referencePanelList.getWidth(), referencePanelList.getHeight());
         contentPanel.setLayout(new GridLayout());
@@ -176,9 +173,8 @@ public class NewReferenceDialog extends javax.swing.JDialog {
         }
 
         // we'll use empty reference here in order to facilitate
-        // auto-generation in fieldsPanel.getEntry() 
-        BibTeXEntry entry = referencePanelList.getEntry("", mainUI.getDBUtils().getDatabase());
-        mainUI.getDBUtils().addEntry(entry);
+        // auto-generation in fieldsPanel.getEntry()
+        mainUI.getDBUtils().addEntry(referencePanelList.getType(), "", referencePanelList.getReferences());
 
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed

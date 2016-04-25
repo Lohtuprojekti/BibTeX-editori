@@ -24,14 +24,13 @@ import referenzixx.refs.ReferenceEntryBuilder;
 public class MainUI extends javax.swing.JFrame {
 
     private int row = 0;
-    private String url = "referenzixx.bib"; // TODO: Refactor to database utils
     private DatabaseUtils dbutils;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
-        this.dbutils = new DatabaseUtils(url);
+        this.dbutils = new DatabaseUtils();
 
         initComponents();
     }
@@ -169,13 +168,13 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
-        // TODO: Move to utils
+
         dbutils.copyToClipboard();
         
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
-        new NewReferenceDialog(this, new ReferenceEntryBuilder(), true).setVisible(true);
+        new NewReferenceDialog(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
