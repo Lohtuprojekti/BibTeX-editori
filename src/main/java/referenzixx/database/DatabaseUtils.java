@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
@@ -55,11 +56,7 @@ public class DatabaseUtils implements ReferenceDatabase {
 
     @Override
     public List<BibTeXEntry> getReferences() {
-        List<BibTeXEntry> entryList = new ArrayList<>();
-        for (BibTeXEntry entry : database.getEntries().values()) {
-            entryList.add(entry);
-        }
-        return entryList;
+        return database.getEntries().values().stream().collect(Collectors.toList());
     }
 
     @Override
