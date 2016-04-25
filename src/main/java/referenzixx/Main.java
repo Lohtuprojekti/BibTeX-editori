@@ -1,10 +1,7 @@
 package referenzixx;
 
-import java.io.File;
 import referenzixx.ui.MainUI;
 import javax.swing.UIManager;
-import org.jbibtex.BibTeXDatabase;
-import referenzixx.database.DatabaseUtils;
 
 public class Main {
 
@@ -19,7 +16,6 @@ public class Main {
         }
         // </editor-fold>
 
-        // </editor-fold>
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
         

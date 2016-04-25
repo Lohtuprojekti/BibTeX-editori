@@ -2,6 +2,7 @@ package referenzixx.parser;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Map;
 import org.jbibtex.*;
 
@@ -31,6 +32,19 @@ public class BibtexWriter {
         } catch (Exception e) {
         }
 
+        return false;
+    }
+    
+    //Teippikeinoksi poistaa viite
+    public boolean rewriteDatabaseToBibtex(BibTeXDatabase database, File file) {
+        try {
+            new PrintWriter(file).close();
+            for (BibTeXEntry entry : database.getEntries().values()) {
+                writeToBibtex(entry, file);
+            }
+            return true;
+        } catch (Exception e) {
+        }
         return false;
     }
 

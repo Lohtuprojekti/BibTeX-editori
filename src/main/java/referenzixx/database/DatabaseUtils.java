@@ -42,12 +42,6 @@ public class DatabaseUtils implements ReferenceDatabase {
     public DatabaseUtils(String url) { //Käli haluaa url version
         this(new File(url));
     }
-
-    /**
-     * Constructor of class DatabaseUtils
-     *
-     * @param file
-     */
     public DatabaseUtils(File file) {
         this.selectFile(file);
     }
@@ -60,12 +54,7 @@ public class DatabaseUtils implements ReferenceDatabase {
     public void selectFile(String url) { //Käli haluaa url version
         this.selectFile(new File(url));
     }
-
-    /**
-     * Changes the currently accessed file and database to given file.
-     *
-     * @param file
-     */
+    
     private void selectFile(File file) {
         this.file = file;
         this.database = new BibtexReader().openNewFile(this.file);
@@ -84,6 +73,13 @@ public class DatabaseUtils implements ReferenceDatabase {
         new BibtexWriter().writeToBibtex(entry, file);
     }
 
+    /**
+     * UI uses this method to add entry to database using information it has
+     * collected from the user.
+     * @param type
+     * @param ref
+     * @param references 
+     */
     public void addEntry(Key type, String ref, List<ReferencePanel> references) {
         ReferenceEntryBuilder builder = new ReferenceEntryBuilder();
         BibTeXEntry entry = new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
@@ -91,12 +87,13 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
-     * Deletes an entry from BibTexDatabase
+     * Deletes an entry from BibTexDatabase and updates the file to reflect that
      *
      * @param entry
      */
     private void delEntry(BibTeXEntry entry) {
         database.removeObject(entry);
+        new BibtexWriter().rewriteDatabaseToBibtex(database, file);
     }
 
     /**

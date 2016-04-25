@@ -5,10 +5,6 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
-import referenzixx.Main;
-import referenzixx.parser.BibtexWriter;
-import referenzixx.refs.ReferenceEntryBuilder;
-import referenzixx.refs.ReferenceIDGenerator;
 
 /**
  *

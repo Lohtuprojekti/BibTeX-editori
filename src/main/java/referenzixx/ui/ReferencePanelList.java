@@ -6,8 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.ConfigFileParser;
 import referenzixx.refs.ReferenceEntryBuilder;

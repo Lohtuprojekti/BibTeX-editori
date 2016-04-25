@@ -1,21 +1,6 @@
 package referenzixx.ui;
 
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.io.File;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JFileChooser;
-import javax.swing.table.TableModel;
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
 import referenzixx.database.DatabaseUtils;
-import referenzixx.parser.BibtexReader;
-import referenzixx.parser.BibtexWriter;
-import referenzixx.refs.ReferenceEntryBuilder;
 
 /**
  *
