@@ -32,7 +32,7 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testSelectFile() {
-       
+
     }
 
     @Test
@@ -48,6 +48,11 @@ public class DatabaseUtilsTest {
 
         assertTrue(filecontents.contains("ABC"));
         testfile.delete();
+    }
+    
+    @Test
+    public void testDelEntry() {
+     
     }
 
     @Test
@@ -66,7 +71,7 @@ public class DatabaseUtilsTest {
     public void testGetReferences() {
         dbu.selectFile(file.getPath());
         List<BibTeXEntry> entryList = dbu.getReferences();
-        
+
         assertEquals(2, entryList.size());
     }
 

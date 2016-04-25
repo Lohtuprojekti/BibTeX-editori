@@ -20,15 +20,10 @@ public class Main {
         // </editor-fold>
 
         // </editor-fold>
-//        MainUI mainUI = new MainUI();
-//        mainUI.setVisible(true);
+        MainUI mainUI = new MainUI();
+        mainUI.setVisible(true);
 
         //Siivosin kun mikään vanhoista ei enää ole relevantti
-        File file = new File("src/test/shortbibtexfile.bib");
-        DatabaseUtils dbu = new DatabaseUtils(file.getPath());
-        dbu.selectFile(file.getPath());
-        BibTeXDatabase db = dbu.getDatabase();
         
-        System.out.println(db.getEntries().entrySet().size());
     }
 }
