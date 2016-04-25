@@ -15,6 +15,7 @@ import org.jbibtex.BibTeXEntry;
 import referenzixx.database.DatabaseUtils;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
+import referenzixx.refs.ReferenceEntryBuilder;
 
 /**
  *
@@ -174,7 +175,7 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
-        new NewReferenceDialog(this, true).setVisible(true);
+        new NewReferenceDialog(this, new ReferenceEntryBuilder(), true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
