@@ -4,7 +4,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Key;
+import referenzixx.Main;
 import referenzixx.parser.BibtexWriter;
+import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.refs.ReferenceIDGenerator;
 
 /**
@@ -14,40 +17,51 @@ import referenzixx.refs.ReferenceIDGenerator;
 public class NewReferenceDialog extends javax.swing.JDialog {
 
     private MainUI mainUI;
-    private ReferencePanelList fieldsPanel;
+    private ReferenceEntryBuilder referenceEntryBuilder;
+    private ReferencePanelList referencePanelList;
 
     /**
      * Creates new form NewReference
      *
      * @param mainUI
+     * @param referenceEntryBuilder
      * @param modal
      */
-    public NewReferenceDialog(MainUI mainUI, boolean modal) {
+    public NewReferenceDialog(MainUI mainUI, ReferenceEntryBuilder referenceEntryBuilder, boolean modal) {
         super(mainUI, modal);
         this.mainUI = mainUI;
+        this.referenceEntryBuilder = referenceEntryBuilder;
         initComponents();
-        
+
         initFields();
     }
 
     private void initFields() {
+        Key type = null;
+        String url = "";
         switch (typeChooser.getSelectedItem().toString()) {
             case "Article":
-                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_ARTICLE, "uiConfig/articleConfig.cnf");
+                type = BibTeXEntry.TYPE_ARTICLE;
+                url = "articleConfig.cnf";
                 break;
             case "Book":
-                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_BOOK, "uiConfig/bookConfig.cnf");
+                type = BibTeXEntry.TYPE_BOOK;
+                url = "bookConfig.cnf";
                 break;
             case "Inproceedings":
-                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
+                type = BibTeXEntry.TYPE_INPROCEEDINGS;
+                url = "inproceedingsConfig.cnf";
                 break;
             default:
-                fieldsPanel = new ReferencePanelList(BibTeXEntry.TYPE_INPROCEEDINGS, "uiConfig/inproceedingsConfig.cnf");
+                type = BibTeXEntry.TYPE_INPROCEEDINGS;
+                url = "inproceedingsConfig.cnf";
         }
         
-        contentPanel.setSize(fieldsPanel.getWidth(), fieldsPanel.getHeight());
+        referencePanelList = new ReferencePanelList(referenceEntryBuilder, type, url);
+
+        contentPanel.setSize(referencePanelList.getWidth(), referencePanelList.getHeight());
         contentPanel.setLayout(new GridLayout());
-        contentPanel.add(fieldsPanel);
+        contentPanel.add(referencePanelList);
 
         Dimension size = new Dimension(contentPanel.getWidth() + 60, contentPanel.getHeight() + 150);
         this.setSize(size);
@@ -143,7 +157,7 @@ public class NewReferenceDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void typeChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeChooserActionPerformed
-        contentPanel.remove(fieldsPanel);
+        contentPanel.remove(referencePanelList);
         initFields();
 
         revalidate();
@@ -151,21 +165,21 @@ public class NewReferenceDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_typeChooserActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        
-        if (!fieldsPanel.valuesOk()) {
+
+        if (!referencePanelList.valuesOk()) {
             errorLabel.setText("Syötä vaadittuihin kenttiin jokin arvo");
             return;
         }
-        if (!fieldsPanel.valuesConvertOk()) {
+        if (!referencePanelList.valuesConvertOk()) {
             errorLabel.setText("Syötä numeeriset arvot oikeassa muodossa");
             return;
         }
 
         // we'll use empty reference here in order to facilitate
         // auto-generation in fieldsPanel.getEntry() 
-        BibTeXEntry entry = fieldsPanel.getEntry("", mainUI.getDBUtils().getDatabase());
+        BibTeXEntry entry = referencePanelList.getEntry("", mainUI.getDBUtils().getDatabase());
         mainUI.getDBUtils().addEntry(entry);
-                
+
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed
 

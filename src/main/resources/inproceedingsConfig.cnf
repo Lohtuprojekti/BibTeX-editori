@@ -1,0 +1,22 @@
+*** Kent‰t menev‰t seuraavasti:
+*** Kent‰n kuvaus|Tooltip|BibTeX-tyyppi|string/integer|required/optional
+*** Kaksi ensimm‰ist‰ kentt‰‰ ovat siis puhtaasti k‰yttˆliittym‰n kuvauksia
+*** Kolmas kentt‰ m‰‰ritt‰‰, mik‰ BibTeX-kentt‰ on kyseess‰
+*** Nelj‰s kentt‰ m‰‰ritt‰‰, onko kyseess‰ string vai integer
+*** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
+
+
+Author|Tekij‰|author|string|required
+Title|Otsikko|title|string|required
+Booktitle|Kirjan otsikko|booktitle|string|required
+Year|Julkaisuvuosi|year|string|required
+Editor|Editor|editor|string|optional
+Volume|Volume|volume|integer|optional
+Series|Series|series|string|optional
+Pages|Sivum‰‰r‰|pages|integer|optional
+Address|Address|address|string|optional
+Month|Kuukausi|month|integer|optional
+Organization|Organisaatio|organization|string|optional
+Publisher|Julkaisija|publisher|string|optional
+Note|Note|note|string|optional
+Key|Key|key|string|optional

@@ -2,6 +2,7 @@ package referenzixx.ui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -10,15 +11,16 @@ import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.ConfigFileParser;
 import referenzixx.refs.ReferenceEntryBuilder;
-import referenzixx.refs.ReferenceIDGenerator;
 
 public class ReferencePanelList extends JPanel {
 
+    private ReferenceEntryBuilder referenceEntryBuilder;
     private Key type;
     private String configUrl;
     private List<ReferencePanel> references;
 
-    public ReferencePanelList(Key type, String configUrl) {
+    public ReferencePanelList(ReferenceEntryBuilder referenceEntryBuilder, Key type, String configUrl) {
+        this.referenceEntryBuilder = referenceEntryBuilder;
         this.type = type;
         this.configUrl = configUrl;
         this.references = new ArrayList<>();
@@ -63,6 +65,6 @@ public class ReferencePanelList extends JPanel {
     }
 
     public BibTeXEntry getEntry(String ref, BibTeXDatabase database) {
-        return new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
+        return referenceEntryBuilder.buildEntry(type, ref, database, references);
     }
 }
