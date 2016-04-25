@@ -53,24 +53,24 @@ public class BibtexReader {
     
     /**
      * Lukee tiedoston databaseen, asettaa tiedoston käytetyksi tiedostoksi ja palauttaa databasen
-     * Parses the contents of a Bibtex file and adds them in a database
+     * Parses the contents of a Bibtex file and adds the entries in a database
      * @return 
      */
-    public boolean openNewFile(File file, BibTeXDatabase database) {
+    public BibTeXDatabase openNewFile(File file, BibTeXDatabase database) {
         try {
             BibTeXParser parser = new BibTeXParser();
             database = parser.parse(new FileReader(file));
 
-            return true;
+//            return database;
 
         } catch (Exception e) {
         }
 
-        return false;
+        return database;
     }
 
     /**
-     * Returns the contents of BibTex file as string
+     * Returns the contents of BibTex file as a string
      * Usage: Copy to clipboard
      * 
      * @return

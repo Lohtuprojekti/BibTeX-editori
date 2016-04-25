@@ -10,8 +10,7 @@ import org.jbibtex.Value;
 
 /**
  * Writes BibtexEntry objects to .bib files.
- * 
- * @author lilkettu
+
  */
 public class BibtexWriter {
 
@@ -23,7 +22,6 @@ public class BibtexWriter {
      * @param database
      * @return 
      */
-    
     public boolean writeToBibtex(BibTeXEntry entry, File file, BibTeXDatabase database) {
         if (entry == null) {
             return false;
@@ -51,9 +49,9 @@ public class BibtexWriter {
      */
     private boolean addToBibtex(String kirjoitettava, File file) {
         try {
-            FileWriter kirjoittaja = new FileWriter(file, true);
-            kirjoittaja.write(kirjoitettava);
-            kirjoittaja.close();
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(kirjoitettava);
+            writer.close();
             return true;
         } catch (Exception e) {
         }
@@ -94,7 +92,7 @@ public class BibtexWriter {
     }
 
     /**
-     * Checks if the reference number of the BibTexEntry is unique
+     * Checks if the refnum of the BibTexEntry is unique
      * 
      * @param refnum
      * @param database
