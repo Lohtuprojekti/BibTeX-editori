@@ -38,7 +38,6 @@ public class DatabaseUtilsTest {
     @Test
     public void testAddEntry() {
         File testfile = new File("src/test/testfile.bib");
-        dbu.setFile(testfile);
         dbu.selectFile(testfile.getPath());
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);

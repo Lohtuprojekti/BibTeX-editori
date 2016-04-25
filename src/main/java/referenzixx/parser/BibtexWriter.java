@@ -3,51 +3,26 @@ package referenzixx.parser;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Map;
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
-import org.jbibtex.Key;
-import org.jbibtex.Value;
+import org.jbibtex.*;
 
 /**
  * Writes BibtexEntry objects to .bib files.
-
+ *
  */
 public class BibtexWriter {
 
     /**
-     * Prepares BibTexEntry to be written to a file.
-     * 
-     * @param entry
-     * @param file
-     * @param database
-     * @return 
-     */
-    public boolean writeToBibtex(BibTeXEntry entry, File file, BibTeXDatabase database) {
-        if (entry == null) {
-            return false;
-        }
-        Key refnum = entry.getKey();
-
-        //Tarkista viimeistään tässä onko refnum jo databasessa
-        if (!isRefnumUnique(refnum, database)) {
-            System.out.println("Refnum ei ollut uniikki, kirjoitusta ei tapahtunut");
-            return false;
-        }
-
-        String kirjoitettava = bibtexBuilder(entry);
-        addToDatabase(entry, database);
-
-        return addToBibtex(kirjoitettava, file);
-    }
-
-    /**
      * Writes reference to a .bib file.
-     * 
+     *
      * @param kirjoitettava
      * @param file
-     * @return 
+     * @return
      */
-    private boolean addToBibtex(String kirjoitettava, File file) {
+    public boolean writeToBibtex(BibTeXEntry entry, File file) {
+        if (entry == null) {
+            return false; //Testejä varten
+        }
+        String kirjoitettava = bibtexBuilder(entry);
         try {
             FileWriter writer = new FileWriter(file, true);
             writer.write(kirjoitettava);
@@ -60,48 +35,31 @@ public class BibtexWriter {
     }
 
     /**
-     * Muokkaa BibTeXEntryn stringiksi siististi tabulaattoreita ja rivinvaihtoja 
-     * käyttäen täsmälleen mallin mukaisesti.
-     * 
-     * @param entry
+     * Outputs BibTeXEntry in a clean and easily readable form.
+     *
+     * @param entry Entry that is edited to string
+     * @return
+     */
+    private String bibtexBuilder(BibTeXEntry entry) {
+        return "@" + entry.getType().getValue() + "{"
+                + entry.getKey().getValue() + ",\r\n"
+        + iterateReferenceToString(entry) + "}\r\n\r\n";
+    }
+
+    /**
+     * Iterates through the key-value pairs in BibTeXEntry and converts them to
+     * String.
+     * @param entry 
      * @return 
      */
-   
-    private String bibtexBuilder(BibTeXEntry entry) {
-        String kirjoitettava = "@";
-        kirjoitettava += (entry.getType().getValue() + "{");
-        kirjoitettava += (entry.getKey().getValue() + ",\r\n");
+    private String iterateReferenceToString(BibTeXEntry entry) {
+        String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             if (!valuepair.getValue().toUserString().isEmpty()) {
-                kirjoitettava += ("\t" + valuepair.getKey().toString() + " = {");
-                kirjoitettava += (valuepair.getValue().toUserString() + "},\r\n");
+                entryString += ("\t" + valuepair.getKey().toString() + " = {"
+                        + valuepair.getValue().toUserString() + "},\r\n");
             }
         }
-        kirjoitettava += "}\r\n\r\n";
-        return kirjoitettava;
-    }
-
-    /**
-     * Adds BibTexEntry to the database
-     * 
-     * @param entry
-     * @param database 
-     */
-    private void addToDatabase(BibTeXEntry entry, BibTeXDatabase database) {
-        database.addObject(entry);
-    }
-
-    /**
-     * Checks if the refnum of the BibTexEntry is unique
-     * 
-     * @param refnum
-     * @param database
-     * @return 
-     */
-    private boolean isRefnumUnique(Key refnum, BibTeXDatabase database) {
-        if (database.getEntries().containsKey(refnum)) {
-            return false;
-        }
-        return true;
+        return entryString;
     }
 }

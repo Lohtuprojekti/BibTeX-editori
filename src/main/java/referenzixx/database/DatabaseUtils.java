@@ -10,7 +10,6 @@ import java.util.Map;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
-import org.jbibtex.Value;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 
@@ -32,25 +31,34 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @param url
      */
     public DatabaseUtils(String url) {
-        this.file = new File(url);
-        this.database = new BibTeXDatabase();
+        this(new File(url));
+    }
+    
+    public DatabaseUtils(File file) {
+        this.file = file;
+        this.database = new BibtexReader().openNewFile(this.file);
     }
 
     /**
-     *
+     *  Changes the 
      * @param url
      */
-    public void selectFile(String url) {
-        database = new BibtexReader().openNewFile(file, database);
+    public void selectFile(String url) { //Voiko tästä jotenkin hankkiutua eroon
+        this.file = new File(url);
+        this.database = new BibtexReader().openNewFile(file);
     }
 
     /**
-     * Adds an entry to BibTexDatabase
+     * Adds an entry to the file and BibTeXDatabase
      *
      * @param entry
      */
     public void addEntry(BibTeXEntry entry) {
-        new BibtexWriter().writeToBibtex(entry, file, database);
+        if (entry == null || !isRefnumUnique(entry.getKey(), database)) {
+            return;
+        }
+        database.addObject(entry);
+        new BibtexWriter().writeToBibtex(entry, file);
     }
 
     /**
@@ -63,7 +71,7 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
-     *
+     * Copies the currently chosen bibtex file to clipboard.
      */
     public void copyToClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -71,20 +79,15 @@ public class DatabaseUtils implements ReferenceDatabase {
         clipboard.setContents(new StringSelection(content), null);
     }
 
-    /*
-     private void readBibtexFile() {
-
-     bibtexEntries.listReferences().stream().
-     }
-     */
     /**
+     * Returns the database as a list of BibTeXEntry
      *
      * @return
      */
     @Override
     public List<BibTeXEntry> getReferences() {
         List<BibTeXEntry> entryList = new ArrayList<>();
-        
+
         for (BibTeXEntry entry : database.getEntries().values()) {
             entryList.add(entry);
         }
@@ -99,7 +102,6 @@ public class DatabaseUtils implements ReferenceDatabase {
     @Override
     public List<BibTeXEntry> getReferences(Map<String, String> filters) {
         List<BibTeXEntry> entryList = new ArrayList<>();
-        //Aivan sysipaska mutta pitäisi antaa oikeita tuloksia
         for (Map.Entry<String, String> filter : filters.entrySet()) {
             for (BibTeXEntry entry : database.getEntries().values()) {
                 if (entry.getFields().containsKey(new Key(filter.getKey()))) {
@@ -114,35 +116,31 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
+     * Checks if the reference ID of the BibTexEntry is unique
      *
+     * @param refnum
+     * @param database
      * @return
+     */
+    private boolean isRefnumUnique(Key refnum, BibTeXDatabase database) {
+        return !database.getEntries().containsKey(refnum);
+    }
+
+    /**
+     * Used to get the currently chosen file.
+     *
+     * @return File that is edited
      */
     public File getFile() {
         return file;
     }
-
+    
     /**
-     *
-     * @param file
-     */
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    /**
+     * Used to get the currently chosen database.
      *
      * @return
      */
     public BibTeXDatabase getDatabase() {
         return database;
     }
-
-    /**
-     *
-     * @param database
-     */
-    public void setDatabase(BibTeXDatabase database) {
-        this.database = database;
-    }
-
 }

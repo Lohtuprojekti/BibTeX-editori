@@ -22,8 +22,6 @@ public class Main {
         // </editor-fold>
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
-
-        //Siivosin kun mikään vanhoista ei enää ole relevantti
         
     }
 }

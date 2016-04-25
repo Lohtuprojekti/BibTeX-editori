@@ -22,7 +22,7 @@ public class BibtexWriterTest {
         File file = new File("src/test/emtpy.bib");
         DatabaseUtils dbu = new DatabaseUtils(file.getPath());
 
-        writer.writeToBibtex(entry, file, dbu.getDatabase());
+        writer.writeToBibtex(entry, file);
 
         BibtexReader reader = new BibtexReader();
         String filecontents = reader.getBibFileAsString(file);
