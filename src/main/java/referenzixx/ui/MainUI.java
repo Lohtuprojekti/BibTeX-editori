@@ -1,7 +1,11 @@
 package referenzixx.ui;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFileChooser;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;
@@ -15,14 +19,17 @@ import referenzixx.database.DatabaseUtils;
 public class MainUI extends javax.swing.JFrame {
 
     private DatabaseUtils dbutils;
+    private Map<String, String> filters;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
         this.dbutils = new DatabaseUtils();
+        this.filters = new HashMap<>();
 
         initComponents();
+        initListeners();
         refresh();
     }
 
@@ -34,8 +41,13 @@ public class MainUI extends javax.swing.JFrame {
      * Refreshes the reference table to match the list in DatabaseUtils.
      */
     public final void refresh() {
-        List<BibTeXEntry> references = dbutils.getReferences();
-        
+        List<BibTeXEntry> references;
+        if (filters.isEmpty()) {
+            references = dbutils.getReferences();
+        } else {
+            references = dbutils.getReferences(filters);
+        }
+
         DefaultTableModel tableModel = (DefaultTableModel) referenceTable.getModel();
         tableModel.setRowCount(0); // Clear the table
         tableModel.setRowCount(references.size());
@@ -53,7 +65,52 @@ public class MainUI extends javax.swing.JFrame {
         tableModel.setValueAt(entry.getField(new Key("title")).toUserString(), row, 2);
         tableModel.setValueAt(entry.getField(new Key("year")).toUserString(), row, 3);
     }
-    
+
+    private void refreshFilters() {
+        filters.clear();
+        
+        String ref = referenceTextField.getText();
+        String author = authorTextField.getText();
+        String title = titleTextField.getText();
+        String year = yearTextField.getText();
+
+        if (!author.isEmpty()) {
+            filters.put("author", author);
+        }
+        if (!title.isEmpty()) {
+            filters.put("title", title);
+        }
+        if (!year.isEmpty()) {
+            filters.put("year", year);
+        }
+
+        refresh();
+    }
+
+    private void initListeners() {
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+        };
+        
+        referenceTextField.getDocument().addDocumentListener(documentListener);
+        authorTextField.getDocument().addDocumentListener(documentListener);
+        titleTextField.getDocument().addDocumentListener(documentListener);
+        yearTextField.getDocument().addDocumentListener(documentListener);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,7 +125,16 @@ public class MainUI extends javax.swing.JFrame {
         readButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         referenceTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        delReferenceButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        referenceTextField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        titleTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        authorTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        yearTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -131,10 +197,48 @@ public class MainUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(referenceTable);
 
-        jButton1.setText("Poista");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        delReferenceButton.setText("Poista");
+        delReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                delReferenceButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Hae viitteitä");
+
+        jLabel2.setText("Viite");
+
+        referenceTextField.setToolTipText("");
+        referenceTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                referenceTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Otsikko");
+
+        titleTextField.setToolTipText("Viitteen otsikko");
+        titleTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                titleTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Kirjoittaja");
+
+        authorTextField.setToolTipText("Viitteen kirjoittaja");
+        authorTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                authorTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Vuosi");
+
+        yearTextField.setToolTipText("Viitteen julkaisuvuosi");
+        yearTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearTextFieldActionPerformed(evt);
             }
         });
 
@@ -148,18 +252,49 @@ public class MainUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addReferenceButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(delReferenceButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(readButton)
                         .addGap(18, 18, 18)
                         .addComponent(copyButton))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(titleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(referenceTextField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(authorTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(yearTextField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(119, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(referenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(authorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +303,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addComponent(readButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(addReferenceButton)
-                        .addComponent(jButton1)))
+                        .addComponent(delReferenceButton)))
                 .addContainerGap())
         );
 
@@ -176,9 +311,7 @@ public class MainUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
-
         dbutils.copyToClipboard();
-
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
@@ -194,21 +327,47 @@ public class MainUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_readButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void delReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delReferenceButtonActionPerformed
         List<BibTeXEntry> references = dbutils.getReferences();
         int selectedRow = referenceTable.getSelectedRow();
         if (selectedRow != -1) {
             dbutils.delEntry(references.get(selectedRow));
         }
         refresh();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_delReferenceButtonActionPerformed
+
+    private void referenceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_referenceTextFieldActionPerformed
+        System.out.println("asdf");
+        refreshFilters();
+    }//GEN-LAST:event_referenceTextFieldActionPerformed
+
+    private void titleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleTextFieldActionPerformed
+        refreshFilters();
+    }//GEN-LAST:event_titleTextFieldActionPerformed
+
+    private void authorTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorTextFieldActionPerformed
+        refreshFilters();
+    }//GEN-LAST:event_authorTextFieldActionPerformed
+
+    private void yearTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearTextFieldActionPerformed
+        refreshFilters();
+    }//GEN-LAST:event_yearTextFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
+    private javax.swing.JTextField authorTextField;
     private javax.swing.JButton copyButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton delReferenceButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
+    private javax.swing.JTextField referenceTextField;
+    private javax.swing.JTextField titleTextField;
+    private javax.swing.JTextField yearTextField;
     // End of variables declaration//GEN-END:variables
 }
