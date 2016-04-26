@@ -1,5 +1,8 @@
 package referenzixx.ui;
 
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
@@ -10,7 +13,7 @@ import referenzixx.database.DatabaseUtils;
  * @author Johannes
  */
 public class MainUI extends javax.swing.JFrame {
-    
+
     private DatabaseUtils dbutils;
 
     /**
@@ -22,18 +25,27 @@ public class MainUI extends javax.swing.JFrame {
         initComponents();
         refresh();
     }
-    
+
     public DatabaseUtils getDBUtils() {
         return this.dbutils;
     }
-    
+
+    /**
+     * Refreshes the reference table to match the list in DatabaseUtils.
+     */
     public final void refresh() {
+        List<BibTeXEntry> references = dbutils.getReferences();
+        
+        DefaultTableModel tableModel = (DefaultTableModel) referenceTable.getModel();
+        tableModel.setRowCount(0); // Clear the table
+        tableModel.setRowCount(references.size());
+
         int row = 0;
-        for (BibTeXEntry entry : dbutils.getReferences()) {
-            displayReference(entry, row++);
+        for (BibTeXEntry reference : references) {
+            displayReference(reference, row++);
         }
     }
-    
+
     private void displayReference(BibTeXEntry entry, int row) {
         TableModel tableModel = referenceTable.getModel();
         tableModel.setValueAt(entry.getKey().toString(), row, 0);
@@ -41,27 +53,7 @@ public class MainUI extends javax.swing.JFrame {
         tableModel.setValueAt(entry.getField(new Key("title")).toUserString(), row, 2);
         tableModel.setValueAt(entry.getField(new Key("year")).toUserString(), row, 3);
     }
-
-    /**
-     * Lisää artikkeli käyttöliittymään.
-     *
-     * @param reference Lisättävä artikkeli
-     */
-//    public void addReference(IReference reference) {
-//        references.put(reference.getRefNum(), reference);
-//
-//        TableModel tableModel = referenceTable.getModel();
-//        tableModel.setValueAt(reference.getRefNum(), row, 0);
-//        tableModel.setValueAt(reference.getAuthor(), row, 1);
-//        tableModel.setValueAt(reference.getTitle(), row, 2);
-//        tableModel.setValueAt(reference.getYear() + "", row, 3);
-//        tableModel.setValueAt(reference.getPublisher(), row, 4);
-//
-//        row++;
-//
-//        bibtexReader.writeToFile(reference);
-//    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +90,6 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         readButton.setText("Lue");
-        readButton.setEnabled(false);
         readButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 readButtonActionPerformed(evt);
@@ -178,7 +169,7 @@ public class MainUI extends javax.swing.JFrame {
     private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
 
         dbutils.copyToClipboard();
-        
+
     }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
@@ -186,7 +177,12 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addReferenceButtonActionPerformed
 
     private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
-
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            dbutils.selectFile(chooser.getSelectedFile());
+            refresh();
+        }
     }//GEN-LAST:event_readButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

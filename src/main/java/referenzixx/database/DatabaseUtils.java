@@ -47,13 +47,10 @@ public class DatabaseUtils implements ReferenceDatabase {
     /**
      * Changes the currently accessed file and database to given file.
      *
-     * @param url
+     * @param file
      */
-    public void selectFile(String url) { //Käli haluaa url version
-        this.selectFile(new File(url));
-    }
     
-    private void selectFile(File file) {
+    public void selectFile(File file) {
         this.file = file;
         this.database = new BibtexReader().openNewFile(this.file);
     }
