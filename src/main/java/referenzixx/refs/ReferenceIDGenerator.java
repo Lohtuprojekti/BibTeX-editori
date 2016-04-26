@@ -6,6 +6,10 @@ import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.Key;
 import referenzixx.util.CharacterSequencer;
 
+/**
+ * Generates unique reference IDs.
+ *
+ */
 
 public class ReferenceIDGenerator {
 
@@ -40,7 +44,7 @@ public class ReferenceIDGenerator {
 
     // we pick the second word, and assume that it's the last name of an author
     // if the author text is just one word, we'll return it back.
-    // Hajoaa jos on vain yksi sana.
+    // Hajosi jos on vain yksi sana.
     private String generateAuthorText(String author) {
         if (author.contains(" ")) { 
         return (author.split(" ").length > 0 ? author.split(" ")[1].toLowerCase() : author.toLowerCase());

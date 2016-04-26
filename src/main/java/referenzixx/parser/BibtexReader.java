@@ -8,70 +8,36 @@ package referenzixx.parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import referenzixx.refs.*;
 import org.jbibtex.*;
 
 /**
- * Parseroi bibtex -muodossa olevat viitteet ja kirjoittaa ne oikeassa muodossa
- * .bib -tiedostoon
+ * Parses the Bibtex file to a database of objects
  *
  * @author lilkettu
  */
 public class BibtexReader {
-
-    /**
-     * Palauttaa viitteet bibtexEntry-olioiden listana
-     *
-     * @return
-     */
-    public Collection<BibTeXEntry> listReferences(File file, BibTeXDatabase database) {
-
-        try {
-            BibTeXParser parser = new BibTeXParser();
-            database = parser.parse(new FileReader(file));
-
-            Map<Key, BibTeXEntry> entryMap = database.getEntries();
-
-            return entryMap.values();
-
-        } catch (Exception e) {
-        }
-
-        return null;
-    }
     
     /**
-     * Lukee tiedoston databaseen, asettaa tiedoston käytetyksi tiedostoksi ja palauttaa databasen
-     * 
+     * Parses the contents of a Bibtex file and returns the entries as a database
+     * @param file File that is opened.
      * @return 
      */
-    public boolean openNewFile(File file, BibTeXDatabase database) {
+    public BibTeXDatabase openNewFile(File file) {
+        BibTeXDatabase database = new BibTeXDatabase();
         try {
             BibTeXParser parser = new BibTeXParser();
             database = parser.parse(new FileReader(file));
-
-            return true;
-
         } catch (Exception e) {
         }
 
-        return false;
+        return database;
     }
 
     /**
-     * Palauttaa bibtiedoston Stringinä
+     * Returns the contents of BibTex file as a string
      * Usage: Copy to clipboard
      * 
      * @return

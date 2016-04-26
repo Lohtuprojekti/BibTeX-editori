@@ -6,21 +6,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import referenzixx.parser.ConfigFileParser;
 import referenzixx.refs.ReferenceEntryBuilder;
 
 public class ReferencePanelList extends JPanel {
 
-    private ReferenceEntryBuilder referenceEntryBuilder;
     private Key type;
     private String configUrl;
     private List<ReferencePanel> references;
 
-    public ReferencePanelList(ReferenceEntryBuilder referenceEntryBuilder, Key type, String configUrl) {
-        this.referenceEntryBuilder = referenceEntryBuilder;
+    public ReferencePanelList(Key type, String configUrl) {
         this.type = type;
         this.configUrl = configUrl;
         this.references = new ArrayList<>();
@@ -64,7 +60,13 @@ public class ReferencePanelList extends JPanel {
         return true;
     }
 
-    public BibTeXEntry getEntry(String ref, BibTeXDatabase database) {
-        return referenceEntryBuilder.buildEntry(type, ref, database, references);
+    public Key getType() {
+        return type;
     }
+
+    public List<ReferencePanel> getReferences() {
+        return references;
+    }
+
+    
 }

@@ -2,70 +2,78 @@ package referenzixx.parser;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Map;
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
-import org.jbibtex.Key;
-import org.jbibtex.Value;
+import org.jbibtex.*;
 
+/**
+ * Writes BibtexEntry objects to .bib files.
+ *
+ */
 public class BibtexWriter {
 
-    //Kirjoittaa annetun BibTeXEntryn fileen
-    public boolean writeToBibtex(BibTeXEntry entry, File file, BibTeXDatabase database) {
+    /**
+     * Writes reference to a .bib file.
+     *
+     * @param kirjoitettava
+     * @param file
+     * @return
+     */
+    public boolean writeToBibtex(BibTeXEntry entry, File file) {
         if (entry == null) {
-            return false;
+            return false; //Testejä varten
         }
-        Key refnum = entry.getKey();
-
-        //Tarkista viimeistään tässä onko refnum jo databasessa
-        if (!isRefnumUnique(refnum, database)) {
-            System.out.println("Refnum ei ollut uniikki, kirjoitusta ei tapahtunut");
-            return false;
-        }
-
         String kirjoitettava = bibtexBuilder(entry);
-        addToDatabase(entry, database);
-
-        return addToBibtex(kirjoitettava, file);
-    }
-
-    private boolean addToBibtex(String kirjoitettava, File file) {
         try {
-            FileWriter kirjoittaja = new FileWriter(file, true);
-            kirjoittaja.write(kirjoitettava);
-            kirjoittaja.close();
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(kirjoitettava);
+            writer.close();
             return true;
         } catch (Exception e) {
         }
 
         return false;
     }
+    
+    //Teippikeinoksi poistaa viite
+    public boolean rewriteDatabaseToBibtex(BibTeXDatabase database, File file) {
+        try {
+            new PrintWriter(file).close();
+            for (BibTeXEntry entry : database.getEntries().values()) {
+                writeToBibtex(entry, file);
+            }
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
 
-    //Muokkaa BibTeXEntryn stringiksi siististi tabulaattoreita ja rivinvaihtoja
-    //käyttäen täsmälleen mallin mukaisesti.
+    /**
+     * Outputs BibTeXEntry in a clean and easily readable form.
+     *
+     * @param entry Entry that is edited to string
+     * @return
+     */
     private String bibtexBuilder(BibTeXEntry entry) {
-        String kirjoitettava = "@";
-        kirjoitettava += (entry.getType().getValue() + "{");
-        kirjoitettava += (entry.getKey().getValue() + ",\r\n");
+        return "@" + entry.getType().getValue() + "{"
+                + entry.getKey().getValue() + ",\r\n"
+        + iterateReferenceToString(entry) + "}\r\n\r\n";
+    }
+
+    /**
+     * Iterates through the key-value pairs in BibTeXEntry and converts them to
+     * String.
+     * @param entry 
+     * @return 
+     */
+    private String iterateReferenceToString(BibTeXEntry entry) {
+        String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             if (!valuepair.getValue().toUserString().isEmpty()) {
-                kirjoitettava += ("\t" + valuepair.getKey().toString() + " = {");
-                kirjoitettava += (valuepair.getValue().toUserString() + "},\r\n");
+                entryString += ("\t" + valuepair.getKey().toString() + " = {"
+                        + valuepair.getValue().toUserString() + "},\r\n");
             }
         }
-        kirjoitettava += "}\r\n\r\n";
-        return kirjoitettava;
-    }
-
-    //Databasenhallintaan
-    private void addToDatabase(BibTeXEntry entry, BibTeXDatabase database) {
-        database.addObject(entry);
-    }
-
-    private boolean isRefnumUnique(Key refnum, BibTeXDatabase database) {
-        if (database.getEntries().containsKey(refnum)) {
-            return false;
-        }
-        return true;
+        return entryString;
     }
 }

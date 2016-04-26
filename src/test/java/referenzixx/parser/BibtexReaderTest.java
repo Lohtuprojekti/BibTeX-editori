@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package referenzixx.parser;
 
 import java.io.File;
@@ -19,10 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author lilkettu
- */
 public class BibtexReaderTest {
 
     public BibtexReaderTest() {
@@ -44,6 +35,7 @@ public class BibtexReaderTest {
     public void tearDown() {
     }
 
+    
     /**
      * Tests of listReferences method, of class BibtexReader.
      */
@@ -74,7 +66,6 @@ public class BibtexReaderTest {
 //        Collection<IReference> articles = reader.listArticles(entries);
 //        assertEquals(Article.class, articles.iterator().next().getClass());        
 //    }
-
     /**
      * Tests of writeToFile method, of class BibtexReader.
      */
@@ -92,7 +83,6 @@ public class BibtexReaderTest {
 //
 //        file.delete();
 //    }
-
 //    @Test
 //    public void tyhjanArtikkelinLisaaminenEiOnnistu() throws FileNotFoundException {
 //        File file = new File("src/emptybibtexfile.bib");
@@ -106,5 +96,4 @@ public class BibtexReaderTest {
 //
 //        file.delete();
 //    }
-
 }

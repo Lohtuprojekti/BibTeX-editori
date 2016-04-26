@@ -19,7 +19,7 @@ scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
         
 
     when "Lisätään yksi uusi viite", {
-        writer.writeToBibtex(entry, file, database)
+        writer.writeToBibtex(entry, file)
     }
     then "Tiedoston pituus kasvaa", {
         file.length().shouldNotBe(0)
@@ -37,7 +37,7 @@ scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
         BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        writer.writeToBibtex(entry, file, database)
+        writer.writeToBibtex(entry, file)
     }
 
     then "Tiedostossa ei tapahdu muutosta", {
@@ -56,7 +56,7 @@ scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
 
 
     when "Lisätään artikkeli", {
-        writer.writeToBibtex(entry, file, database)
+        writer.writeToBibtex(entry, file)
     }
     then "Tiedosto luodaan ja siinä on sisältöä", {
         file.exists().shouldBe(true)
@@ -74,7 +74,7 @@ scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
         BibTeXEntry entry = null
 
     when "Lisätään olematonta", {
-        writer.writeToBibtex(entry, file, database)
+        writer.writeToBibtex(entry, file)
     }
     then "Tiedostoa ei pitäisi ilmestyä", {
         file.exists().shouldBe(false)
