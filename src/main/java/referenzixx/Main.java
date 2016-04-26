@@ -35,8 +35,6 @@ public class Main {
         }
         // </editor-fold>
         
-        // </editor-fold>
-        
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
 
