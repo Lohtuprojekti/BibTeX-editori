@@ -7,8 +7,5 @@ branches:
 jdk:
   - oraclejdk8
 
-script:
-  - mvn integration-test
-
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
