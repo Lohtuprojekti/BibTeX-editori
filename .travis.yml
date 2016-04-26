@@ -7,5 +7,7 @@ branches:
 jdk:
   - oraclejdk8
 
+install: true
+
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
