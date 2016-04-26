@@ -40,6 +40,7 @@ public class BibtexReader {
      * Returns the contents of BibTex file as a string
      * Usage: Copy to clipboard
      * 
+     * @param file
      * @return
      */
     public String getBibFileAsString(File file) {

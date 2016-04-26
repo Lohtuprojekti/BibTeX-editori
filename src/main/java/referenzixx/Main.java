@@ -15,9 +15,8 @@ public class Main {
             java.util.logging.Logger.getLogger(MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         // </editor-fold>
-        
+
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
-        
     }
 }

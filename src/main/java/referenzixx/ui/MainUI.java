@@ -72,6 +72,7 @@ public class MainUI extends javax.swing.JFrame {
 
         copyButton.setText("Kopioi leikepöydälle");
         copyButton.setToolTipText("Kopioi BibTex-tiedoston leikepöydälle");
+        copyButton.setName("copyButton"); // NOI18N
         copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyButtonActionPerformed(evt);
