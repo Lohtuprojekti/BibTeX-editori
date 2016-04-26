@@ -14,6 +14,7 @@ import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.ui.ReferencePanel;
+import referenzixx.util.StringUtil;
 
 /**
  *
@@ -126,8 +127,9 @@ public class DatabaseUtils implements ReferenceDatabase {
         for (Map.Entry<String, String> filter : filters.entrySet()) {
             for (BibTeXEntry entry : database.getEntries().values()) {
                 if (entry.getFields().containsKey(new Key(filter.getKey()))) {
-                    if (entry.getField(new Key(filter.getKey())).toUserString()
-                            .equals(filter.getValue())) {
+                    if (StringUtil.containsIgnoreCase(
+                            entry.getField(new Key(filter.getKey())).toUserString(),
+                            filter.getValue())) {
                         entryList.add(entry);
                     }
                 }
