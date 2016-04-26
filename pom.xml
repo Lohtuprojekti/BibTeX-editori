@@ -78,6 +78,14 @@
                         <format>html</format>
                         <format>xml</format>
                     </formats>
+    		<instrumentation>
+       		    <ignores>
+     			<ignore>referenzixx.ui.*</ignore>
+     	    	    </ignores>
+        	    <excludes>
+          		<exclude>referenzixx/ui/*.class</exclude>
+        	    </excludes>
+		</instrumentation>
                 </configuration>
             <executions>
                 <execution>
