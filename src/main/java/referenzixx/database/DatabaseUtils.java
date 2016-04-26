@@ -86,7 +86,7 @@ public class DatabaseUtils implements ReferenceDatabase {
      *
      * @param entry
      */
-    private void delEntry(BibTeXEntry entry) {
+    public void delEntry(BibTeXEntry entry) {
         database.removeObject(entry);
         new BibtexWriter().rewriteDatabaseToBibtex(database, file);
     }
