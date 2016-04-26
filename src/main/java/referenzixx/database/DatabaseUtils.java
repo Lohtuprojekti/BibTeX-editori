@@ -20,8 +20,6 @@ import referenzixx.ui.ReferencePanel;
  */
 public class DatabaseUtils implements ReferenceDatabase {
 
-    // DONE: read bibtex file to an internal hashmap, within constructor
-    // DONE: file location can be specified in a constructor parameter
     // TODO: 
     // implement interface methods for filtering out unwanted articles.
     private File file;
