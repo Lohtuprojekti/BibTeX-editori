@@ -1,11 +1,7 @@
 package referenzixx;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import referenzixx.ui.MainUI;
 import javax.swing.UIManager;
-import org.fest.swing.fixture.FrameFixture;
 
 public class Main {
 
@@ -22,12 +18,5 @@ public class Main {
 
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
-        
-        FrameFixture window = new FrameFixture(mainUI);
-        window.button("copyButton").click();
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
-
-        new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).requireText cb
     }
 }
