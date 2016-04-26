@@ -55,17 +55,17 @@ public class DatabaseUtilsTest {
      
     }
 
-//    @Test
-//    public void testCopyToClipboard() throws Exception {
-//        dbu.copyToClipboard();
-//
-//        String bibentry = "@article{65VF";
-//
-//        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-//        String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
-//
-//        assertTrue(cb.contains(bibentry));
-//    }
+    @Test
+    public void testCopyToClipboard() throws Exception {
+        dbu.copyToClipboard();
+
+        String bibentry = "@article{65VF";
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
+
+        assertTrue(cb.contains(bibentry));
+    }
 
     @Test
     public void testGetReferences() {
