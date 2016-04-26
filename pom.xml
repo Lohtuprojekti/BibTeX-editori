@@ -61,19 +61,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${cobertura.version}</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
-                </configuration>
-            </plugin>
-        
+
             <plugin>
                 <groupId>org.easyb</groupId>
                 <artifactId>maven-easyb-plugin</artifactId>
