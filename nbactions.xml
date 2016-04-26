@@ -25,6 +25,14 @@
     </action>
     
     <action>
+        <actionName>CUSTOM-cobertura</actionName>
+        <displayName>cobertura</displayName>
+        <goals>
+            <goal>cobertura:cobertura</goal>
+        </goals>
+    </action>
+    
+    <action>
             <actionName>debug</actionName>
             <packagings>
                 <packaging>jar</packaging>
