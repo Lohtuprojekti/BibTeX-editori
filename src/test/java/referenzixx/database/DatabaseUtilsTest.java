@@ -39,7 +39,7 @@ public class DatabaseUtilsTest {
     @Test
     public void testAddEntry() {
         File testfile = new File("src/test/testfile.bib");
-        dbu.selectFile(testfile.getPath());
+        dbu.selectFile(testfile);
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
 
@@ -69,7 +69,7 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testGetReferences() {
-        dbu.selectFile(file.getPath());
+        dbu.selectFile(file);
         List<BibTeXEntry> entryList = dbu.getReferences();
 
         assertEquals(2, entryList.size());
