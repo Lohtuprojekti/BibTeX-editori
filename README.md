@@ -1,6 +1,7 @@
 # BibTeX-editori
 
 Travis: [![Build Status](https://travis-ci.org/Lohtuprojekti/Referenzixx.svg?branch=master)](https://travis-ci.org/Lohtuprojekti/Referenzixx)
+Coveralls: [![Coverage Status](https://coveralls.io/repos/github/Lohtuprojekti/Referenzixx/badge.svg?branch=master)](https://coveralls.io/github/Lohtuprojekti/Referenzixx?branch=master)
 
 Javalla tehtävä BibTeX tiedostojen lukuun ja kirjoitukseen ohjelma. Tarkemmat speksit https://github.com/mluukkai/ohtu2016/wiki/miniprojekti-speksi
 
