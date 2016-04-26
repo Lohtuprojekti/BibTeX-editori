@@ -19,7 +19,7 @@ public class ReferencePanelList extends JPanel {
     public ReferencePanelList(Key type, String configUrl) {
         this.type = type;
         this.configUrl = configUrl;
-        this.references = new ArrayList<>();
+        this.references = new ArrayList<ReferencePanel>();
         initComponents();
     }
 

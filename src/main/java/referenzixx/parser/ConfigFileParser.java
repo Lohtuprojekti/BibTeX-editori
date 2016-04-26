@@ -26,11 +26,12 @@ import java.util.logging.Logger;
 public class ConfigFileParser {
 
     public static List<String> parseFile(String url, String ignore) {
-        List<String> lines = new ArrayList<>();
+        List<String> lines = new ArrayList<String>();
 
-        try (InputStream is = ConfigFileParser.class.getClassLoader().getResourceAsStream(url);
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr)) {
+        try{
+	    InputStream is = ConfigFileParser.class.getClassLoader().getResourceAsStream(url);
+	    InputStreamReader isr = new InputStreamReader(is);
+	    BufferedReader br = new BufferedReader(isr); 
             
             String line;
             while ((line = br.readLine()) != null) {
