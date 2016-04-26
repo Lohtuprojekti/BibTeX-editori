@@ -171,6 +171,7 @@ public class NewReferenceDialog extends javax.swing.JDialog {
         // we'll use empty reference here in order to facilitate
         // auto-generation in fieldsPanel.getEntry()
         mainUI.getDBUtils().addEntry(referencePanelList.getType(), "", referencePanelList.getReferences());
+        mainUI.refresh();
 
         this.setVisible(false);
     }//GEN-LAST:event_addButtonActionPerformed

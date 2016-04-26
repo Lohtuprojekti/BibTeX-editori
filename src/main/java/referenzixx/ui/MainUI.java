@@ -1,5 +1,8 @@
 package referenzixx.ui;
 
+import javax.swing.table.TableModel;
+import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Key;
 import referenzixx.database.DatabaseUtils;
 
 /**
@@ -7,8 +10,7 @@ import referenzixx.database.DatabaseUtils;
  * @author Johannes
  */
 public class MainUI extends javax.swing.JFrame {
-
-    private int row = 0;
+    
     private DatabaseUtils dbutils;
 
     /**
@@ -18,10 +20,26 @@ public class MainUI extends javax.swing.JFrame {
         this.dbutils = new DatabaseUtils();
 
         initComponents();
+        refresh();
     }
     
     public DatabaseUtils getDBUtils() {
         return this.dbutils;
+    }
+    
+    public final void refresh() {
+        int row = 0;
+        for (BibTeXEntry entry : dbutils.getReferences()) {
+            displayReference(entry, row++);
+        }
+    }
+    
+    private void displayReference(BibTeXEntry entry, int row) {
+        TableModel tableModel = referenceTable.getModel();
+        tableModel.setValueAt(entry.getKey().toString(), row, 0);
+        tableModel.setValueAt(entry.getField(new Key("author")).toUserString(), row, 1);
+        tableModel.setValueAt(entry.getField(new Key("title")).toUserString(), row, 2);
+        tableModel.setValueAt(entry.getField(new Key("year")).toUserString(), row, 3);
     }
 
     /**
@@ -89,26 +107,26 @@ public class MainUI extends javax.swing.JFrame {
 
         referenceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "", "", "", null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, "", "", ""},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Viite", "Kirjoittaja", "Nimi", "Vuosi", "Julkaisija"
+                "Viite", "Kirjoittaja", "Otsikko", "Vuosi"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -132,21 +150,25 @@ public class MainUI extends javax.swing.JFrame {
                         .addComponent(addReferenceButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(readButton)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(copyButton))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addReferenceButton)
-                    .addComponent(copyButton)
-                    .addComponent(readButton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(readButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(addReferenceButton)
+                            .addComponent(copyButton))))
                 .addContainerGap())
         );
 
