@@ -1,14 +1,8 @@
 package referenzixx.database;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
+
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import javafx.stage.Stage;
-import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.junit.After;
@@ -21,6 +15,7 @@ public class DatabaseUtilsTest {
 
     private DatabaseUtils dbu;
     private File file;
+    private BibTeXEntry entry;
 
     public DatabaseUtilsTest() {
 
@@ -30,6 +25,7 @@ public class DatabaseUtilsTest {
     public void setUp() {
         file = new File("src/test/testfile.bib");
         dbu = new DatabaseUtils(file);
+        entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
     }
 
     @After
@@ -39,7 +35,6 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testSelectFile() {
-        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
         
         File emptyfile = new File("src/test/emptybibtexfile.bib");
@@ -52,7 +47,6 @@ public class DatabaseUtilsTest {
 
     @Test
     public void addEntryAddsToFile() {
-        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
 
         BibtexReader reader = new BibtexReader();
@@ -61,15 +55,38 @@ public class DatabaseUtilsTest {
         assertTrue(filecontents.contains("ABC"));
         file.delete();
     }
-
+    
     @Test
     public void addEntryAddsToDatabase() {
         int original = dbu.getDatabase().getEntries().size();
-        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
         int added = dbu.getDatabase().getEntries().size();
 
         assertTrue(added == (original + 1));
+        file.delete();
+    }
+    
+    @Test
+    public void entryNotAddedifNull(){
+        int original = dbu.getDatabase().getEntries().size();
+        entry = null;
+        dbu.addEntry(entry);
+        int added = dbu.getDatabase().getEntries().size();
+
+        assertTrue(added == original);
+        file.delete();
+    }
+    
+    @Test
+    public void entryNotAddedifNotUniqueKey(){
+        dbu.addEntry(entry);
+        int original = dbu.getDatabase().getEntries().size();
+        //add file with same key
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("article"), new Key("ABC"));     
+        dbu.addEntry(entry2);
+        int added = dbu.getDatabase().getEntries().size();
+        
+        assertTrue(added == original);
         file.delete();
     }
 
@@ -91,9 +108,8 @@ public class DatabaseUtilsTest {
     
     @Test
     public void delEntryRemovesFromFile() {
-        BibTeXEntry entry1 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
-        dbu.addEntry(entry1);
+        dbu.addEntry(entry);
         dbu.addEntry(entry2);
         
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
@@ -118,7 +134,6 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testGetReferences() {
-        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
         dbu.addEntry(entry);
         dbu.addEntry(entry2);
