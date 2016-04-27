@@ -14,17 +14,18 @@ description "Arto voi helposti kopioida koko bibtexin leikepoydalle"
 
 scenario "Bibtex on juuri avattu ja kopioidaan sisältö leikepoydalle", {
   
-        File file = new File("src/test/veryshort.bib")
-        DatabaseUtils dbu = new DatabaseUtils(file)
+        ui = new MainUI()
+        ui.setVisible(true)
+        window = new FrameFixture(ui)
     
     when "Kopioidaan leikepoydalle", {
-        dbu.copyToClipboard()
+         window.button("copyButton").click()
     }
     then "Leikepoydalla on sama sisaltö kuin bibtexissa", {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
+         String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
 
-        new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).shouldBe cb
+        new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).shouldBeEqualTo(cb)
         window.cleanUp()
 
     }
