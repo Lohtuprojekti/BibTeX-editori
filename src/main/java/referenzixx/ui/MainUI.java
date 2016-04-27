@@ -144,6 +144,7 @@ public class MainUI extends javax.swing.JFrame {
 
         addReferenceButton.setText("Lisää");
         addReferenceButton.setToolTipText("Lisää uusi artikkeli");
+        addReferenceButton.setName("addButton"); // NOI18N
         addReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addReferenceButtonActionPerformed(evt);
@@ -160,6 +161,7 @@ public class MainUI extends javax.swing.JFrame {
         });
 
         readButton.setText("Valitse tiedosto");
+        readButton.setName("selectButton"); // NOI18N
         readButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 readButtonActionPerformed(evt);
@@ -201,6 +203,7 @@ public class MainUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(referenceTable);
 
         delReferenceButton.setText("Poista");
+        delReferenceButton.setName("delButton"); // NOI18N
         delReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 delReferenceButtonActionPerformed(evt);
