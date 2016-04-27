@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -27,19 +28,30 @@ public class DatabaseUtilsTest {
 
     @Before
     public void setUp() {
-        file = new File("src/test/shortbibtexfile.bib");
-        dbu = new DatabaseUtils(file.getPath());
+        file = new File("src/test/testfile.bib");
+        dbu = new DatabaseUtils(file);
+    }
+
+    @After
+    public void tearDown() {
+        file.delete();
     }
 
     @Test
     public void testSelectFile() {
-
+        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        dbu.addEntry(entry);
+        
+        File newfile = new File("src/test/emptybibtexfile.bib");
+        dbu.selectFile(newfile);
+        assertTrue(dbu.getReferences().isEmpty());
+        assertTrue(dbu.getFile().length() == 0);
+        assertTrue(file.length() != 0);
+        file.delete();
     }
 
     @Test
-    public void testAddEntry() {
-        File testfile = new File("src/test/testfile.bib");
-        dbu.selectFile(testfile);
+    public void addEntryAddsToFile() {
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
 
@@ -47,14 +59,51 @@ public class DatabaseUtilsTest {
         String filecontents = reader.getBibFileAsString(file);
 
         assertTrue(filecontents.contains("ABC"));
-        testfile.delete();
+        file.delete();
+    }
+
+    @Test
+    public void addEntryAddsToDatabase() {
+        int original = dbu.getDatabase().getEntries().size();
+        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        dbu.addEntry(entry);
+        int added = dbu.getDatabase().getEntries().size();
+
+        assertTrue(added == (original + 1));
+        file.delete();
+    }
+
+    @Test
+    public void delEntryRemovesFromDatabase() {
+        BibTeXEntry entry1 = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry1);
+        dbu.addEntry(entry2);
+        
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        dbu.delEntry(entry3);      
+        
+        assertTrue(!dbu.getReferences().contains(entry1));
+        assertTrue(dbu.getReferences().contains(entry2));
+        
+        file.delete();
     }
     
     @Test
-    public void testDelEntry() {
-     
+    public void delEntryRemovesFromFile() {
+        BibTeXEntry entry1 = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry1);
+        dbu.addEntry(entry2);
+        
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        dbu.delEntry(entry3);
+        
+        String filecontents = new BibtexReader().getBibFileAsString(file);
+        assertTrue(!filecontents.contains("article"));
+        file.delete();
     }
-
+    //Tämä testi ei mene läpi traviksesta mutta on hyvä ja toimiva.
 //    @Test
 //    public void testCopyToClipboard() throws Exception {
 //        dbu.copyToClipboard();
@@ -69,10 +118,18 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testGetReferences() {
-        dbu.selectFile(file);
-        List<BibTeXEntry> entryList = dbu.getReferences();
+        BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry);
+        dbu.addEntry(entry2);
 
-        assertEquals(2, entryList.size());
+        List<BibTeXEntry> entryList = dbu.getReferences();
+        for (BibTeXEntry bibTeXEntry : entryList) {
+            assertTrue(dbu.getDatabase().getEntries().containsValue(bibTeXEntry));
+        }
+
+        assertEquals(dbu.getDatabase().getEntries().size(), entryList.size());
+        file.delete();
     }
 
     // Filter
@@ -81,4 +138,8 @@ public class DatabaseUtilsTest {
 
     }
 
+    @Test
+    public void getFileTest() {
+        assertTrue(dbu.getFile() == file);
+    }
 }

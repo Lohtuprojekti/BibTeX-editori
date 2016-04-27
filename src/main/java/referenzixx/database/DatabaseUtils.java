@@ -107,12 +107,7 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences() {
-        List<BibTeXEntry> entryList = new ArrayList<>();
-
-        for (BibTeXEntry entry : database.getEntries().values()) {
-            entryList.add(entry);
-        }
-        return entryList;
+        return new ArrayList(database.getEntries().values());
     }
 
     /**

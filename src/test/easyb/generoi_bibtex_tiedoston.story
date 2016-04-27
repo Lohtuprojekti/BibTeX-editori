@@ -11,7 +11,7 @@ description "Arto voi generoida bibtex-tiedoston"
 
 scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 
-        File file = new File("src/emptybibtexfile.bib")
+        File file = new File("src/test/emptybibtexfile.bib")
         new PrintWriter(file).close()
         BibtexWriter writer = new BibtexWriter()
         BibTeXDatabase database = new BibTeXDatabase();
@@ -29,7 +29,7 @@ scenario "Bibtexiin kirjoittaminen onnistuu oikeilla syötteillä.", {
 
 scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
     
-        File file = new File("src/emptybibtexfile.bib")
+        File file = new File("src/test/emptybibtexfile.bib")
         new PrintWriter(file).close()
         
         BibtexWriter writer = new BibtexWriter()
@@ -48,7 +48,7 @@ scenario "Bibtexiin kirjoittaminen ei onnistu ilman syötettä.", {
 
 scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
 
-        File file = new File("src/olematon.bib")
+        File file = new File("src/test/olematon.bib")
         file.delete()
         BibtexWriter writer = new BibtexWriter()
         BibTeXDatabase database = new BibTeXDatabase();
@@ -67,7 +67,7 @@ scenario "Bibtexin luonti onnistuu oikealla syötteellä", {
 
 scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
     
-        File file = new File("src/olematon.bib")
+        File file = new File("src/test/olematon.bib")
         file.delete()
         BibtexWriter writer = new BibtexWriter()
         BibTeXDatabase database = new BibTeXDatabase();
