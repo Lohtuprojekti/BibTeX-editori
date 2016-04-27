@@ -70,7 +70,7 @@ scenario "Bibtexin luonti ei onnistu ilman oikeaa syötettä", {
         File file = new File("src/test/olematon.bib")
         file.delete()
         BibtexWriter writer = new BibtexWriter()
-        BibTeXDatabase database = new BibTeXDatabase();
+        BibTeXDatabase database = new BibTeXDatabase()
         BibTeXEntry entry = null
 
     when "Lisätään olematonta", {

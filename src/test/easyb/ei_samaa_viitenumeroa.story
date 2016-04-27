@@ -6,8 +6,16 @@ import referenzixx.parser.*
 
 description "Arto ei voi vahingossa luoda toista viitettä, jolla on sama viitenumero"
 
-scenario "Arto yrittaa lisätä samalla viitenumerolla", {
-	given "Tiedostossa on viite jolla on viitenumero ABC123"
-	when "Tiedostoon lisataan viite jolla on viitenumero ABC123"
-	then "Tiedostoon ei kirjoiteta lisää"
+scenario "Arto yrittää lisätä samalla viitenumerolla", {
+	given "Tiedostossa on viite jolla on viitenumero ABC54", {
+            File file = new File("src/test/shortbibtexfile.bib")
+            DatabaseUtils dbu = new DatabaseUtils(file)
+            BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC54"))
+        }
+	when "Tiedostoon lisataan viite jolla on viitenumero ABC54", {
+            dbu.addEntry(entry)
+        }
+	then "Tiedostoon ei kirjoiteta lisää", {
+            dbu.getReferences.size().shouldBe(2)
+        }
 }
