@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.junit.After;
@@ -16,84 +17,34 @@ import static org.junit.Assert.*;
 
 public class BibtexReaderTest {
 
-    public BibtexReaderTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private BibtexReader reader;
 
     @Before
     public void setUp() {
+        reader = new BibtexReader();
     }
 
-    @After
-    public void tearDown() {
+    @Test
+    public void openNewFileReturnsADatabaseOfBibTexEntriesFromTheFile() {
+        File file = new File("src/test/shortbibtexfile.bib");
+
+        BibTeXDatabase db = reader.openNewFile(file);
+        assertEquals(2, db.getEntries().size());
     }
 
-    
-    /**
-     * Tests of listReferences method, of class BibtexReader.
-     */
-//    @Test
-//    public void metodiPalauttaaSamanMaaranOlioitaKunBibTiedostossaOnViitteita() {
-//        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
-//        Collection<BibTeXEntry> entries = reader.listReferences();
-//
-//        assertEquals(2, entries.size());
-//
-//    }
+    @Test
+    public void getBibFileAsStringReturnsTheContentsOfTheFile() {
+        File file = new File("src/test/veryshort.bib");
+        String contents = reader.getBibFileAsString(file);
 
-    /**
-     * Tests of listArticles method, of class BibtexReader.
-     */
-//    @Test
-//    public void muuttaessaBibtexEntrytArticleOlioiksiPalautetaanSamaMaaraOlioita() {
-//        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
-//        Collection<BibTeXEntry> entries = reader.listReferences();
-//        Collection<IReference> articles = reader.listArticles(entries);
-//        assertEquals(entries.size(), articles.size());
-//    }
-//
-//    @Test
-//    public void metodiMuuttaaBibtexEntryOliotArticleOlioiksi() {
-//        BibtexReader reader = new BibtexReader(new File("src/test/shortbibtexfile.bib"));
-//        Collection<BibTeXEntry> entries = reader.listReferences();
-//        Collection<IReference> articles = reader.listArticles(entries);
-//        assertEquals(Article.class, articles.iterator().next().getClass());        
-//    }
-    /**
-     * Tests of writeToFile method, of class BibtexReader.
-     */
-//    @Test
-//    public void metodiLisaaArtikkelinTiedostoon() throws FileNotFoundException {
-//        File file = new File("src/emptybibtexfile.bib");
-//        new PrintWriter(file).close();
-//        BibtexReader reader = new BibtexReader(file);
-//
-//        assertEquals(0, file.length());
-//        //Article artic = new Article("ABC54", "Kirjoittaja", "Artikkeli", "journal", 1, 2016);
-//        //reader.writeToFile(artic);
-//
-//        assertNotEquals(0, file.length());
-//
-//        file.delete();
-//    }
-//    @Test
-//    public void tyhjanArtikkelinLisaaminenEiOnnistu() throws FileNotFoundException {
-//        File file = new File("src/emptybibtexfile.bib");
-//        new PrintWriter(file).close();
-//        BibtexReader reader = new BibtexReader(file);
-//
-////        Article artic = null;
-////        reader.writeToFile(artic);
-//
-//        assertEquals(0, file.length());
-//
-//        file.delete();
-//    }
+        String expected = "@article{65VF,\n"
+                + "author = {Joku},\n"
+                + "title = {Huono},\n"
+                + "journal = {journal},\n"
+                + "year = {1628},\n"
+                + "volume = {13},\n"
+                + "}";
+
+        assertTrue(contents.contains(expected));
+    }
 }

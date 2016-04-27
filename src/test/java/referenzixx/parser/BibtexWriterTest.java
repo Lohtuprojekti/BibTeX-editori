@@ -11,25 +11,33 @@ import referenzixx.database.DatabaseUtils;
 
 public class BibtexWriterTest {
 
-    public BibtexWriterTest() {
+    private BibtexWriter writer;
+
+    @Before
+    public void setUp() {
+        writer = new BibtexWriter();
     }
 
     @Test
     public void writesAnEntryToAFile() {
-        BibtexWriter writer = new BibtexWriter();
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
 
         File file = new File("src/test/testfile.bib");
-        DatabaseUtils dbu = new DatabaseUtils(file.getPath());
 
         writer.writeToBibtex(entry, file);
 
         BibtexReader reader = new BibtexReader();
         String filecontents = reader.getBibFileAsString(file);
-      
+
         assertTrue(filecontents.contains("ABC"));
         file.delete();
     }
-  
 
+    @Test
+    public void doesNotWriteToFileIfEntryIsNull() {
+        File file = new File("src/test/veryshort.bib");
+        Boolean written = writer.writeToBibtex(null, file);
+        
+        assertEquals(false, written);
+    }
 }

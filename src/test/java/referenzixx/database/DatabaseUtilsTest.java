@@ -42,12 +42,12 @@ public class DatabaseUtilsTest {
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry);
         
-        File newfile = new File("src/test/emptybibtexfile.bib");
-        dbu.selectFile(newfile);
+        File emptyfile = new File("src/test/emptybibtexfile.bib");
+        dbu.selectFile(emptyfile);
         assertTrue(dbu.getReferences().isEmpty());
         assertTrue(dbu.getFile().length() == 0);
         assertTrue(file.length() != 0);
-        file.delete();
+        emptyfile.delete();
     }
 
     @Test
