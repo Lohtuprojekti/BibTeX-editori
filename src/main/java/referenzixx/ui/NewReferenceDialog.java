@@ -80,6 +80,7 @@ public class NewReferenceDialog extends javax.swing.JDialog {
 
         addButton.setText("Lisää");
         addButton.setToolTipText("Lisää artikkeli");
+        addButton.setName("addRefButton"); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -88,11 +89,14 @@ public class NewReferenceDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Peruuta");
         cancelButton.setToolTipText("Peruuta tallentamatta artikkelia");
+        cancelButton.setName("cancelButton"); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
+
+        errorLabel.setName("errorLabel"); // NOI18N
 
         typeChooser.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Article", "Book", "Inproceedings" }));
         typeChooser.addActionListener(new java.awt.event.ActionListener() {
@@ -120,12 +124,11 @@ public class NewReferenceDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(errorLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(typeChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(errorLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addGap(31, 31, 31)
                         .addComponent(addButton)))
@@ -138,12 +141,11 @@ public class NewReferenceDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(typeChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton)
-                    .addComponent(addButton))
+                    .addComponent(addButton)
+                    .addComponent(errorLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(errorLabel)
-                .addContainerGap())
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();

@@ -23,8 +23,10 @@ scenario "Bibtex on juuri avattu ja kopioidaan sisältö leikepoydalle", {
     then "Leikepoydalla on sama sisaltö kuin bibtexissa", {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
-  
-        new BibtexReader().getBibFileAsString(file).shouldBeEqualTo(cb)
+
+        new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).shouldBe cb
+        window.cleanUp()
+
     }
 }
 

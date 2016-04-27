@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -40,6 +40,7 @@ public class ReferencePanel extends javax.swing.JPanel {
         nameLabel.setText(tokenizer.nextToken());
         valueField.setToolTipText(tokenizer.nextToken());
         type = new Key(tokenizer.nextToken());
+        valueField.setName(type.getValue() + "Field");
         isInteger = tokenizer.nextToken().equalsIgnoreCase("integer");
         isRequired = tokenizer.nextToken().equalsIgnoreCase("required");
 

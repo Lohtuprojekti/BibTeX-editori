@@ -5,6 +5,7 @@ import referenzixx.parser.*
 import referenzixx.database.*
 import org.jbibtex.BibTeXEntry
 import org.jbibtex.Key
+import org.jbibtex.*
 
 
 description "Arto ei voi vahingossa luoda toista viitettä, jolla on sama viitenumero"

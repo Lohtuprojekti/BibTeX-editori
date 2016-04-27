@@ -114,6 +114,7 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Lis&#xe4;&#xe4;"/>
         <Property name="toolTipText" type="java.lang.String" value="Lis&#xe4;&#xe4; uusi artikkeli"/>
+        <Property name="name" type="java.lang.String" value="addButton" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addReferenceButtonActionPerformed"/>
@@ -132,6 +133,7 @@
     <Component class="javax.swing.JButton" name="readButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Valitse tiedosto"/>
+        <Property name="name" type="java.lang.String" value="selectButton" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readButtonActionPerformed"/>
@@ -194,6 +196,7 @@
     <Component class="javax.swing.JButton" name="delReferenceButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Poista"/>
+        <Property name="name" type="java.lang.String" value="delButton" noResource="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delReferenceButtonActionPerformed"/>
