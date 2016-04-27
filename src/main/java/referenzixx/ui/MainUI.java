@@ -74,6 +74,9 @@ public class MainUI extends javax.swing.JFrame {
         String title = titleTextField.getText();
         String year = yearTextField.getText();
 
+        if (!ref.isEmpty()) {
+            filters.put("key", ref);
+        }
         if (!author.isEmpty()) {
             filters.put("author", author);
         }

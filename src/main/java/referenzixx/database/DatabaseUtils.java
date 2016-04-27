@@ -41,10 +41,11 @@ public class DatabaseUtils implements ReferenceDatabase {
     public DatabaseUtils(String url) { //Käli haluaa url version
         this(new File(url));
     }
+
     public DatabaseUtils(File file) {
         this.selectFile(file);
     }
-    
+
     /**
      * Changes the currently accessed file and database to given file.
      *
@@ -71,9 +72,10 @@ public class DatabaseUtils implements ReferenceDatabase {
     /**
      * UI uses this method to add entry to database using information it has
      * collected from the user.
+     *
      * @param type
      * @param ref
-     * @param references 
+     * @param references
      */
     public void addEntry(Key type, String ref, List<ReferencePanel> references) {
         ReferenceEntryBuilder builder = new ReferenceEntryBuilder();
@@ -126,6 +128,11 @@ public class DatabaseUtils implements ReferenceDatabase {
                             filter.getValue())) {
                         entryList.add(entry);
                     }
+                } else if (filter.getKey().equals("key") && StringUtil.containsIgnoreCase(
+                        entry.getKey().toString(),
+                        filter.getValue()
+                )) {
+                    entryList.add(entry);
                 }
             }
         }
