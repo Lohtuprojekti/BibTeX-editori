@@ -23,6 +23,7 @@ scenario "Bibtex on juuri avattu ja kopioidaan sisältö leikepoydalle", {
         String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
 
         new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).shouldBe cb
+        window.cleanUp()
     }
 }
 
