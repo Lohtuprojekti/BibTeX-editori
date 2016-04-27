@@ -2,12 +2,18 @@ package referenzixx;
 
 import referenzixx.ui.MainUI;
 import javax.swing.UIManager;
+import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Key;
+import org.jbibtex.KeyValue;
+import referenzixx.database.DatabaseUtils;
+import referenzixx.refs.ReferenceIDGenerator;
 
 public class Main {
 
     public static void main(String[] args) {
 
         /* Set the default look and feel */
+
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
         try {
             javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -18,5 +24,6 @@ public class Main {
 
         MainUI mainUI = new MainUI();
         mainUI.setVisible(true);
+         
     }
 }

@@ -19,7 +19,7 @@ public class BibtexWriterTest {
         BibtexWriter writer = new BibtexWriter();
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
 
-        File file = new File("src/test/emtpy.bib");
+        File file = new File("src/test/testfile.bib");
         DatabaseUtils dbu = new DatabaseUtils(file.getPath());
 
         writer.writeToBibtex(entry, file);

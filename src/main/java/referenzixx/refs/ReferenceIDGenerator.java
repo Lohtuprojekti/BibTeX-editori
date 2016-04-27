@@ -35,7 +35,7 @@ public class ReferenceIDGenerator {
 
         // to prevent a duplicate id from being generated
         referenceIDText = authorRef + this.yearText + cs.next();
-        while (!checkDuplicate(referenceIDText, database)) {
+        while (checkDuplicate(referenceIDText, database)) {
             referenceIDText = authorRef + this.yearText + cs.next();
         }
 
@@ -57,9 +57,9 @@ public class ReferenceIDGenerator {
     // pending database functionality
     private boolean checkDuplicate(String referenceID, BibTeXDatabase database) {
         if (database.getEntries().containsKey(new Key(referenceID))) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     

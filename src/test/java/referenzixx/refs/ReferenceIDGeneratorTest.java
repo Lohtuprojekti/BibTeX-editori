@@ -1,8 +1,10 @@
 package refs;
 
+import java.io.File;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.jbibtex.KeyValue;
+import org.junit.After;
 import referenzixx.refs.ReferenceIDGenerator;
 import referenzixx.database.DatabaseUtils;
 import org.junit.Test;
@@ -22,11 +24,15 @@ public class ReferenceIDGeneratorTest {
     @Before
     public void setUp(){
         dutil = new DatabaseUtils("src/test/testfile.bib");
-        entry = new BibTeXEntry(new Key("Article"), new Key("Testi"));
+        entry = new BibTeXEntry(new Key("Article"), new Key("mafia1990a"));
         entry.addField(new Key("author"), new KeyValue("Taika Mafia"));
         entry.addField(new Key("year"), new KeyValue("1990"));
-        entry.addField(new Key("refnum"), new KeyValue("mafia1990a"));
         dutil.addEntry(entry);
+    }
+    
+    @After
+    public void tearDown(){
+        new File("src/test/testfile.bib").delete();
     }
     
     @Test
@@ -44,13 +50,13 @@ public class ReferenceIDGeneratorTest {
         assertTrue(ret.equals("milla1987a"));
 
     }
-    
-   /* @Test
+
+    @Test
     public void idCreationCreatesUniqueIdForSameNamedAuthor(){
         iGene = new ReferenceIDGenerator("Taika Mafia", "1990");
         String ret = iGene.generateReferenceID(dutil.getDatabase());
         assertTrue(ret.equals("mafia1990b"));
 
-    }*/
+    }
     
 }
