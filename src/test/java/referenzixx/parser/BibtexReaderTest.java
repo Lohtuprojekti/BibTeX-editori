@@ -19,24 +19,9 @@ public class BibtexReaderTest {
 
     private BibtexReader reader;
 
-    public BibtexReaderTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         reader = new BibtexReader();
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -51,7 +36,7 @@ public class BibtexReaderTest {
     public void getBibFileAsStringReturnsTheContentsOfTheFile() {
         File file = new File("src/test/veryshort.bib");
         String contents = reader.getBibFileAsString(file);
-       
+
         String expected = "@article{65VF,\n"
                 + "author = {Joku},\n"
                 + "title = {Huono},\n"
