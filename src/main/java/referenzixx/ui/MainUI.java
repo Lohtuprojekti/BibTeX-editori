@@ -19,14 +19,14 @@ import referenzixx.database.DatabaseUtils;
 public class MainUI extends javax.swing.JFrame {
 
     private DatabaseUtils dbutils;
-    private Map<String, String> filters;
+    private String filters;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
         this.dbutils = new DatabaseUtils();
-        this.filters = new HashMap<>();
+        this.filters = "";
 
         initComponents();
         initListeners();
@@ -67,25 +67,8 @@ public class MainUI extends javax.swing.JFrame {
     }
 
     private void refreshFilters() {
-        filters.clear();
-        
-        String ref = referenceTextField.getText();
-        String author = authorTextField.getText();
-        String title = titleTextField.getText();
-        String year = yearTextField.getText();
 
-        if (!ref.isEmpty()) {
-            filters.put("key", ref);
-        }
-        if (!author.isEmpty()) {
-            filters.put("author", author);
-        }
-        if (!title.isEmpty()) {
-            filters.put("title", title);
-        }
-        if (!year.isEmpty()) {
-            filters.put("year", year);
-        }
+        this.filters = authorTextField.getText();
 
         refresh();
     }

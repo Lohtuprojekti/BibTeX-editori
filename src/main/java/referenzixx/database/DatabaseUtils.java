@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -112,23 +113,31 @@ public class DatabaseUtils implements ReferenceDatabase {
         return database.getEntries().values().stream().collect(Collectors.toList());
     }
 
+    public List<BibTeXEntry> getReferences(String searchTerm) {
+        if (searchTerm.isEmpty()) {
+            return this.getReferences();
+        } else {
+            return this.getReferences(new ArrayList<String>(Arrays.asList(searchTerm)));
+        }
+        
+    }
+
     /**
      *
      * @param filters
      * @return
      */
     @Override
-    public List<BibTeXEntry> getReferences(ArrayList<String> terms) {
-        
+    public List<BibTeXEntry> getReferences(ArrayList<String> searchTerms) {
+
         // If there's need to remove any special chars from the search term
         // it shall be done here.
-                
         // See if any of the Values in in a BibTeXEntry contains the wanted
         // search term.
         return database.getEntries()
                 .values().stream()
                 .filter(e -> e.getFields().values().stream()
-                        .anyMatch(i -> terms.contains(i)))
+                        .anyMatch(i -> searchTerms.contains(i.toUserString())))
                 .collect(Collectors.toList());
 
     }

@@ -163,9 +163,7 @@ public class DatabaseUtilsTest {
         entry3.addField(new Key("author"), new KeyValue("BAR"));
         dbu.addEntry(entry3);
 
-        Map<String, String> filters = new HashMap<>();
-        filters.put("key", "123");
-        filters.put("author", "BAR");
+        String filters = "Zombie";
         List<BibTeXEntry> list = dbu.getReferences(filters);
         assertTrue(list.isEmpty());
         file.delete();
@@ -179,8 +177,7 @@ public class DatabaseUtilsTest {
         entry3.addField(new Key("author"), new KeyValue("BAR"));
         dbu.addEntry(entry3);
 
-        Map<String, String> filters = new HashMap<>();
-        filters.put("author", "B");
+        String filters = "BAR";
         List<BibTeXEntry> list = dbu.getReferences(filters);
         assertTrue(list.size() == 1);
         file.delete();
