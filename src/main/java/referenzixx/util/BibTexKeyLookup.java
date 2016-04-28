@@ -6,7 +6,7 @@ import org.jbibtex.Key;
  *
  * @author kkirjala
  */
-public class FilterFormatter {
+public class BibTexKeyLookup {
 
     // a method for turning a string-based search key to a key object
     public static Key stringToKey(String key) {
