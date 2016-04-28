@@ -51,9 +51,7 @@ public class BibtexReader {
                 bibString += scanner.nextLine() + "\n";
 
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(BibtexReader.class
-                    .getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
         }
         return bibString;
 

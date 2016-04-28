@@ -78,7 +78,6 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @param references
      */
     public void addEntry(Key type, String ref, List<ReferencePanel> references) {
-        ReferenceEntryBuilder builder = new ReferenceEntryBuilder();
         BibTeXEntry entry = new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
         this.addEntry(entry);
     }
@@ -119,20 +118,23 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences(Map<String, String> filters) {
-        List<BibTeXEntry> entryList = new ArrayList<>();
-        for (Map.Entry<String, String> filter : filters.entrySet()) {
-            for (BibTeXEntry entry : database.getEntries().values()) {
-                if (entry.getFields().containsKey(new Key(filter.getKey()))) {
-                    if (StringUtil.containsIgnoreCase(
-                            entry.getField(new Key(filter.getKey())).toUserString(),
+        List<BibTeXEntry> entryList = new ArrayList<>(database.getEntries().values());
+        for (BibTeXEntry bibTeXEntry : database.getEntries().values()) {
+            for (Map.Entry<String, String> filter : filters.entrySet()) {
+                if (bibTeXEntry.getFields().containsKey(new Key(filter.getKey()))) {
+                    if (!StringUtil.containsIgnoreCase(
+                            bibTeXEntry.getField(new Key(filter.getKey())).toUserString(),
                             filter.getValue())) {
-                        entryList.add(entry);
+                        entryList.remove(bibTeXEntry);
+                        break;
                     }
                 } else if (filter.getKey().equals("key") && StringUtil.containsIgnoreCase(
-                        entry.getKey().toString(),
-                        filter.getValue()
-                )) {
-                    entryList.add(entry);
+                        bibTeXEntry.getKey().toString(),
+                        filter.getValue())) {
+                    
+                } else {
+                    entryList.remove(bibTeXEntry);
+                    break;
                 }
             }
         }

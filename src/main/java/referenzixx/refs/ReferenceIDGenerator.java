@@ -65,6 +65,7 @@ public class ReferenceIDGenerator {
     
     // future expansion, not used now.
     // first letters of every word of the journal/publication
+    /*
     private String generateJournalText(String journal) {
 
         String journalRef = "";
@@ -74,5 +75,6 @@ public class ReferenceIDGenerator {
 
         return journalRef.toLowerCase();
     }
+    */
 
 }

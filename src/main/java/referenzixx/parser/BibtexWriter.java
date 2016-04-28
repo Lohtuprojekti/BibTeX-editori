@@ -29,10 +29,8 @@ public class BibtexWriter {
             writer.write(kirjoitettava);
             writer.close();
             return true;
-        } catch (Exception e) {
-        }
-
-        return false;
+        } catch (Exception e) { return false; }
+        
     }
     
     //Teippikeinoksi poistaa viite
@@ -43,9 +41,7 @@ public class BibtexWriter {
                 writeToBibtex(entry, file);
             }
             return true;
-        } catch (Exception e) {
-        }
-        return false;
+        } catch (Exception e) { return false; }
     }
 
     /**

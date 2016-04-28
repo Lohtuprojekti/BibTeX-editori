@@ -1,15 +1,25 @@
 package referenzixx.database;
 
-
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
+import org.jbibtex.KeyValue;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import referenzixx.parser.BibtexReader;
+import referenzixx.refs.ReferenceEntryBuilder;
+import referenzixx.ui.ReferencePanel;
 
 public class DatabaseUtilsTest {
 
@@ -35,11 +45,17 @@ public class DatabaseUtilsTest {
     public void tearDown() {
         file.delete();
     }
+    
+    @Test
+    public void defaultIsCorrect() {
+        DatabaseUtils dbutils = new DatabaseUtils();
+        assertTrue(dbutils.getFile().getPath().contains("referenzixx.bib"));
+    }
 
     @Test
     public void testSelectFile() {
         dbu.addEntry(entry);
-        
+
         File emptyfile = new File("src/test/emptybibtexfile.bib");
         dbu.selectFile(emptyfile);
         assertTrue(dbu.getReferences().isEmpty());
@@ -56,32 +72,32 @@ public class DatabaseUtilsTest {
         assertTrue(filecontents.contains("ABC"));
         file.delete();
     }
-    
+
     @Test
     public void addEntryAddsToDatabase() {
         int added = dbu.getDatabase().getEntries().size();
         assertTrue(added == (original + 1));
         file.delete();
     }
-    
+
     @Test
-    public void entryNotAddedifNull(){
+    public void entryNotAddedifNull() {
         BibTeXEntry entry2 = null;
         dbu.addEntry(entry2);
         int added = dbu.getDatabase().getEntries().size();
         //NOTE: SetUP() already adds 1 to database, thus original+1
-        assertTrue(added == original+1);
+        assertTrue(added == original + 1);
         file.delete();
     }
-    
+
     @Test
-    public void entryNotAddedifNotUniqueKey(){
+    public void entryNotAddedifNotUniqueKey() {
         original = dbu.getDatabase().getEntries().size();
         //add file with same key
-        BibTeXEntry entry2 = new BibTeXEntry(new Key("article"), new Key("ABC"));     
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry2);
         int added = dbu.getDatabase().getEntries().size();
-        
+
         assertTrue(added == original);
         file.delete();
     }
@@ -91,22 +107,22 @@ public class DatabaseUtilsTest {
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
         dbu.addEntry(entry2);
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
-        dbu.delEntry(entry3);      
-        
+        dbu.delEntry(entry3);
+
         assertTrue(!dbu.getReferences().contains(entry));
         assertTrue(dbu.getReferences().contains(entry2));
         file.delete();
     }
-    
+
     @Test
     public void delEntryRemovesFromFile() {
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
         dbu.addEntry(entry);
         dbu.addEntry(entry2);
-        
+
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.delEntry(entry3);
-        
+
         String filecontents = new BibtexReader().getBibFileAsString(file);
         assertTrue(!filecontents.contains("article"));
         file.delete();
@@ -140,7 +156,50 @@ public class DatabaseUtilsTest {
 
     // Filter
     @Test
-    public void testGetReferences_Map() {
+    public void testFilters1() {
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry2);
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
+        entry3.addField(new Key("author"), new KeyValue("BAR"));
+        dbu.addEntry(entry3);
+
+        Map<String, String> filters = new HashMap<>();
+        filters.put("key", "123");
+        filters.put("author", "BAR");
+        List<BibTeXEntry> list = dbu.getReferences(filters);
+        assertTrue(list.isEmpty());
+        file.delete();
+    }
+
+    @Test
+    public void testFilters2() {
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry2);
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
+        entry3.addField(new Key("author"), new KeyValue("BAR"));
+        dbu.addEntry(entry3);
+
+        Map<String, String> filters = new HashMap<>();
+        filters.put("author", "B");
+        List<BibTeXEntry> list = dbu.getReferences(filters);
+        assertTrue(list.size() == 1);
+        file.delete();
+    }
+
+    @Test
+    public void whenCreatingEntryFromPartsCallsAddEntry() {
+        original = dbu.getDatabase().getEntries().size();
+        List<ReferencePanel> references = new ArrayList<>();
+        dbu.addEntry(new Key("book"), "", references);
+
+        int added = dbu.getDatabase().getEntries().size();
+        assertTrue(added == (original + 1));
+
+        BibtexReader reader = new BibtexReader();
+        String filecontents = reader.getBibFileAsString(file);
+
+        assertTrue(filecontents.contains("book"));
+        file.delete();
 
     }
 
