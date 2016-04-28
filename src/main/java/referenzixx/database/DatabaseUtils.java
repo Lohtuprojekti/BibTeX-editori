@@ -118,18 +118,17 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @return
      */
     @Override
-    public List<BibTeXEntry> getReferences(String searchTerm) {
+    public List<BibTeXEntry> getReferences(ArrayList<String> terms) {
         
         // If there's need to remove any special chars from the search term
         // it shall be done here.
-        
-        
+                
         // See if any of the Values in in a BibTeXEntry contains the wanted
         // search term.
         return database.getEntries()
                 .values().stream()
                 .filter(e -> e.getFields().values().stream()
-                        .anyMatch(i -> i.toUserString().contains(searchTerm)))
+                        .anyMatch(i -> terms.contains(i)))
                 .collect(Collectors.toList());
 
     }
