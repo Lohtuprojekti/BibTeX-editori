@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
@@ -108,7 +109,7 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences() {
-        return new ArrayList(database.getEntries().values());
+        return database.getEntries().values().stream().collect(Collectors.toList());
     }
 
     /**
@@ -117,28 +118,20 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @return
      */
     @Override
-    public List<BibTeXEntry> getReferences(Map<String, String> filters) {
-        List<BibTeXEntry> entryList = new ArrayList<>(database.getEntries().values());
-        for (BibTeXEntry bibTeXEntry : database.getEntries().values()) {
-            for (Map.Entry<String, String> filter : filters.entrySet()) {
-                if (bibTeXEntry.getFields().containsKey(new Key(filter.getKey()))) {
-                    if (!StringUtil.containsIgnoreCase(
-                            bibTeXEntry.getField(new Key(filter.getKey())).toUserString(),
-                            filter.getValue())) {
-                        entryList.remove(bibTeXEntry);
-                        break;
-                    }
-                } else if (filter.getKey().equals("key") && StringUtil.containsIgnoreCase(
-                        bibTeXEntry.getKey().toString(),
-                        filter.getValue())) {
-                    
-                } else {
-                    entryList.remove(bibTeXEntry);
-                    break;
-                }
-            }
-        }
-        return entryList;
+    public List<BibTeXEntry> getReferences(String searchTerm) {
+        
+        // If there's need to remove any special chars from the search term
+        // it shall be done here.
+        
+        
+        // See if any of the Values in in a BibTeXEntry contains the wanted
+        // search term.
+        return database.getEntries()
+                .values().stream()
+                .filter(e -> e.getFields().values().stream()
+                        .anyMatch(i -> i.toUserString().contains(searchTerm)))
+                .collect(Collectors.toList());
+
     }
 
     /**

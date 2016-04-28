@@ -9,6 +9,6 @@ public interface ReferenceDatabase {
     
     public List<BibTeXEntry> getReferences();
     
-    public List<BibTeXEntry> getReferences(Map<String, String> filters);
+    public List<BibTeXEntry> getReferences(String searchTerm);
         
 }
