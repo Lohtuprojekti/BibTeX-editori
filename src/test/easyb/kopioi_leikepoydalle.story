@@ -19,11 +19,11 @@ scenario "Bibtex on juuri avattu ja kopioidaan sisältö leikepoydalle", {
         window = new FrameFixture(ui)
     
     when "Kopioidaan leikepoydalle", {
-         window.button("copyButton").click()
+        window.button("copyButton").click()
     }
     then "Leikepoydalla on sama sisaltö kuin bibtexissa", {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-         String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
+        String cb = (String) clipboard.getData(DataFlavor.stringFlavor);
 
         new BibtexReader().getBibFileAsString(new File("referenzixx.bib")).shouldBeEqualTo(cb)
         window.cleanUp()

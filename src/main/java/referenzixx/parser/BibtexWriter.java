@@ -70,8 +70,18 @@ public class BibtexWriter {
         String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             if (!valuepair.getValue().toUserString().isEmpty()) {
-                entryString += ("\t" + valuepair.getKey().toString() + " = {"
+                
+                if (valuepair.getKey().equals(new Key("author"))) {
+                    String authors = ("\t" + valuepair.getKey().toString() + " = {"
+                        + valuepair.getValue().toUserString());
+                    authors = authors.replaceAll(",", " and");
+                    entryString += authors + "},\r\n";
+                   
+                } else {
+                    entryString += ("\t" + valuepair.getKey().toString() + " = {"
                         + valuepair.getValue().toUserString() + "},\r\n");
+                }
+                
             }
         }
         return entryString;

@@ -2,7 +2,10 @@ package referenzixx.database;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.junit.After;
@@ -141,7 +144,12 @@ public class DatabaseUtilsTest {
     // Filter
     @Test
     public void testGetReferences_Map() {
-
+        File bigfile = new File("src/test/bibtexfile.bib");
+        dbu.selectFile(bigfile);
+        Map<String, String> filters = new HashMap<>();
+        filters.put("year", "2004");
+        List<BibTeXEntry> results = dbu.getReferences(filters);
+//        assertEquals(3, results.size());
     }
 
     @Test
