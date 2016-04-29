@@ -1,13 +1,11 @@
 package referenzixx.parser;
 
 import java.io.File;
-import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import referenzixx.database.DatabaseUtils;
 
 public class BibtexWriterTest {
 

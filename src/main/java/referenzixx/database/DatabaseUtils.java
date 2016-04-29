@@ -5,8 +5,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
@@ -78,7 +80,6 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @param references
      */
     public void addEntry(Key type, String ref, List<ReferencePanel> references) {
-        ReferenceEntryBuilder builder = new ReferenceEntryBuilder();
         BibTeXEntry entry = new ReferenceEntryBuilder().buildEntry(type, ref, database, references);
         this.addEntry(entry);
     }
@@ -109,7 +110,16 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences() {
-        return new ArrayList(database.getEntries().values());
+        return database.getEntries().values().stream().collect(Collectors.toList());
+    }
+
+    public List<BibTeXEntry> getReferences(String searchTerm) {
+        if (searchTerm.isEmpty()) {
+            return this.getReferences();
+        } else {
+            return this.getReferences(new ArrayList<String>(Arrays.asList(searchTerm)));
+        }
+        
     }
 
     /**
@@ -118,25 +128,18 @@ public class DatabaseUtils implements ReferenceDatabase {
      * @return
      */
     @Override
-    public List<BibTeXEntry> getReferences(Map<String, String> filters) {
-        List<BibTeXEntry> entryList = new ArrayList<>();
-        for (Map.Entry<String, String> filter : filters.entrySet()) {
-            for (BibTeXEntry entry : database.getEntries().values()) {
-                if (entry.getFields().containsKey(new Key(filter.getKey()))) {
-                    if (StringUtil.containsIgnoreCase(
-                            entry.getField(new Key(filter.getKey())).toUserString(),
-                            filter.getValue())) {
-                        entryList.add(entry);
-                    }
-                } else if (filter.getKey().equals("key") && StringUtil.containsIgnoreCase(
-                        entry.getKey().toString(),
-                        filter.getValue()
-                )) {
-                    entryList.add(entry);
-                }
-            }
-        }
-        return entryList;
+    public List<BibTeXEntry> getReferences(ArrayList<String> searchTerms) {
+
+        // If there's need to remove any special chars from the search term
+        // it shall be done here.
+        // See if any of the Values in in a BibTeXEntry contains the wanted
+        // search term.
+        return database.getEntries()
+                .values().stream()
+                .filter(e -> e.getFields().values().stream()
+                        .anyMatch(i -> searchTerms.contains(i.toUserString())))
+                .collect(Collectors.toList());
+
     }
 
     /**

@@ -15,6 +15,7 @@ public class BibtexWriter {
     /**
      * Writes reference to a .bib file.
      *
+     * @param entry
      * @param kirjoitettava
      * @param file
      * @return
@@ -29,13 +30,18 @@ public class BibtexWriter {
             writer.write(kirjoitettava);
             writer.close();
             return true;
-        } catch (Exception e) {
-        }
-
-        return false;
+        } catch (Exception e) { return false; }
+        
     }
     
-    //Teippikeinoksi poistaa viite
+    /**
+     * Rewrites the whole database to a file.
+     * Used when removing a reference.
+     * 
+     * @param database
+     * @param file
+     * @return 
+     */
     public boolean rewriteDatabaseToBibtex(BibTeXDatabase database, File file) {
         try {
             new PrintWriter(file).close();
@@ -43,9 +49,7 @@ public class BibtexWriter {
                 writeToBibtex(entry, file);
             }
             return true;
-        } catch (Exception e) {
-        }
-        return false;
+        } catch (Exception e) { return false; }
     }
 
     /**

@@ -29,7 +29,7 @@ public class ReferenceEntryBuilder {
             ref = refID.generateReferenceID(database);
         }
         BibTeXEntry entry = new BibTeXEntry(type, new Key(ref));
-
+        
         for (ReferencePanel reference : references) {
             entry.addField(reference.getType(), reference.getValue());
         }
