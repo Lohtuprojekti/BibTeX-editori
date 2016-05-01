@@ -67,8 +67,12 @@ public class ReferenceIDGenerator {
         String text = "";
         String authors[] = author.split(", ");
         for (String a : authors) {
-            String[] name = a.split(" ");
-            text += name[1].substring(0, 2);
+            if (a.contains(" ")) {
+                String[] name = a.split(" ");
+                text += name[1].substring(0, 2);
+            } else {
+                text += a.substring(0, 2);
+            }                
         }
         return text.toLowerCase();
     }
