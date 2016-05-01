@@ -44,6 +44,27 @@ public class ReferenceIDGeneratorTest {
         assertTrue(ret.equals("milla1987a"));
 
     }
+    
+    @Test
+    public void idCreationWorksWithMultipleAuthors() {
+        iGene = new ReferenceIDGenerator("Joku Nimi, Toinen Tyyppi", "2014");
+        String ret = iGene.generateReferenceID(dutil.getDatabase());
+        assertTrue(ret.equals("nity2014a"));
+    }
+    
+    @Test
+    public void idCreationKeepsLengthOfIDUnder12CharactersWithOneAuthor() {
+        iGene = new ReferenceIDGenerator("Schwarzenegger", "1980");
+        String ret = iGene.generateReferenceID(dutil.getDatabase());
+        assertTrue(ret.equals("schwarz1980a"));
+    }
+    
+    @Test
+    public void idCreationKeepsLengthOfIDUnder12CharactersWithMultipleAuthors() {
+        iGene = new ReferenceIDGenerator("Eka Tyyppi, Joku Muu, Some Body, Hemmo Heebo", "1980");
+        String ret = iGene.generateReferenceID(dutil.getDatabase());
+        assertTrue(ret.equals("tymuboh1980a"));
+    }
 
     @Test
     public void idCreationCreatesUniqueIdForSameNamedAuthor(){

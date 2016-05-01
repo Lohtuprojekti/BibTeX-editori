@@ -99,9 +99,7 @@ public class BibtexWriter {
      * @return String containing authors separated by and
      */
     private String separateAuthorsWithAnd(Map.Entry<Key, Value> valuepair) {
-        String authors = ("\t" + valuepair.getKey().toString() + " = {"
-                + valuepair.getValue().toUserString());
-        authors = authors.replaceAll(",", " and");
-        return authors + "},\r\n";
+        String authors = valuepair.getValue().toUserString().replace(",", " and");
+        return ("\t" + valuepair.getKey().toString() + " = {" + authors) + "},\r\n";
     }
 }
