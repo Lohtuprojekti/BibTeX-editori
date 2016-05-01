@@ -30,17 +30,18 @@ public class BibtexWriter {
             writer.write(kirjoitettava);
             writer.close();
             return true;
-        } catch (Exception e) { return false; }
-        
+        } catch (Exception e) {
+            return false;
+        }
+
     }
-    
+
     /**
-     * Rewrites the whole database to a file.
-     * Used when removing a reference.
-     * 
+     * Rewrites the whole database to a file. Used when removing a reference.
+     *
      * @param database
      * @param file
-     * @return 
+     * @return
      */
     public boolean rewriteDatabaseToBibtex(BibTeXDatabase database, File file) {
         try {
@@ -49,7 +50,9 @@ public class BibtexWriter {
                 writeToBibtex(entry, file);
             }
             return true;
-        } catch (Exception e) { return false; }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -61,33 +64,44 @@ public class BibtexWriter {
     private String bibtexBuilder(BibTeXEntry entry) {
         return "@" + entry.getType().getValue() + "{"
                 + entry.getKey().getValue() + ",\r\n"
-        + iterateReferenceToString(entry) + "}\r\n\r\n";
+                + iterateReferenceToString(entry) + "}\r\n\r\n";
     }
 
     /**
      * Iterates through the key-value pairs in BibTeXEntry and converts them to
      * String.
-     * @param entry 
-     * @return 
+     *
+     * @param entry
+     * @return
      */
     private String iterateReferenceToString(BibTeXEntry entry) {
         String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             if (!valuepair.getValue().toUserString().isEmpty()) {
-                
+
                 if (valuepair.getKey().equals(new Key("author"))) {
-                    String authors = ("\t" + valuepair.getKey().toString() + " = {"
-                        + valuepair.getValue().toUserString());
-                    authors = authors.replaceAll(",", " and");
-                    entryString += authors + "},\r\n";
-                   
+                    entryString += separateAuthorsWithAnd(valuepair);
+
                 } else {
                     entryString += ("\t" + valuepair.getKey().toString() + " = {"
-                        + valuepair.getValue().toUserString() + "},\r\n");
+                            + valuepair.getValue().toUserString() + "},\r\n");
                 }
-                
+
             }
         }
         return entryString;
+    }
+
+    /**
+     * Replaces commas with 'and' to separate multiple authors.
+     * 
+     * @param valuepair value is a string containing author(s) separated by comma
+     * @return String containing authors separated by and
+     */
+    private String separateAuthorsWithAnd(Map.Entry<Key, Value> valuepair) {
+        String authors = ("\t" + valuepair.getKey().toString() + " = {"
+                + valuepair.getValue().toUserString());
+        authors = authors.replaceAll(",", " and");
+        return authors + "},\r\n";
     }
 }
