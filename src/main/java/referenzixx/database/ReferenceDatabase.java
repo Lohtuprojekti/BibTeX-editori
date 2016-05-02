@@ -10,6 +10,6 @@ public interface ReferenceDatabase {
     
     public List<BibTeXEntry> getReferences();
     
-    public List<BibTeXEntry> getReferences(ArrayList<String> searchTerms);
+    public List<BibTeXEntry> getReferences(List<String> searchTerms);
         
 }
