@@ -15,5 +15,5 @@ Series|Kirjasarja|series|string|optional
 Address|Address|address|string|optional
 Edition|Edition|edition|string|optional
 Month|Month|month|integer|optional
-Note|Note|note|string|optional
+Tag/Note|Note|note|string|optional
 Key|Key|key|string|optional
