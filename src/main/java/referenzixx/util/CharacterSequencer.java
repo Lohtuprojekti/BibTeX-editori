@@ -7,11 +7,12 @@ public class CharacterSequencer {
 
     private String currChars;
 
+    public CharacterSequencer() {
+        this.currChars = "";
+    }
     
     public CharacterSequencer(String initialChars) {
-
         this.currChars = initialChars;
-
     }
 
     // next() will return the next in sequence. 
