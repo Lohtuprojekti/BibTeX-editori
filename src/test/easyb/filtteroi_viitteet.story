@@ -10,11 +10,7 @@ description "Viitteitä voi filtteröidä yhden hakuehdon perusteella"
 
 scenario "Arto hakee viitteitä vuosiluvun perusteella", {
 
-<<<<<<< HEAD
         File file = new File("src/test/shortbibtexfile.bib")
-=======
-        File file = new File("src/test/bibtexfile.bib")
->>>>>>> Jami
         DatabaseUtils dbu = new DatabaseUtils(file)
         List<BibTeXEntry> results = new ArrayList<BibTeXEntry>()
     
