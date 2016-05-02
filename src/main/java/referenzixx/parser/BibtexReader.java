@@ -49,7 +49,6 @@ public class BibtexReader {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 bibString += scanner.nextLine() + "\n";
-
             }
         } catch (Exception e) {
         }
