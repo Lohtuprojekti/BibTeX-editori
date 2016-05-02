@@ -21,6 +21,42 @@ public class CharacterSequencerTest {
     }
     
     @Test
+    public void testMultipleNextWithDefaultConstructor() {
+        CharacterSequencer characterSequencer = new CharacterSequencer();
+        String firstCharacter = characterSequencer.next();
+        String secondCharacter = characterSequencer.next();
+        String thirdCharacter = characterSequencer.next();
+        assertEquals("a", firstCharacter);
+        assertEquals("b", secondCharacter);
+        assertEquals("c", thirdCharacter);
+    }
+    
+    @Test
+    public void testMultipleNextWithAAB() {
+        CharacterSequencer characterSequencer = new CharacterSequencer("aab");
+        String firstCharacter = characterSequencer.next();
+        String secondCharacter = characterSequencer.next();
+        String thirdCharacter = characterSequencer.next();
+        assertEquals("aac", firstCharacter);
+        assertEquals("aad", secondCharacter);
+        assertEquals("aae", thirdCharacter);
+    }
+    
+    @Test
+    public void testNextWithEmptyInitialization() {
+        CharacterSequencer characterSequencer = new CharacterSequencer("");
+        String nextCharacter = characterSequencer.next();
+        assertEquals("a", nextCharacter);
+    }
+        
+    @Test
+    public void testNextWithNullInitialization() {
+        CharacterSequencer characterSequencer = new CharacterSequencer(null);
+        String nextCharacter = characterSequencer.next();
+        assertEquals("a", nextCharacter);
+    }
+    
+    @Test
     public void testNextAfterZ() {
         CharacterSequencer characterSequencer = new CharacterSequencer("z");
         String nextCharacter = characterSequencer.next();
@@ -40,6 +76,13 @@ public class CharacterSequencerTest {
         String nextCharacter = characterSequencer.next();
         assertEquals("ba", nextCharacter);
     }
+        
+    @Test
+    public void testNextAfterZZ() {
+        CharacterSequencer characterSequencer = new CharacterSequencer("zz");
+        String nextCharacter = characterSequencer.next();
+        assertEquals("aaa", nextCharacter);
+    }
     
     @Test
     public void testNextAfterRandomWord() {
@@ -53,5 +96,12 @@ public class CharacterSequencerTest {
         CharacterSequencer characterSequencer = new CharacterSequencer("");
         String nextCharacter = characterSequencer.next();
         assertEquals("a", nextCharacter);
+    }
+    
+    @Test
+    public void testWithInitializedWordOutOfScope() {
+        CharacterSequencer characterSequencer = new CharacterSequencer("aböz");
+        String nextCharacter = characterSequencer.next();
+        assertEquals("acaa", nextCharacter);
     }
 }
