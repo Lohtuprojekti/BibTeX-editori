@@ -1,15 +1,11 @@
 package referenzixx.ui;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;

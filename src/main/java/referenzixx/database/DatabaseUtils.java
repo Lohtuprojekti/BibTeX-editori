@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
@@ -16,7 +15,6 @@ import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.ui.ReferencePanel;
-import referenzixx.util.StringUtil;
 
 /**
  *

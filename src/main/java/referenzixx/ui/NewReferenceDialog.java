@@ -2,7 +2,6 @@ package referenzixx.ui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JPanel;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
 
