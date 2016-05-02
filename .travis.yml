@@ -7,7 +7,15 @@ branches:
 jdk:
   - oraclejdk8
 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
+
 install: true
+
+script:
+  - mvn integration-test
 
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
