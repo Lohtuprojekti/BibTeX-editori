@@ -37,6 +37,15 @@ public class MainUI extends javax.swing.JFrame {
         refresh();
     }
 
+    public MainUI(DatabaseUtils dbutils) {
+        this.dbutils = dbutils;
+        this.filters = "";
+
+        initComponents();
+        initListeners();
+        refresh();
+    }
+
     public DatabaseUtils getDBUtils() {
         return this.dbutils;
     }
@@ -94,7 +103,7 @@ public class MainUI extends javax.swing.JFrame {
                 refreshFilters();
             }
         };
-        
+
         referenceTextField.getDocument().addDocumentListener(documentListener);
         authorTextField.getDocument().addDocumentListener(documentListener);
         titleTextField.getDocument().addDocumentListener(documentListener);

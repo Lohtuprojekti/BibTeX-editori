@@ -2,9 +2,10 @@ import referenzixx.*
 import referenzixx.refs.*
 import referenzixx.ui.*
 import referenzixx.database.*
-import org.jbibtex.BibTeXEntry;
-import org.jbibtex.Key;
+import org.jbibtex.*
 import org.fest.swing.fixture.*
+import java.io.File;
+
 
 
 description 'Arto voi lisätä viitteen, jolla on viitteelle tyypilliset kentät.'
@@ -12,7 +13,7 @@ description 'Arto voi lisätä viitteen, jolla on viitteelle tyypilliset kentät
 scenario "Lisääminen onnistuu kun kaikki pakolliset on annettu", {
 
     given 'Kaikki tiedot on annettu', {
-        ui = new MainUI()
+        ui = new MainUI(new DatabaseUtils("src/test/testfile.bib"))
         ui.setVisible(true)
         window = new FrameFixture(ui)
 
@@ -30,14 +31,13 @@ scenario "Lisääminen onnistuu kun kaikki pakolliset on annettu", {
         dialog.requireNotVisible()
         dialog.cleanUp()
         window.cleanUp()
-
     }
 }
 
 scenario "Lisääminen epäonnistuu jos kaikki pakolliset ovat tyhjänä", {
 
     given 'Kaikki tiedot puuttuvat', {
-        ui = new MainUI()
+        ui = new MainUI(new DatabaseUtils("src/test/testfile.bib"))
         ui.setVisible(true)
         window = new FrameFixture(ui)
         window.button("addButton").click()
@@ -57,7 +57,7 @@ scenario "Lisääminen epäonnistuu jos kaikki pakolliset ovat tyhjänä", {
 scenario "Lisääminen epäonnistuu kun jotakin pakollista ei ole annettu", {
 
     given 'Kaikki paitsi yksi tieto on annettu', {
-        ui = new MainUI()
+        ui = new MainUI(new DatabaseUtils("src/test/testfile.bib"))
         ui.setVisible(true)
         window = new FrameFixture(ui)
 

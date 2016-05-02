@@ -14,4 +14,4 @@ Volume|Volume|volume|integer|optional
 Number|Number|number|integer|optional
 Pages|Pages|pages|integer|optional
 Month|Month|month|string|optional
-Note|Note|note|string|optional
+Tag/Note|Note|note|string|optional
