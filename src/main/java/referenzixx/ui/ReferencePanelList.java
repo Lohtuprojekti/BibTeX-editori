@@ -26,7 +26,7 @@ public class ReferencePanelList extends JPanel {
     private void initComponents() {
         List<String> lines = ConfigFileParser.parseFile(configUrl, "***");
 
-        Dimension size = new Dimension(550, (lines.size() + 1) / 2 * 42);
+        Dimension size = new Dimension(630, (lines.size() + 1) / 2 * 42);
         JPanel panel = new JPanel();
         panel.setSize(size);
         this.setSize(size);

@@ -113,6 +113,11 @@ public class DatabaseUtils implements ReferenceDatabase {
         return database.getEntries().values().stream().collect(Collectors.toList());
     }
 
+    /**
+     * Searches the database for entries 
+     * @param searchTerm
+     * @return 
+     */
     public List<BibTeXEntry> getReferences(String searchTerm) {
         if (searchTerm.isEmpty()) {
             return this.getReferences();
@@ -123,12 +128,12 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
-     *
-     * @param filters
+     * Searches the database for entries 
+     * @param searchTerms
      * @return
      */
     @Override
-    public List<BibTeXEntry> getReferences(ArrayList<String> searchTerms) {
+    public List<BibTeXEntry> getReferences(List<String> searchTerms) {
 
         // If there's need to remove any special chars from the search term
         // it shall be done here.

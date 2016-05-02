@@ -18,5 +18,5 @@ Address|Address|address|string|optional
 Month|Kuukausi|month|integer|optional
 Organization|Organisaatio|organization|string|optional
 Publisher|Julkaisija|publisher|string|optional
-Note|Note|note|string|optional
+Tag/Note|Note|note|string|optional
 Key|Key|key|string|optional

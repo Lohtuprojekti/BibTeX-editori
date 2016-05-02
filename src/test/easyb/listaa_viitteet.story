@@ -14,7 +14,7 @@ scenario "Listassa on yhtä monta viitettä kuin tiedostossa", {
         window = new FrameFixture(ui)
     }
     when 'Ei tehdä muutoksia', {
-        rows = new DatabaseUtils().getReferences().size()
+        rows = ui.getDBUtils().getReferences().size()
     }
     then 'Listassa on yhtä monta viitettä kuin tiedostossa', {
         window.table().requireRowCount(rows)
@@ -24,7 +24,7 @@ scenario "Listassa on yhtä monta viitettä kuin tiedostossa", {
 
 scenario "Arto näkee juuri lisätyn viitteen", {
     given 'Arto syöttää kaikki vaadittavat tiedot', {
-        ui = new MainUI()
+        ui = new MainUI(new DatabaseUtils("src/test/testfile.bib"))
         ui.setVisible(true)
         window = new FrameFixture(ui)
 
@@ -37,7 +37,7 @@ scenario "Arto näkee juuri lisätyn viitteen", {
     }
     when 'Viite lisätään', {
         dialog.button("addRefButton").click()
-        row = new DatabaseUtils().getReferences().size()-1
+        row = ui.getDBUtils().getReferences().size()-1
     }
     then 'Juuri lisätty viite ilmestyy listan loppuun', {
         window.table().cell(TableCell.row(row).column(1)).requireValue "test"

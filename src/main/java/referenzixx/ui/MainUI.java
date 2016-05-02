@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFileChooser;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jbibtex.BibTeXEntry;
@@ -26,6 +30,15 @@ public class MainUI extends javax.swing.JFrame {
      */
     public MainUI() {
         this.dbutils = new DatabaseUtils();
+        this.filters = "";
+
+        initComponents();
+        initListeners();
+        refresh();
+    }
+
+    public MainUI(DatabaseUtils dbutils) {
+        this.dbutils = dbutils;
         this.filters = "";
 
         initComponents();
@@ -90,11 +103,23 @@ public class MainUI extends javax.swing.JFrame {
                 refreshFilters();
             }
         };
-        
+
         referenceTextField.getDocument().addDocumentListener(documentListener);
         authorTextField.getDocument().addDocumentListener(documentListener);
         titleTextField.getDocument().addDocumentListener(documentListener);
         yearTextField.getDocument().addDocumentListener(documentListener);
+        
+        ListSelectionModel listSelectionModel = referenceTable.getSelectionModel();
+        listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        listSelectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (referenceTable.getSelectedRow() == -1) {
+                delReferenceButton.setEnabled(false);
+            }
+            else {
+                delReferenceButton.setEnabled(true);
+            }
+        });
     }
 
     /**
@@ -186,6 +211,7 @@ public class MainUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(referenceTable);
 
         delReferenceButton.setText("Poista");
+        delReferenceButton.setEnabled(false);
         delReferenceButton.setName("delButton"); // NOI18N
         delReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +353,7 @@ public class MainUI extends javax.swing.JFrame {
         if (selectedRow != -1) {
             dbutils.delEntry(references.get(selectedRow));
         }
+        
         refresh();
     }//GEN-LAST:event_delReferenceButtonActionPerformed
 

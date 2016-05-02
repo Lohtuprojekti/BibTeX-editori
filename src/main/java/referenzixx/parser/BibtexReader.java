@@ -6,11 +6,8 @@
 package referenzixx.parser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jbibtex.*;
 
 /**
@@ -49,7 +46,6 @@ public class BibtexReader {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 bibString += scanner.nextLine() + "\n";
-
             }
         } catch (Exception e) {
         }
