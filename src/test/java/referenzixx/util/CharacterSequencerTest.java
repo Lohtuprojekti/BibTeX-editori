@@ -47,4 +47,11 @@ public class CharacterSequencerTest {
         String nextCharacter = characterSequencer.next();
         assertEquals("changeMyLastCharactes", nextCharacter);
     }
+    
+    @Test
+    public void testNextAfterEmptyInitialization() {
+        CharacterSequencer characterSequencer = new CharacterSequencer("");
+        String nextCharacter = characterSequencer.next();
+        assertEquals("a", nextCharacter);
+    }
 }
