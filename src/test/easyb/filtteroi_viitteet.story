@@ -12,7 +12,6 @@ description "Viitteitä voi filtteröidä yhden hakuehdon perusteella"
 
 scenario "Arto hakee viitteitä vuosiluvun perusteella", {
 
- 
         File file = new File("src/test/bibtexfile.bib")
         DatabaseUtils dbu = new DatabaseUtils(file)
         Map<String, String> filters = new HashMap<String, String>()
