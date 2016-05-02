@@ -196,6 +196,7 @@
     <Component class="javax.swing.JButton" name="delReferenceButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Poista"/>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="delButton" noResource="true"/>
       </Properties>
       <Events>
