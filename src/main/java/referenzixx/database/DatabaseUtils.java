@@ -115,14 +115,22 @@ public class DatabaseUtils implements ReferenceDatabase {
 
     /**
      * Searches the database for entries 
-     * @param searchTerm
+     * @param searchTerm  Single word or several ones separated by "and" keywords.
      * @return 
      */
     public List<BibTeXEntry> getReferences(String searchTerm) {
+        
+        
         if (searchTerm.isEmpty()) {
             return this.getReferences();
         } else {
-            return this.getReferences(new ArrayList<String>(Arrays.asList(searchTerm)));
+            
+            // we'll check if there are multiple search terms included in
+            // one string (separated by " and " keyword) and splice 
+            // into arraylist accordingly.
+            String[] multipleSearchTerms = searchTerm.split(" (and) | (AND) ");            
+            
+            return this.getReferences(new ArrayList<String>(Arrays.asList(multipleSearchTerms)));
         }
         
     }
