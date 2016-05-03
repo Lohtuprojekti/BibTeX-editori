@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
+import org.jbibtex.KeyValue;
+import org.jbibtex.LiteralValue;
 import org.jbibtex.Value;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
@@ -68,10 +70,24 @@ public class DatabaseUtils implements ReferenceDatabase {
             return;
         }
         //Muutetaan authori tässä vaiheessa
+        entry = separateAuthorsWithAnd(entry);
         database.addObject(entry);
         new BibtexWriter().writeToBibtex(entry, file);
     }
 
+    /**
+     * 
+     * @param entry
+     * @return 
+     */
+    private BibTeXEntry separateAuthorsWithAnd(BibTeXEntry entry) {
+        String authors = entry.getField(new Key("author")).toUserString();
+        authors = authors.replace(",", " and");
+        entry.removeField(new Key("author"));
+        entry.addField(new Key("author"), new KeyValue(authors));
+        return entry;
+    }
+    
     /**
      * UI uses this method to add entry to database using information it has
      * collected from the user.

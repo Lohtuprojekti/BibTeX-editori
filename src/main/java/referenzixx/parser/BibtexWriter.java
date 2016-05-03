@@ -84,22 +84,9 @@ public class BibtexWriter {
     
     private String valuePairToBibTeXString(Map.Entry<Key, Value> valuepair) {
         if (valuepair.getValue().toUserString().isEmpty()) return "";
-        
-        if (valuepair.getKey().equals(new Key("author")))
-            return separateAuthorsWithAnd(valuepair);
-        
+               
         return "\t" + valuepair.getKey().toString() + " = {"
                     + valuepair.getValue().toUserString() + "},\r\n";
     }
-    
-    /**
-     * Replaces commas with 'and' to separate multiple authors.
-     * 
-     * @param valuepair value is a string containing author(s) separated by comma
-     * @return String containing authors separated by and
-     */
-    private String separateAuthorsWithAnd(Map.Entry<Key, Value> valuepair) {
-        String authors = valuepair.getValue().toUserString().replace(",", " and");
-        return ("\t" + valuepair.getKey().toString() + " = {" + authors) + "},\r\n";
-    }
+   
 }
