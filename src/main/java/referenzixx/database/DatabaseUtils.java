@@ -68,24 +68,27 @@ public class DatabaseUtils implements ReferenceDatabase {
     public void addEntry(BibTeXEntry entry) {
         if (entry == null || !isRefnumUnique(entry.getKey(), database)) {
             return;
+        }        
+        
+        // Reformatting author visual presentation (if key found)
+        if (entry.getField(new Key("author")) != null) {
+            String authorsFormatted = separateAuthorsWithAnd(entry.getField(new Key("author")).toUserString());
+            
+            entry.removeField(new Key("author"));
+            entry.addField(new Key("author"), new KeyValue(authorsFormatted));
         }
-        //Muutetaan authori tässä vaiheessa
-        entry = separateAuthorsWithAnd(entry);
+                
         database.addObject(entry);
         new BibtexWriter().writeToBibtex(entry, file);
     }
 
     /**
      * Replaces commas with 'and' to separate multiple authors.
-     * @param entry
+     * @param String
      * @return 
      */
-    private BibTeXEntry separateAuthorsWithAnd(BibTeXEntry entry) {
-        String authors = entry.getField(new Key("author")).toUserString();
-        authors = authors.replace(",", " and");
-        entry.removeField(new Key("author"));
-        entry.addField(new Key("author"), new KeyValue(authors));
-        return entry;
+    private String separateAuthorsWithAnd(String authorText) {
+        return authorText.replace(",", " and");
     }
     
     /**
@@ -141,7 +144,6 @@ public class DatabaseUtils implements ReferenceDatabase {
         if (searchTerm.isEmpty()) {
             return this.getReferences();
         } else {
-            
             // we'll check if there are multiple search terms included in
             // one string (separated by " and " keyword) and splice 
             // into arraylist accordingly.
