@@ -67,6 +67,7 @@ public class DatabaseUtils implements ReferenceDatabase {
         if (entry == null || !isRefnumUnique(entry.getKey(), database)) {
             return;
         }
+        //Muutetaan authori tässä vaiheessa
         database.addObject(entry);
         new BibtexWriter().writeToBibtex(entry, file);
     }
