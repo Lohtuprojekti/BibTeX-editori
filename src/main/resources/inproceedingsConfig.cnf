@@ -6,8 +6,8 @@
 *** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
 
 
-Author|Tekij‰|author|string|required
-Title|Otsikko|title|string|required
+Author|Author of inproceedings|author|string|required
+Title|Title of inproceedings|title|string|required
 Booktitle|Kirjan otsikko|booktitle|string|required
 Year|Julkaisuvuosi|year|string|required
 Editor|Editor|editor|string|optional

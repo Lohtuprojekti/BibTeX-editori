@@ -40,6 +40,11 @@ public class ReferencePanelList extends JPanel {
         }
     }
 
+    /**
+     * Checks if every required field is filled.
+     * 
+     * @return True if required fields are filled, false otherwise.
+     */
     public boolean valuesOk() {
         for (ReferencePanel reference : references) {
             if (!reference.valueOk()) {
@@ -50,6 +55,11 @@ public class ReferencePanelList extends JPanel {
         return true;
     }
 
+    /**
+     * Checks if fields marked as integer can be converted.
+     * 
+     * @return True if converts were succesful, false otherwise.
+     */
     public boolean valuesConvertOk() {
         for (ReferencePanel reference : references) {
             if (!reference.valueConvertOk()) {
@@ -60,11 +70,21 @@ public class ReferencePanelList extends JPanel {
         return true;
     }
 
+    /**
+     * Returns the type of the reference.
+     * 
+     * @return Type of the reference
+     */
     public Key getType() {
         return type;
     }
 
-    public List<ReferencePanel> getReferences() {
+    /**
+     * Returns a list of the filled fields.
+     * 
+     * @return List of the filled fields.
+     */
+    public List<ReferencePanel> getFields() {
         return references;
     }
 
