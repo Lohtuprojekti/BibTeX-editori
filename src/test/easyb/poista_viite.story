@@ -36,3 +36,17 @@ scenario "Arto voi poistaa valitun viitteen", {
     }
 }
 
+scenario "Arto ei voi painaa poista nappia jos viitettä ei ole valittu", {
+    given 'UI on käynnistetty', {
+        ui = new MainUI(new DatabaseUtils("src/test/testfile.bib"))
+        ui.setVisible(true)
+        window = new FrameFixture(ui)
+    }
+    when 'Viitettä ei ole valittu', {
+        
+    }
+    then 'Poista nappia ei voi painaa', {
+        window.button("delButton").requireDisabled()
+        window.cleanUp()
+    }
+}

@@ -77,21 +77,21 @@ public class BibtexWriter {
     private String iterateReferenceToString(BibTeXEntry entry) {
         String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
-            if (!valuepair.getValue().toUserString().isEmpty()) {
-
-                if (valuepair.getKey().equals(new Key("author"))) {
-                    entryString += separateAuthorsWithAnd(valuepair);
-
-                } else {
-                    entryString += ("\t" + valuepair.getKey().toString() + " = {"
-                            + valuepair.getValue().toUserString() + "},\r\n");
-                }
-
-            }
+            entryString += valuePairToBibTeXString(valuepair);
         }
         return entryString;
     }
-
+    
+    private String valuePairToBibTeXString(Map.Entry<Key, Value> valuepair) {
+        if (valuepair.getValue().toUserString().isEmpty()) return "";
+        
+        if (valuepair.getKey().equals(new Key("author")))
+            return separateAuthorsWithAnd(valuepair);
+        
+        return "\t" + valuepair.getKey().toString() + " = {"
+                    + valuepair.getValue().toUserString() + "},\r\n";
+    }
+    
     /**
      * Replaces commas with 'and' to separate multiple authors.
      * 
