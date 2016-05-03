@@ -1,7 +1,6 @@
 package referenzixx.refs;
 // BibTex reference ID for a new entry (article, book, inproceedings)
 
-import java.util.List;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.Key;
 import referenzixx.util.CharacterSequencer;

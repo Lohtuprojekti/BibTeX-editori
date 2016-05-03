@@ -19,3 +19,5 @@ https://docs.google.com/spreadsheets/d/17CkXQanI1ZLBA5fAyDZJhTtrZXGwSo8b-4nAij-V
 GUI prototype: https://docs.google.com/document/d/170nPVH2HUWYJIInBr7DlIVXbLDiOM1gGBpDT_k8pBWo/edit?usp=docslist_api
 
 Burndown-kaaviot löytyvät backlogin välilehdistä google sheetsistä.
+
+

@@ -5,8 +5,6 @@
  */
 package referenzixx.ui;
 
-import java.awt.Dimension;
-import java.awt.Font;
 import java.util.StringTokenizer;
 import org.jbibtex.Key;
 import org.jbibtex.KeyValue;
