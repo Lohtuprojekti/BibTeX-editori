@@ -109,8 +109,8 @@ public class DatabaseUtilsTest {
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.delEntry(entry3);
 
-        assertTrue(!dbu.getReferences().contains(entry));
-        assertTrue(dbu.getReferences().contains(entry2));
+        assertTrue(!dbu.getDatabase().getEntries().containsKey(entry.getKey()));
+        assertTrue(dbu.getDatabase().getEntries().containsKey(entry2.getKey()));
         file.delete();
     }
 
@@ -147,7 +147,7 @@ public class DatabaseUtilsTest {
 
         List<BibTeXEntry> entryList = dbu.getReferences();
         for (BibTeXEntry bibTeXEntry : entryList) {
-            assertTrue(dbu.getDatabase().getEntries().containsValue(bibTeXEntry));
+            assertTrue(dbu.getDatabase().getEntries().containsKey(bibTeXEntry.getKey()));
         }
 
         assertEquals(dbu.getDatabase().getEntries().size(), entryList.size());

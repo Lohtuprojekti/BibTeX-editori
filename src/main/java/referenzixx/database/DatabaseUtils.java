@@ -217,7 +217,7 @@ public class DatabaseUtils implements ReferenceDatabase {
         return database;
     }
     
-    private List<BibTeXEntry> getConvertedEntries() {
+    public List<BibTeXEntry> getConvertedEntries() {
         List<BibTeXEntry> entries = new ArrayList<>();
         
         for (BibTeXEntry entry : database.getEntries().values()) {
