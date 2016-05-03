@@ -47,7 +47,7 @@ scenario "Viitteitä voi filtteröidä useiden hakuehtojen perusteella", {
         List<BibTeXEntry> results = new ArrayList<BibTeXEntry>();
    
     when "Arto hakee viitteitä hakusanoilla 2016 ja Joku", {
-        List<String> filters = new ArrayList<>()
+        List<String> filters = new ArrayList<String>()
         filters.add("2016")
         filters.add("Joku")
         results = dbu.getReferences(filters)
