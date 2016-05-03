@@ -161,22 +161,23 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences(List<String> searchTerms) {
+	/*
+         If there's need to remove any special chars from the search term
+         it shall be done here.
+         See if any of the Values in in a BibTeXEntry contains the wanted
+         search term.
 
-        // If there's need to remove any special chars from the search term
-        // it shall be done here.
-        // See if any of the Values in in a BibTeXEntry contains the wanted
-        // search term.
-        List<BibTeXEntry> list = new ArrayList<>();
-//        for (int j = 0; j < searchTerms.size(); j++) {
-//        final int k = j;
-//        list.addAll(database.getEntries()
-//                .values().stream()
-//                .filter(e -> e.getFields().values().stream()
-//                        .anyMatch(i -> searchTerms.get(k).contains(i.toUserString())))
-//                .collect(Collectors.toList()));
-//        }
-
+        for (int j = 0; j < searchTerms.size(); j++) {
+        final int k = j;
+        list.addAll(database.getEntries()
+                .values().stream()
+                .filter(e -> e.getFields().values().stream()
+                        .anyMatch(i -> searchTerms.get(k).contains(i.toUserString())))
+                .collect(Collectors.toList()));
+        }
+	*/
 //Toimii paremmin
+        List<BibTeXEntry> list = new ArrayList<>();
         for (BibTeXEntry value : database.getEntries().values()) {
             loop:
             for (String searchTerm : searchTerms) {
