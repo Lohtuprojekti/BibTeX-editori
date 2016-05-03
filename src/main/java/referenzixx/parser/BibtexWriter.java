@@ -77,29 +77,27 @@ public class BibtexWriter {
     private String iterateReferenceToString(BibTeXEntry entry) {
         String entryString = "";
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
-            if (!valuepair.getValue().toUserString().isEmpty()) {
-
-                if (valuepair.getKey().equals(new Key("author"))) {
-                    entryString += separateAuthorsWithAnd(valuepair);
-
-                } else {
-                    entryString += ("\t" + valuepair.getKey().toString() + " = {"
-                            + valuepair.getValue().toUserString() + "},\r\n");
-                }
-
-            }
+            entryString += valuePairToBibTeXString(valuepair);
         }
+        entryString = changeLettersToBibtexFormat(entryString);
         return entryString;
     }
-
-    /**
-     * Replaces commas with 'and' to separate multiple authors.
-     * 
-     * @param valuepair value is a string containing author(s) separated by comma
-     * @return String containing authors separated by and
-     */
-    private String separateAuthorsWithAnd(Map.Entry<Key, Value> valuepair) {
-        String authors = valuepair.getValue().toUserString().replace(",", " and");
-        return ("\t" + valuepair.getKey().toString() + " = {" + authors) + "},\r\n";
+    
+    private String valuePairToBibTeXString(Map.Entry<Key, Value> valuepair) {
+        if (valuepair.getValue().toUserString().isEmpty()) return "";
+       
+        return "\t" + valuepair.getKey().toString() + " = {"
+                    + valuepair.getValue().toUserString() + "},\r\n";
     }
+
+    private String changeLettersToBibtexFormat(String entry) {
+        entry = entry.replace("ä", "{\\\"a}");
+        entry = entry.replace("Ä", "{\\\"A}");
+        entry = entry.replace("ö", "{\\\"o}");
+        entry = entry.replace("Ö", "{\\\"O}");
+        return entry;
+    }
+    
+  
+   
 }

@@ -6,10 +6,10 @@
 *** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
 
 
-Author|Artikkelin tekij‰|author|string|required
-Title|Artikkelin otsikko|title|string|required
-Journal|Artikkelin julkaisulehti|journal|string|required
-Year|Artikkelin julkaisuvuosi|year|integer|required
+Author|Author of the article|author|string|required
+Title|Title of the article|title|string|required
+Journal|Journal of the article|journal|string|required
+Year|Year of release|year|integer|required
 Volume|Volume|volume|integer|optional
 Number|Number|number|integer|optional
 Pages|Pages|pages|integer|optional

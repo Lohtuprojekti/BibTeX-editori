@@ -89,9 +89,11 @@
     		<instrumentation>
        		    <ignores>
      			<ignore>referenzixx.ui.*</ignore>
+			<ignore>referenzixx.*</ignore>
      	    	    </ignores>
         	    <excludes>
           		<exclude>referenzixx/ui/*.class</exclude>
+			<exclude>referenzixx/*.class</exclude>
         	    </excludes>
 		</instrumentation>
                 </configuration>

@@ -1,11 +1,11 @@
-package referenzixx.util;
+/*package referenzixx.util;
 
 import org.jbibtex.Key;
 
-/**
- *
- * @author kkirjala
- */
+
+ 
+// @author kkirjala
+ 
 public class BibTexKeyLookup {
 
     // a method for turning a string-based search key to a key object
@@ -105,3 +105,4 @@ public class BibTexKeyLookup {
     }
 
 }
+*/

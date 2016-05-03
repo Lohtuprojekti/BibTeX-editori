@@ -26,18 +26,26 @@ public class ReferenceIDGenerator {
     // reference ID
     public String generateReferenceID(BibTeXDatabase database) {
 
-        String referenceIDText = "";
-        String authorRef = generateAuthorText(this.author);
-
-        CharacterSequencer cs = new CharacterSequencer("");
-
-        // to prevent a duplicate id from being generated
-        referenceIDText = authorRef + this.yearText + cs.next();
-        while (checkDuplicate(referenceIDText, database)) {
-            referenceIDText = authorRef + this.yearText + cs.next();
-        }
-
+        String referenceIDText = generateUniqueReferenceIDText(database);        
         return referenceIDText;
+    }
+
+    private String generateUniqueReferenceIDText(BibTeXDatabase database) {
+        
+        String referenceIDText = null;
+        CharacterSequencer cs = new CharacterSequencer();  
+        
+        do {
+            referenceIDText = createReferenceIDCandidate(cs);
+        } while(checkDuplicate(referenceIDText, database));
+        
+        return referenceIDText;
+    }
+
+    private String createReferenceIDCandidate(CharacterSequencer characterSequencer) {
+        String authorRef = generateAuthorText(this.author);
+        String candidate = authorRef + this.yearText + characterSequencer.next();
+        return candidate;
     }
 
     // we pick the second word, and assume that it's the last name of an author
