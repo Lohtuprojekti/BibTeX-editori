@@ -80,8 +80,7 @@ public class MainUI extends javax.swing.JFrame {
     }
 
     private void refreshFilters() {
-
-        this.filters = authorTextField.getText();
+        this.filters = searchField.getText();
 
         refresh();
     }
@@ -104,10 +103,7 @@ public class MainUI extends javax.swing.JFrame {
             }
         };
 
-        referenceTextField.getDocument().addDocumentListener(documentListener);
-        authorTextField.getDocument().addDocumentListener(documentListener);
-        titleTextField.getDocument().addDocumentListener(documentListener);
-        yearTextField.getDocument().addDocumentListener(documentListener);
+        searchField.getDocument().addDocumentListener(documentListener);
         
         ListSelectionModel listSelectionModel = referenceTable.getSelectionModel();
         listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -138,14 +134,7 @@ public class MainUI extends javax.swing.JFrame {
         referenceTable = new javax.swing.JTable();
         delReferenceButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        referenceTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        titleTextField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        authorTextField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        yearTextField = new javax.swing.JTextField();
+        searchField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -221,39 +210,10 @@ public class MainUI extends javax.swing.JFrame {
 
         jLabel1.setText("Hae viitteitä");
 
-        jLabel2.setText("Viite");
-
-        referenceTextField.setToolTipText("");
-        referenceTextField.addActionListener(new java.awt.event.ActionListener() {
+        searchField.setToolTipText("");
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                referenceTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Otsikko");
-
-        titleTextField.setToolTipText("Viitteen otsikko");
-        titleTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Kirjoittaja");
-
-        authorTextField.setToolTipText("Viitteen kirjoittaja");
-        authorTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                authorTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Vuosi");
-
-        yearTextField.setToolTipText("Viitteen julkaisuvuosi");
-        yearTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearTextFieldActionPerformed(evt);
+                searchFieldActionPerformed(evt);
             }
         });
 
@@ -276,24 +236,7 @@ public class MainUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(titleTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                    .addComponent(referenceTextField))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(authorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -303,20 +246,10 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(referenceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(authorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(copyButton)
@@ -357,38 +290,19 @@ public class MainUI extends javax.swing.JFrame {
         refresh();
     }//GEN-LAST:event_delReferenceButtonActionPerformed
 
-    private void referenceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_referenceTextFieldActionPerformed
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         System.out.println("asdf");
         refreshFilters();
-    }//GEN-LAST:event_referenceTextFieldActionPerformed
-
-    private void titleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleTextFieldActionPerformed
-        refreshFilters();
-    }//GEN-LAST:event_titleTextFieldActionPerformed
-
-    private void authorTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorTextFieldActionPerformed
-        refreshFilters();
-    }//GEN-LAST:event_authorTextFieldActionPerformed
-
-    private void yearTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearTextFieldActionPerformed
-        refreshFilters();
-    }//GEN-LAST:event_yearTextFieldActionPerformed
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
-    private javax.swing.JTextField authorTextField;
     private javax.swing.JButton copyButton;
     private javax.swing.JButton delReferenceButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
-    private javax.swing.JTextField referenceTextField;
-    private javax.swing.JTextField titleTextField;
-    private javax.swing.JTextField yearTextField;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }

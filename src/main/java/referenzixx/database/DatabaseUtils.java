@@ -122,7 +122,7 @@ public class DatabaseUtils implements ReferenceDatabase {
         if (searchTerm.isEmpty()) {
             return this.getReferences();
         } else {
-            return this.getReferences(new ArrayList<String>(Arrays.asList(searchTerm)));
+            return this.getReferences(new ArrayList<>(Arrays.asList(searchTerm)));
         }
         
     }
