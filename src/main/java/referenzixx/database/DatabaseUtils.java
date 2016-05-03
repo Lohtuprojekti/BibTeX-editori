@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
+import org.jbibtex.Value;
 import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 import referenzixx.refs.ReferenceEntryBuilder;
@@ -123,6 +124,7 @@ public class DatabaseUtils implements ReferenceDatabase {
         if (searchTerm.isEmpty()) {
             return this.getReferences();
         } else {
+            //Tähän palottelu
             return this.getReferences(new ArrayList<>(Arrays.asList(searchTerm)));
         }
         
@@ -140,12 +142,35 @@ public class DatabaseUtils implements ReferenceDatabase {
         // it shall be done here.
         // See if any of the Values in in a BibTeXEntry contains the wanted
         // search term.
-        return database.getEntries()
-                .values().stream()
-                .filter(e -> e.getFields().values().stream()
-                        .anyMatch(i -> searchTerms.contains(i.toUserString())))
-                .collect(Collectors.toList());
+        List<BibTeXEntry> list = new ArrayList<>();
+//        for (int j = 0; j < searchTerms.size(); j++) {
+//        final int k = j;
+//        list.addAll(database.getEntries()
+//                .values().stream()
+//                .filter(e -> e.getFields().values().stream()
+//                        .anyMatch(i -> searchTerms.get(k).contains(i.toUserString())))
+//                .collect(Collectors.toList()));
+//        }
 
+//Toimii paremmin
+        for (BibTeXEntry value : database.getEntries().values()) {
+            loop:
+            for (String searchTerm : searchTerms) {
+                for (Value value1 : value.getFields().values()) {
+                    if (value1.toUserString().toLowerCase().contains(searchTerm.toLowerCase())) {
+                        list.add(value);
+                        break loop;
+                    }
+                }
+                if (value.getKey().toString().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    list.add(value);
+                    break;
+                }
+            }
+        }
+        
+        
+        return list;
     }
 
     /**

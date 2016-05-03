@@ -137,7 +137,6 @@ public class MainUI extends javax.swing.JFrame {
         searchField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocationByPlatform(true);
 
         addReferenceButton.setText("Lisää");
         addReferenceButton.setToolTipText("Lisää uusi artikkeli");
