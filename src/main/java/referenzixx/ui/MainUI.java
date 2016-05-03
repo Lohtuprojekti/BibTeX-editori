@@ -1,9 +1,20 @@
 package referenzixx.ui;
 
-import java.awt.Component;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.swing.JFileChooser;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicListUI;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import referenzixx.refs.Reference;
+import org.jbibtex.BibTeXEntry;
+import org.jbibtex.Key;
+import referenzixx.database.DatabaseUtils;
 
 /**
  *
@@ -11,33 +22,100 @@ import referenzixx.refs.Reference;
  */
 public class MainUI extends javax.swing.JFrame {
 
-    private Map<Integer, Reference> references;
-    
-    /**
-     * Creates new form MainUI
-     */
-    
+    private DatabaseUtils dbutils;
+    private String filters;
+
     /**
      * Creates new form MainUI
      */
     public MainUI() {
+        this.dbutils = new DatabaseUtils();
+        this.filters = "";
+
         initComponents();
+        initListeners();
+        refresh();
     }
-    
-    public void setReferences(Map<Integer, Reference> references) {
+
+    public MainUI(DatabaseUtils dbutils) {
+        this.dbutils = dbutils;
+        this.filters = "";
+
+        initComponents();
+        initListeners();
+        refresh();
+    }
+
+    public DatabaseUtils getDBUtils() {
+        return this.dbutils;
+    }
+
+    /**
+     * Refreshes the reference table to match the list in DatabaseUtils.
+     */
+    public final void refresh() {
+        List<BibTeXEntry> references;
+        if (filters.isEmpty()) {
+            references = dbutils.getReferences();
+        } else {
+            references = dbutils.getReferences(filters);
+        }
+
+        DefaultTableModel tableModel = (DefaultTableModel) referenceTable.getModel();
+        tableModel.setRowCount(0); // Clear the table
+        tableModel.setRowCount(references.size());
+
         int row = 0;
-        for (Reference reference : references.values()) {
-            addReference(row++, reference);
+        for (BibTeXEntry reference : references) {
+            displayReference(reference, row++);
         }
     }
-    
-    public void addReference(int row, Reference reference) {
+
+    private void displayReference(BibTeXEntry entry, int row) {
         TableModel tableModel = referenceTable.getModel();
-        tableModel.setValueAt(reference.getRefNum(), row, 0);
-        tableModel.setValueAt(reference.getAuthor(), row, 1);
-        tableModel.setValueAt(reference.getTitle(), row, 2);
-        tableModel.setValueAt(reference.getYear()+"", row, 3);
-        tableModel.setValueAt(reference.getPublisher(), row, 4);
+        tableModel.setValueAt(entry.getKey().toString(), row, 0);
+        tableModel.setValueAt(entry.getField(new Key("author")).toUserString(), row, 1);
+        tableModel.setValueAt(entry.getField(new Key("title")).toUserString(), row, 2);
+        tableModel.setValueAt(entry.getField(new Key("year")).toUserString(), row, 3);
+    }
+
+    private void refreshFilters() {
+        this.filters = searchField.getText();
+
+        refresh();
+    }
+
+    private void initListeners() {
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                refreshFilters();
+            }
+        };
+
+        searchField.getDocument().addDocumentListener(documentListener);
+        
+        ListSelectionModel listSelectionModel = referenceTable.getSelectionModel();
+        listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        listSelectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (referenceTable.getSelectedRow() == -1) {
+                delReferenceButton.setEnabled(false);
+            }
+            else {
+                delReferenceButton.setEnabled(true);
+            }
+        });
     }
 
     /**
@@ -50,52 +128,64 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         addReferenceButton = new javax.swing.JButton();
-        saveButton = new javax.swing.JButton();
+        copyButton = new javax.swing.JButton();
         readButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         referenceTable = new javax.swing.JTable();
-        referenceUI1 = new referenzixx.ui.ReferenceUI();
+        delReferenceButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        searchField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         addReferenceButton.setText("Lisää");
+        addReferenceButton.setToolTipText("Lisää uusi artikkeli");
+        addReferenceButton.setName("addButton"); // NOI18N
         addReferenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addReferenceButtonActionPerformed(evt);
             }
         });
 
-        saveButton.setText("Tallenna");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
+        copyButton.setText("Kopioi leikepöydälle");
+        copyButton.setToolTipText("Kopioi BibTex-tiedoston leikepöydälle");
+        copyButton.setName("copyButton"); // NOI18N
+        copyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+                copyButtonActionPerformed(evt);
             }
         });
 
-        readButton.setText("Lue");
+        readButton.setText("Valitse tiedosto");
+        readButton.setName("selectButton"); // NOI18N
+        readButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readButtonActionPerformed(evt);
+            }
+        });
 
         referenceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "", "", "", null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, "", "", ""},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Viite", "Kirjoittaja", "Nimi", "Vuosi", "Julkaisija"
+                "Viite", "Kirjoittaja", "Otsikko", "Vuosi"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -108,7 +198,23 @@ public class MainUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(referenceTable);
 
-        referenceUI1.setToolTipText("");
+        delReferenceButton.setText("Poista");
+        delReferenceButton.setEnabled(false);
+        delReferenceButton.setName("delButton"); // NOI18N
+        delReferenceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delReferenceButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Hae viitteitä");
+
+        searchField.setToolTipText("");
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,50 +225,83 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addReferenceButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(delReferenceButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(readButton)
                         .addGap(18, 18, 18)
-                        .addComponent(saveButton))
+                        .addComponent(copyButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(referenceUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addReferenceButton)
-                    .addComponent(saveButton)
-                    .addComponent(readButton))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(copyButton)
+                        .addComponent(readButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addReferenceButton)
+                        .addComponent(delReferenceButton)))
                 .addContainerGap())
         );
-
-        referenceUI1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveButtonActionPerformed
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        dbutils.copyToClipboard();
+    }//GEN-LAST:event_copyButtonActionPerformed
 
     private void addReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addReferenceButtonActionPerformed
-        new NewReferenceUI(this, true).setVisible(true);
+        new NewReferenceDialog(this, true).setVisible(true);
     }//GEN-LAST:event_addReferenceButtonActionPerformed
+
+    private void readButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readButtonActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            dbutils.selectFile(chooser.getSelectedFile());
+            refresh();
+        }
+    }//GEN-LAST:event_readButtonActionPerformed
+
+    private void delReferenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delReferenceButtonActionPerformed
+        List<BibTeXEntry> references = dbutils.getReferences();
+        int selectedRow = referenceTable.getSelectedRow();
+        if (selectedRow != -1) {
+            dbutils.delEntry(references.get(selectedRow));
+        }
+        
+        refresh();
+    }//GEN-LAST:event_delReferenceButtonActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        System.out.println("asdf");
+        refreshFilters();
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addReferenceButton;
+    private javax.swing.JButton copyButton;
+    private javax.swing.JButton delReferenceButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton readButton;
     private javax.swing.JTable referenceTable;
-    private referenzixx.ui.ReferenceUI referenceUI1;
-    private javax.swing.JButton saveButton;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }

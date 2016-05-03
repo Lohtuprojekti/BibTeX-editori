@@ -7,73 +7,49 @@ package referenzixx.parser;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.jbibtex.BibTeXDatabase;
-import org.jbibtex.BibTeXEntry;
-import org.jbibtex.BibTeXFormatter;
-import org.jbibtex.BibTeXObject;
-import org.jbibtex.BibTeXParser;
-import org.jbibtex.BibTeXString;
-import org.jbibtex.Key;
-import org.jbibtex.ParseException;
-import referenzixx.refs.Reference;
+import java.util.Scanner;
+import org.jbibtex.*;
 
 /**
+ * Parses the Bibtex file to a database of objects
  *
  * @author lilkettu
  */
 public class BibtexReader {
-
-    private File input;
-    private BibTeXDatabase database;
-
-    public BibtexReader(String filename) {
-        input = new File(filename);
-    }
-
-    // Palauttaa viitteet listana
-    public Collection<BibTeXEntry> listReferences() {
-
+    
+    /**
+     * Parses the contents of a Bibtex file and returns the entries as a database
+     * @param file File that is opened.
+     * @return 
+     */
+    public BibTeXDatabase openNewFile(File file) {
+        BibTeXDatabase database = new BibTeXDatabase();
         try {
             BibTeXParser parser = new BibTeXParser();
-            database = parser.parse(new FileReader(input));
-
-            Map<Key, BibTeXEntry> entryMap = database.getEntries();
-
-            return entryMap.values();
-
+            database = parser.parse(new FileReader(file));
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
-        return null;
+        return database;
     }
 
-    // Kirjoittaa referenssi-olion .bib -tiedostoon
-    public void writeToFile(Reference ref) {
-        String bibtexEntry = ref.toString();
-       
+    /**
+     * Returns the contents of BibTex file as a string
+     * Usage: Copy to clipboard
+     * 
+     * @param file
+     * @return
+     */
+    public String getBibFileAsString(File file) {
+        String bibString = "";
         try {
-            FileWriter writer = new FileWriter(input, true);
-            writer.write(bibtexEntry);
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(BibtexReader.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-    }
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNext()) {
+                bibString += scanner.nextLine() + "\n";
+            }
+        } catch (Exception e) {
+        }
+        return bibString;
 
-    // Muuttaa artikkeli-olion bibtex-muotoon
-    //private String formatToBibtex(Reference ref) {
-    //    return ref.toString();
-   //}
+    }
 }
