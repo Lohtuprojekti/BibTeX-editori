@@ -12,11 +12,6 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import referenzixx.parser.BibtexReader;
 import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.ui.ReferencePanel;
@@ -27,10 +22,6 @@ public class DatabaseUtilsTest {
     private File file;
     private BibTeXEntry entry;
     private int original;
-
-    public DatabaseUtilsTest() {
-
-    }
 
     @Before
     public void setUp() {
@@ -54,8 +45,6 @@ public class DatabaseUtilsTest {
 
     @Test
     public void testSelectFile() {
-        dbu.addEntry(entry);
-
         File emptyfile = new File("src/test/emptybibtexfile.bib");
         dbu.selectFile(emptyfile);
         assertTrue(dbu.getReferences().isEmpty());
@@ -68,16 +57,13 @@ public class DatabaseUtilsTest {
     public void addEntryAddsToFile() {
         BibtexReader reader = new BibtexReader();
         String filecontents = reader.getBibFileAsString(file);
-
         assertTrue(filecontents.contains("ABC"));
-        file.delete();
     }
 
     @Test
     public void addEntryAddsToDatabase() {
         int added = dbu.getDatabase().getEntries().size();
         assertTrue(added == (original + 1));
-        file.delete();
     }
 
     @Test
@@ -87,19 +73,15 @@ public class DatabaseUtilsTest {
         int added = dbu.getDatabase().getEntries().size();
         //NOTE: SetUP() already adds 1 to database, thus original+1
         assertTrue(added == original + 1);
-        file.delete();
     }
 
     @Test
     public void entryNotAddedifNotUniqueKey() {
-        original = dbu.getDatabase().getEntries().size();
         //add file with same key
         BibTeXEntry entry2 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.addEntry(entry2);
         int added = dbu.getDatabase().getEntries().size();
-
-        assertTrue(added == original);
-        file.delete();
+        assertTrue(added == original +1);
     }
 
     @Test
@@ -109,23 +91,19 @@ public class DatabaseUtilsTest {
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.delEntry(entry3);
 
-        assertTrue(!dbu.getReferences().contains(entry));
-        assertTrue(dbu.getReferences().contains(entry2));
-        file.delete();
+        assertTrue(!dbu.getDatabase().getEntries().containsKey(entry.getKey()));
+        assertTrue(dbu.getDatabase().getEntries().containsKey(entry2.getKey()));
     }
 
     @Test
     public void delEntryRemovesFromFile() {
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
-        dbu.addEntry(entry);
         dbu.addEntry(entry2);
-
         BibTeXEntry entry3 = new BibTeXEntry(new Key("article"), new Key("ABC"));
         dbu.delEntry(entry3);
 
         String filecontents = new BibtexReader().getBibFileAsString(file);
         assertTrue(!filecontents.contains("article"));
-        file.delete();
     }
     //Tämä testi ei mene läpi traviksesta mutta on hyvä ja toimiva.
 //    @Test
@@ -147,11 +125,9 @@ public class DatabaseUtilsTest {
 
         List<BibTeXEntry> entryList = dbu.getReferences();
         for (BibTeXEntry bibTeXEntry : entryList) {
-            assertTrue(dbu.getDatabase().getEntries().containsValue(bibTeXEntry));
+            assertTrue(dbu.getDatabase().getEntries().containsKey(bibTeXEntry.getKey()));
         }
-
         assertEquals(dbu.getDatabase().getEntries().size(), entryList.size());
-        file.delete();
     }
 
     // Filter
@@ -166,7 +142,6 @@ public class DatabaseUtilsTest {
         String filters = "Zombie";
         List<BibTeXEntry> list = dbu.getReferences(filters);
         assertTrue(list.isEmpty());
-        file.delete();
     }
 
     @Test
@@ -180,7 +155,6 @@ public class DatabaseUtilsTest {
         String filters = "BAR";
         List<BibTeXEntry> list = dbu.getReferences(filters);
         assertTrue(list.size() == 1);
-        file.delete();
     }
 
     @Test
@@ -191,12 +165,10 @@ public class DatabaseUtilsTest {
 
         int added = dbu.getDatabase().getEntries().size();
         assertTrue(added == (original + 1));
-
         BibtexReader reader = new BibtexReader();
         String filecontents = reader.getBibFileAsString(file);
 
         assertTrue(filecontents.contains("book"));
-        file.delete();
     }
 
     @Test

@@ -15,9 +15,6 @@ public class ReferenceIDGeneratorTest {
     
     private ReferenceIDGenerator iGene;
     private DatabaseUtils dutil;
-
-    public ReferenceIDGeneratorTest() {
-    }
     
     @Before
     public void setUp(){

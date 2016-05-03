@@ -130,7 +130,7 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences() {
-        return database.getEntries().values().stream().collect(Collectors.toList());
+        return getConvertedEntries().stream().collect(Collectors.toList());
     }
 
     /**
@@ -149,7 +149,7 @@ public class DatabaseUtils implements ReferenceDatabase {
             // into arraylist accordingly.
             String[] multipleSearchTerms = searchTerm.split(" (and) | (AND) ");            
             
-            return this.getReferences(new ArrayList<String>(Arrays.asList(multipleSearchTerms)));
+            return this.getReferences(new ArrayList<>(Arrays.asList(multipleSearchTerms)));
         }
         
     }
@@ -161,24 +161,13 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     @Override
     public List<BibTeXEntry> getReferences(List<String> searchTerms) {
-	/*
-         If there's need to remove any special chars from the search term
-         it shall be done here.
-         See if any of the Values in in a BibTeXEntry contains the wanted
-         search term.
 
-        for (int j = 0; j < searchTerms.size(); j++) {
-        final int k = j;
-        list.addAll(database.getEntries()
-                .values().stream()
-                .filter(e -> e.getFields().values().stream()
-                        .anyMatch(i -> searchTerms.get(k).contains(i.toUserString())))
-                .collect(Collectors.toList()));
-        }
-	*/
-//Toimii paremmin
+	// If there's need to remove any special chars from the search term
+	// it shall be done here.
+	// See if any of the Values in in a BibTeXEntry contains the wanted
+	// search term.
         List<BibTeXEntry> list = new ArrayList<>();
-        for (BibTeXEntry value : database.getEntries().values()) {
+        for (BibTeXEntry value : getConvertedEntries()) {
             loop:
             for (String searchTerm : searchTerms) {
                 for (Value value1 : value.getFields().values()) {
@@ -193,8 +182,7 @@ public class DatabaseUtils implements ReferenceDatabase {
                 }
             }
         }
-        
-        
+            
         return list;
     }
 
@@ -225,5 +213,15 @@ public class DatabaseUtils implements ReferenceDatabase {
      */
     public BibTeXDatabase getDatabase() {
         return database;
+    }
+    
+    public List<BibTeXEntry> getConvertedEntries() {
+        List<BibTeXEntry> entries = new ArrayList<>();
+        
+        for (BibTeXEntry entry : database.getEntries().values()) {
+            entries.add(ReferenceEntryBuilder.convertScandic(entry));
+        }
+        
+        return entries;
     }
 }

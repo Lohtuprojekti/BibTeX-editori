@@ -19,9 +19,7 @@ public class BibtexWriterTest {
     @Test
     public void writesAnEntryToAFile() {
         BibTeXEntry entry = new BibTeXEntry(new Key("article"), new Key("ABC"));
-
         File file = new File("src/test/testfile.bib");
-
         writer.writeToBibtex(entry, file);
 
         BibtexReader reader = new BibtexReader();
@@ -34,8 +32,7 @@ public class BibtexWriterTest {
     @Test
     public void doesNotWriteToFileIfEntryIsNull() {
         File file = new File("src/test/veryshort.bib");
-        Boolean written = writer.writeToBibtex(null, file);
-        
+        Boolean written = writer.writeToBibtex(null, file);      
         assertEquals(false, written);
     }
 }

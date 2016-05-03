@@ -4,6 +4,8 @@ import java.util.List;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
 import org.jbibtex.Key;
+import org.jbibtex.KeyValue;
+import org.jbibtex.Value;
 import referenzixx.ui.ReferencePanel;
 
 /**
@@ -55,5 +57,35 @@ public class ReferenceEntryBuilder {
         }
         return foundValue;
 
+    }
+    
+    /**
+     * Converts bibtex scandics to more clear ones, i.e. \"{o} to ö.
+     * 
+     * @param entry Entry to be converted
+     * @return Converted entry
+     */
+    public static BibTeXEntry convertScandic(BibTeXEntry entry) {
+        BibTeXEntry convertedEntry = new BibTeXEntry(entry.getType(), entry.getKey());
+        
+        for (Key key : entry.getFields().keySet()) {
+            convertedEntry.addField(key, new KeyValue(convertScandic(entry.getField(key).toUserString())));
+        }
+        
+        return convertedEntry;
+    }
+    
+    private static String convertScandic(String line) {
+        String convertedLine = line;
+        
+        convertedLine = convertedLine.replace("\\\"{o}", "ö");
+        convertedLine = convertedLine.replace("\\aa", "å");
+        convertedLine = convertedLine.replace("\\\"{a}", "ä");
+        
+        for (char c = 'A'; c <= 'Z'; c++) {
+            convertedLine = convertedLine.replace("{" + c + "}", c+"");
+        }
+        
+        return convertedLine;
     }
 }
