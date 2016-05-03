@@ -17,7 +17,6 @@ import referenzixx.parser.BibtexReader;
 import referenzixx.parser.BibtexWriter;
 import referenzixx.refs.ReferenceEntryBuilder;
 import referenzixx.ui.ReferencePanel;
-import referenzixx.util.StringUtil;
 
 /**
  *
