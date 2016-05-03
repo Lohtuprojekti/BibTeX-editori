@@ -76,7 +76,7 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
-     * 
+     * Replaces commas with 'and' to separate multiple authors.
      * @param entry
      * @return 
      */

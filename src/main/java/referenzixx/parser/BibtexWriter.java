@@ -79,14 +79,25 @@ public class BibtexWriter {
         for (Map.Entry<Key, Value> valuepair : entry.getFields().entrySet()) {
             entryString += valuePairToBibTeXString(valuepair);
         }
+        entryString = changeLettersToBibtexFormat(entryString);
         return entryString;
     }
     
     private String valuePairToBibTeXString(Map.Entry<Key, Value> valuepair) {
         if (valuepair.getValue().toUserString().isEmpty()) return "";
-               
+       
         return "\t" + valuepair.getKey().toString() + " = {"
                     + valuepair.getValue().toUserString() + "},\r\n";
     }
+
+    private String changeLettersToBibtexFormat(String entry) {
+        entry = entry.replace("ä", "{\\\"a}");
+        entry = entry.replace("Ä", "{\\\"A}");
+        entry = entry.replace("ö", "{\\\"o}");
+        entry = entry.replace("Ö", "{\\\"O}");
+        return entry;
+    }
+    
+  
    
 }
