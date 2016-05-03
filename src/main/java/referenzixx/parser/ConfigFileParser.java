@@ -19,7 +19,7 @@ import java.util.List;
 public class ConfigFileParser {
 
     public static List<String> parseFile(String url, String ignore) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         try{
 	    InputStream is = ConfigFileParser.class.getClassLoader().getResourceAsStream(url);

@@ -2,13 +2,11 @@ package referenzixx.ui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import org.jbibtex.Key;
 import referenzixx.parser.ConfigFileParser;
-import referenzixx.refs.ReferenceEntryBuilder;
 
 public class ReferencePanelList extends JPanel {
 
@@ -19,7 +17,7 @@ public class ReferencePanelList extends JPanel {
     public ReferencePanelList(Key type, String configUrl) {
         this.type = type;
         this.configUrl = configUrl;
-        this.references = new ArrayList<ReferencePanel>();
+        this.references = new ArrayList<>();
         initComponents();
     }
 
