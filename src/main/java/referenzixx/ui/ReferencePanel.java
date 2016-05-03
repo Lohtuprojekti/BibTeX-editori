@@ -57,10 +57,22 @@ public class ReferencePanel extends javax.swing.JPanel {
         return new KeyValue(valueField.getText());
     }
 
+    
+    /**
+     * Checks if a required field is filled.
+     * 
+     * @return False if a required field is empty, true otherwise.
+     */
     public boolean valueOk() {
         return isRequired ? !valueField.getText().isEmpty() : true;
     }
 
+    /**
+     * Checks if the entered text can be converted to integer, if the
+     * field is marked as integer.
+     * 
+     * @return False if the field can't be converted to integer, true otherwise.
+     */
     public boolean valueConvertOk() {
         if (isInteger) {
             if (!isRequired && valueField.getText().isEmpty())
