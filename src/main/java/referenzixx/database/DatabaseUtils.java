@@ -172,7 +172,6 @@ public class DatabaseUtils implements ReferenceDatabase {
             for (String searchTerm : searchTerms) { // Loop through search terms
                 if (value.getKey().toString().toLowerCase().contains(searchTerm.toLowerCase())) {
                     count++; // Current search term matches the reference id
-                    break;
                 } else {
                     for (Value value1 : value.getFields().values()) {
                         if (value1.toUserString().toLowerCase().contains(searchTerm.toLowerCase())) {

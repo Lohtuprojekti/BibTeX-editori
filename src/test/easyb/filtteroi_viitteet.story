@@ -46,15 +46,13 @@ scenario "Viitteitä voi filtteröidä useiden hakuehtojen perusteella", {
         DatabaseUtils dbu = new DatabaseUtils(file)
         List<BibTeXEntry> results = new ArrayList<BibTeXEntry>();
    
-    when "Arto hakee viitteitä hakusanoilla 2016 ja Joku", {
-        List<String> filters = new ArrayList<String>()
-        filters.add("2016")
-        filters.add("Joku")
+    when "Arto hakee viitteitä hakusanoilla 2016 ja joku", {
+        String filters = "1628 AND joku"
         results = dbu.getReferences(filters)
     }
 
     then "Palautetaan lista viitteitä jotka on julkaistu vuonna 2016 ja julkaisija on Joku", {
-        results.size().shouldBe(2)
+        results.size().shouldBe(1)
     }
 }
     

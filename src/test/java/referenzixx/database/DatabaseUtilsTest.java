@@ -182,6 +182,38 @@ public class DatabaseUtilsTest {
         assertTrue(list.size() == 1);
         file.delete();
     }
+    
+    @Test
+    public void testFiltersMultipleSearchTermsValues() {
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry2);
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
+        entry3.addField(new Key("author"), new KeyValue("BAR"));
+        entry3.addField(new Key("title"), new KeyValue("123"));
+        dbu.addEntry(entry3);
+
+        String filters = "bar AND 123";
+        List<BibTeXEntry> list = dbu.getReferences(filters);
+        System.out.println(list);
+        assertTrue(list.size() == 1);
+        file.delete();
+    }
+    
+    @Test
+    public void testFiltersMultipleSearchTermsKey() {
+        BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
+        dbu.addEntry(entry2);
+        BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
+        entry3.addField(new Key("author"), new KeyValue("BAR"));
+        entry3.addField(new Key("title"), new KeyValue("123"));
+        dbu.addEntry(entry3);
+
+        String filters = "foo AND 123";
+        List<BibTeXEntry> list = dbu.getReferences(filters);
+        System.out.println(list);
+        assertTrue(list.size() == 1);
+        file.delete();
+    }
 
     @Test
     public void whenCreatingEntryFromPartsCallsAddEntry() {
