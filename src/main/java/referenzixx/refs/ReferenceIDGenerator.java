@@ -52,7 +52,7 @@ public class ReferenceIDGenerator {
     // if the author text is just one word, we'll return it back.
     // Hajosi jos on vain yksi sana.
     private String generateAuthorText(String author) {
-        String text = "";
+        String text;
         if (author.contains(",")) {
             text = generateAuthorTextFromMultipleAuthors(author);
         } else if (author.contains(" ")) {
@@ -60,7 +60,16 @@ public class ReferenceIDGenerator {
         } else {
             text = author.toLowerCase();
         }
+        text = replaceUmlauts(text);
         return text.length() > 7 ? text.substring(0, 7) : text;
+    }
+    
+    private String replaceUmlauts(String text) {
+        // TODO: Refactor to more sophisticated solution
+        text = text.replace("ä", "a");
+        text = text.replace("ö", "o");
+        text = text.replace("å", "a");
+        return text;
     }
 
     /**
