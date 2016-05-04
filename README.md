@@ -13,6 +13,8 @@ Definition of done:
  
 3. Koodi kääntyy oman koneen lisäksi myös Travis CI.
 
+[Raportti](https://github.com/Lohtuprojekti/Referenzixx/blob/master/Raport.md)
+
 Backlog:
 https://docs.google.com/spreadsheets/d/17CkXQanI1ZLBA5fAyDZJhTtrZXGwSo8b-4nAij-V2sc/edit?usp=docslist_api
 
