@@ -156,7 +156,7 @@ public class DatabaseUtilsTest {
 
     // Filter
     @Test
-    public void testFilters1() {
+    public void testFiltersNoMatches() {
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
         dbu.addEntry(entry2);
         BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
@@ -170,7 +170,7 @@ public class DatabaseUtilsTest {
     }
 
     @Test
-    public void testFilters2() {
+    public void testFiltersFoundMatches() {
         BibTeXEntry entry2 = new BibTeXEntry(new Key("book"), new Key("123"));
         dbu.addEntry(entry2);
         BibTeXEntry entry3 = new BibTeXEntry(new Key("book"), new Key("FOO"));
