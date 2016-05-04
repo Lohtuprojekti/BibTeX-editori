@@ -21,4 +21,5 @@ GUI prototype: https://docs.google.com/document/d/170nPVH2HUWYJIInBr7DlIVXbLDiOM
 Burndown-kaaviot löytyvät backlogin välilehdistä google sheetsistä.
 
 LICENSES:
-[Project uses jbibtex: Copyright (c) 2012, University of Tartu][(https://github.com/jbibtex/jbibtex/blob/master/LICENSE.txt)]
+<br>
+[Project uses jbibtex: Copyright (c) 2012, University of Tartu](https://github.com/jbibtex/jbibtex/blob/master/LICENSE.txt)
