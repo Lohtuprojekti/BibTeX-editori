@@ -6,7 +6,7 @@
 *** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
 
 
-Author|Author of the article|author|string|required
+Author|Authors of the article, separated with a comma|author|string|required
 Title|Title of the article|title|string|required
 Journal|Journal of the article|journal|string|required
 Year|Year of release|year|integer|required

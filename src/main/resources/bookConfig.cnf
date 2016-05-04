@@ -6,7 +6,7 @@
 *** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
 
 
-Author|Author of the book|author|string|required
+Author|Authors of the book, separated with a comma|author|string|required
 Title|Title of the book|title|string|required
 Publisher|Publisher of the book|publisher|string|required
 Year|Year of release|year|integer|required

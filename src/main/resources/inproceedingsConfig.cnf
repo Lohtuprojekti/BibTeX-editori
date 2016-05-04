@@ -6,7 +6,7 @@
 *** Viides kentt‰ m‰‰ritt‰‰, onko kentt‰ pakollinen vai valinnainen
 
 
-Author|Author of inproceedings|author|string|required
+Author|Authors of inproceedings, separated with a comma|author|string|required
 Title|Title of inproceedings|title|string|required
 Booktitle|Kirjan otsikko|booktitle|string|required
 Year|Julkaisuvuosi|year|string|required
