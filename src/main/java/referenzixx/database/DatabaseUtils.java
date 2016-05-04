@@ -68,29 +68,30 @@ public class DatabaseUtils implements ReferenceDatabase {
     public void addEntry(BibTeXEntry entry) {
         if (entry == null || !isRefnumUnique(entry.getKey(), database)) {
             return;
-        }        
-        
+        }
+
         // Reformatting author visual presentation (if key found)
         if (entry.getField(new Key("author")) != null) {
             String authorsFormatted = separateAuthorsWithAnd(entry.getField(new Key("author")).toUserString());
-            
+
             entry.removeField(new Key("author"));
             entry.addField(new Key("author"), new KeyValue(authorsFormatted));
         }
-                
+
         database.addObject(entry);
         new BibtexWriter().writeToBibtex(entry, file);
     }
 
     /**
      * Replaces commas with 'and' to separate multiple authors.
+     *
      * @param String
-     * @return 
+     * @return
      */
     private String separateAuthorsWithAnd(String authorText) {
         return authorText.replace(",", " and");
     }
-    
+
     /**
      * UI uses this method to add entry to database using information it has
      * collected from the user.
@@ -134,57 +135,58 @@ public class DatabaseUtils implements ReferenceDatabase {
     }
 
     /**
-     * Searches the database for entries 
-     * @param searchTerm  Single word or several ones separated by "and" keywords.
-     * @return 
+     * Searches the database for entries
+     *
+     * @param searchTerm Single word or several ones separated by "and"
+     * keywords.
+     * @return
      */
     public List<BibTeXEntry> getReferences(String searchTerm) {
-        
-        
+
         if (searchTerm.isEmpty()) {
             return this.getReferences();
         } else {
             // we'll check if there are multiple search terms included in
             // one string (separated by " and " keyword) and splice 
             // into arraylist accordingly.
-            String[] multipleSearchTerms = searchTerm.split(" (and) | (AND) ");            
-            
+            String[] multipleSearchTerms = searchTerm.split(" (and) | (AND) ");
+
             return this.getReferences(new ArrayList<>(Arrays.asList(multipleSearchTerms)));
         }
-        
+
     }
 
     /**
-     * Searches the database for entries 
+     * Searches the database for entries. See if any of the Values in in a
+     * BibTeXEntry contains the wanted search term.
+     *
      * @param searchTerms
      * @return
      */
     @Override
     public List<BibTeXEntry> getReferences(List<String> searchTerms) {
-
-        // If there's need to remove any special chars from the search term
-        // it shall be done here.
-        // See if any of the Values in in a BibTeXEntry contains the wanted
-        // search term.
         List<BibTeXEntry> list = new ArrayList<>();
-        
+
         for (BibTeXEntry value : getConvertedEntries()) {
-            loop:
-            for (String searchTerm : searchTerms) {
-                for (Value value1 : value.getFields().values()) {
-                    if (value1.toUserString().toLowerCase().contains(searchTerm.toLowerCase())) {
-                        list.add(value);
-                        break loop;
+            int count = 0;
+            for (String searchTerm : searchTerms) { // Loop through search terms
+                if (value.getKey().toString().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    count++; // Current search term matches the reference id
+                    break;
+                } else {
+                    for (Value value1 : value.getFields().values()) {
+                        if (value1.toUserString().toLowerCase().contains(searchTerm.toLowerCase())) {
+                            count++; // Current search term matches the one of the metadata values
+                            break;
+                        }
                     }
                 }
-                if (value.getKey().toString().toLowerCase().contains(searchTerm.toLowerCase())) {
-                    list.add(value);
-                    break;
-                }
+            }
+            if (count == searchTerms.size()) { // Check if every search term matched
+                list.add(value);
             }
         }
-        
-        
+
         return list;
     }
 
@@ -216,14 +218,18 @@ public class DatabaseUtils implements ReferenceDatabase {
     public BibTeXDatabase getDatabase() {
         return database;
     }
-    
+
+    /**
+     * Return a list of entries with corrected scandics.
+     * @return List of entries
+     */
     public List<BibTeXEntry> getConvertedEntries() {
         List<BibTeXEntry> entries = new ArrayList<>();
-        
+
         for (BibTeXEntry entry : database.getEntries().values()) {
             entries.add(ReferenceEntryBuilder.convertScandic(entry));
         }
-        
+
         return entries;
     }
 }
