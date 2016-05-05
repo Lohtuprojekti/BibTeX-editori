@@ -16,6 +16,9 @@ Ensimmäisessä sprintti meni luonnollisesti lähinnä kehitysympäristön pysty
 Toisella viikolla teimme klassisen virheen ja otimme vähän enemmän taskeja kuin pystyimme tekemään. Kuitenkin syy miksi tästä muodostui ongelma oli siinä, että vasta kasvotusten pidettävän daily scrumin pitämisen jälkeen saimme kunnolla suunniteltua ohjelmiston arkkitehtuurin. Totesimme pelkän digitaalisen viestinnän toimimattomaksi. Myöskin sprintin lopulla ymmärsimme ohjelman nykyisen arkkitehtuurin olevan turhan monimutkainen omine referenssi-olioineen, joten päätimme luopua niistä. Tästä syntyi teknistä velkaa, jota ei varmaankaan olisi tullut jos olisimme käyttäneet hieman enemmän aikaa suunnitteluun ja eri vaihtoehtojen tutkimiseen. Eli mitä enemmän: suunnittelua ja kommunikointia, mitä vähemmän: turhaa työtä.
 
 <h3>Sprint 3 & 4</h3>
+to edit: 3: käyttöliittymä easy b
+4: testit travisiin.
+
 Kolmanneella viikolla viisastuneena ja refraktointi labyrintin jälkeen saimme teknisen velan kurottua. Tämän spritin aikana ryhmän työskentely vakiintui kun oikea workflow löytyi. Myöskin aikaisemmat ongelmat testien kanssa saatiin korjattua ja integraatio-testit toimimaan Traviksessa. Mitä enemmän tai vähemmän: ei mitään, miten tulisi jatkaa: samaan malliin. 
 <br><br>
 Neljäs sprintti jatkui samoissa merkeissä kuin edellinen. Viimeisessäkin asiakastapaamisessa backlogiin lisätyt tehtävät saatiin hyvissä ajoin valmiiksi vaikka buildi vahingossa välissä rikkoutuikin. 
